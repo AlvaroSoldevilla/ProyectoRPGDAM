@@ -92,7 +92,7 @@ public abstract class Jugador extends Entidad{
         armas.forEach(Arma::getNombre);
     }
     @Override
-    public void multiplicarEstadisticas(int multiplicador) {
+    public void multiplicarEstadisticas(double multiplicador) {
         salud *= multiplicador;
         mana *= multiplicador;
         dmg *= multiplicador;

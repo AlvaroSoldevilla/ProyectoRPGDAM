@@ -9,7 +9,11 @@ public enum Estados {
     QUEMADURA("Quemadura",true,true,2),
     CEGADO("Cegado",false,true,2),
     MALDITO("Maldito", true, true, 2),
-    CONGELADO("Congelado", false, true, 1);
+    BENDITO("Bendito", true, true, 2),
+    CONGELADO("Congelado", false, true, 1),
+    SILENCIADO("Silenciado",true,true,1),
+    ELECTRIFICADO("Electrificado",true,true,2),
+    ESPINAS("Espinas",false,false,5);
 
     Estados(String nombre, boolean puedeMultiples, boolean deterioro,int efecto) {
         this.nombre = nombre;

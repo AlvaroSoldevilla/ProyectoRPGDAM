@@ -11,9 +11,9 @@ public class PruebaAtaque extends AtaqueEspecial {
     }
 
     @Override
-    public boolean hacerAtaque(Entidad objetivo, Entidad atatcante) {
-        if (puedeAtacar(atatcante)) {
-            objetivo.recibirDmg(atatcante.getDmg()*2);
+    public boolean hacerAtaque(Entidad objetivo, Entidad atacante) {
+        if (puedeAtacar(atacante)) {
+            objetivo.recibirDmg(atacante.getDmg()*2);
             return true;
         } else {
             return false;
