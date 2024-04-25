@@ -1,7 +1,11 @@
 package Logica;
 
+import Modelo.Enemigos.PruebaEnemigo;
+import Modelo.Jugador.PruebaJugador;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        Combate c = new Combate(new PruebaJugador(),new PruebaEnemigo());
+        c.combate();
     }
 }

@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public abstract class Clase extends Entidad{
+public abstract class Jugador extends Entidad{
 
     protected int oro;
     protected int mana;
@@ -22,6 +22,8 @@ public abstract class Clase extends Entidad{
     public void restaurarMana() {
         mana=maxMana;
     }
+
+
 
     public boolean cambiarArma(Arma nueva) {
         if (nueva != null) {
@@ -48,4 +50,21 @@ public abstract class Clase extends Entidad{
             return false;
         }
     }
+
+    public void ganarOro(int oro) {
+        this.oro +=oro;
+    }
+
+    public void mostrarEstadisticas() {
+        System.out.println("Tus estadisticas:" + "\n" +"Vida: " + salud + "/" + maxSalud + "\n" +
+                "Mana" + mana + "/" + maxMana +  "\n" + "Ataque: " + dmg + "\n" + "Defensa: " + defensa);
+    }
+    @Override
+    public void multiplicarEstadisticas(int multiplicador) {
+        salud *= multiplicador;
+        mana *= multiplicador;
+        dmg *= multiplicador;
+        defensa *= multiplicador;
+    }
+
 }

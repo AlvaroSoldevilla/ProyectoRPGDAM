@@ -1,7 +1,7 @@
 package Logica;
 
 import Modelo.Bases.AtaqueEspecial;
-import Modelo.Bases.Clase;
+import Modelo.Bases.Jugador;
 import Modelo.Bases.Enemigo;
 import Modelo.Bases.Entidad;
 import Modelo.Misc.Estados;
@@ -10,31 +10,55 @@ import UI.MenusConsola;
 import java.util.Random;
 
 public class Combate {
-    public Combate(Clase jugador, Enemigo enemigo) {
+    public Combate(Jugador jugador, Enemigo enemigo) {
         turnoActual = 1;
         this.enemigo = enemigo;
         this.jugador = jugador;
     }
     int turnoActual;
-    Clase jugador;
+    Jugador jugador;
     Enemigo enemigo;
 
     Random rng = new Random();
 
     public void combate() {
-
+        //TODO: Implementar en interfaz gráfica
+        jugador.mostrarEstadisticas();
+        System.out.println();
+        enemigo.mostrarEstadisticas();
+        System.out.println();
+        while (!jugador.estaMuerto()&&!enemigo.estaMuerto()) {
+            System.out.println("Turno del jugador");
+            accionJugador(MenusConsola.menuCombate());
+            enemigo.mostrarEstadisticas();
+            System.out.println();
+            if (!enemigo.estaMuerto()) {
+                System.out.println("Turno del enemigo");
+                accionEnemigo(rng.nextInt(1,3));
+                jugador.mostrarEstadisticas();
+                System.out.println();
+            }
+        }
+        if (jugador.estaMuerto()) {
+            System.out.println("Has perdido");
+        }
+        if (enemigo.estaMuerto()) {
+            System.out.println("Has ganado");
+        }
+        jugador.mostrarEstadisticas();
     }
 
     public void accionJugador(int codAccion) {
         switch (codAccion) {
             case 1:
-                atacar(jugador,enemigo);
+                if (!atacar(enemigo,jugador)) {
+                    System.out.println("El ataque ha fallado");
+                }
                 break;
             case 2:
-
-                break;
-            case 3:
-
+                if (!ataqueEspecial(enemigo,jugador)) {
+                    System.out.println("El ataque ha fallado");
+                }
                 break;
         }
     }
@@ -42,13 +66,14 @@ public class Combate {
     public void accionEnemigo(int codAccion) {
         switch (codAccion) {
             case 1:
-                atacar(jugador,enemigo);
+                if (!atacar(jugador,enemigo)) {
+                    System.out.println("El ataque ha fallado");
+                }
                 break;
             case 2:
-
-                break;
-            case 3:
-
+                if (!ataqueEspecial(jugador,enemigo)) {
+                    System.out.println("El ataque ha fallado");
+                }
                 break;
         }
     }
@@ -57,35 +82,51 @@ public class Combate {
 
     }
 
-    public boolean atacar(Entidad objetivo,Entidad atatcante) {
+    public boolean atacar(Entidad objetivo,Entidad atacante) {
         int multiplicadorFallo = 1;
 
-        if (atatcante.getEstadosSufridos().containsKey(Estados.CEGADO)) {
+        if (atacante.getEstadosSufridos().containsKey(Estados.CEGADO)) {
             multiplicadorFallo *= Estados.CEGADO.getEfecto();
         }
-
-        if (rng.nextInt(0,20/multiplicadorFallo) == 5) {
-            return false;
+        if (!atacante.getEstadosSufridos().containsKey(Estados.CONGELADO)) {
+            if (rng.nextInt(0,20/multiplicadorFallo) == 1) {
+                return false;
+            } else {
+                objetivo.recibirDmg(atacante.getDmg());
+                return true;
+            }
         } else {
-            objetivo.recibirDmg(atatcante.getAtaque());
-            return true;
+            return false;
         }
+
     }
 
-    public boolean ataqueEspecial(Entidad objetivo,Entidad atatcante) {
+    public boolean ataqueEspecial(Entidad objetivo,Entidad atacante) {
         int multiplicadorFallo = 1;
-        int ataque = MenusConsola.elegirAtaqueEspecial();
-        AtaqueEspecial as = atatcante.getAtaques().get(ataque);
+        int ataque;
 
-        if (atatcante.getEstadosSufridos().containsKey(Estados.CEGADO)) {
+        if (atacante.getEstadosSufridos().containsKey(Estados.CEGADO)) {
             multiplicadorFallo *= Estados.CEGADO.getEfecto();
         }
 
-        if (rng.nextInt(0,20/multiplicadorFallo) == 5) {
-            return false;
+        if (!atacante.getEstadosSufridos().containsKey(Estados.CONGELADO)) {
+            if (atacante instanceof Jugador) {
+                ataque = MenusConsola.elegirAtaqueEspecial(atacante);
+            } else {
+                ataque = rng.nextInt(0,atacante.getAtaques().size());
+            }
+
+            AtaqueEspecial as = atacante.getAtaques().get(ataque);
+
+            if (rng.nextInt(0,20/multiplicadorFallo) == 1) {
+                return false;
+            } else {
+                as.hacerAtaque(objetivo, atacante);
+                return true;
+            }
         } else {
-            as.hacerAtaque(objetivo, atatcante);
-            return true;
+            return false;
         }
+
     }
 }

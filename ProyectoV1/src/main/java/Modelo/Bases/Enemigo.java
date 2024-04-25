@@ -18,4 +18,16 @@ public abstract class Enemigo extends Entidad{
             System.out.println("El enemigo es inmune a " + estado.getNombre());
         }
     }
+
+    @Override
+    public void mostrarEstadisticas() {
+        System.out.println("Enemigo:" + "\n" + "Vida: " + salud + "\n" + "Ataque: " + dmg + "\n" + "Defensa: " + defensa);
+    }
+    @Override
+    public void multiplicarEstadisticas(int multiplicador) {
+        salud *= multiplicador;
+        dmg *= multiplicador;
+        defensa *= multiplicador;
+    }
+
 }
