@@ -1,5 +1,6 @@
 package Modelo.Bases;
 
+import Modelo.Misc.Estados;
 import lombok.Data;
 
 import java.util.List;
@@ -12,8 +13,22 @@ public abstract class Jugador extends Entidad{
     protected int maxMana;
     protected Arma arma;
     protected Armadura armadura;
+    protected List<Arma> armas;
+    protected List<Armadura> armaduras;
     protected List<Accesorio> accesorios;
 
+
+    public void InfligirEstado(Estados estado) {
+        if (!armadura.getInmunidades().contains(estado)) {
+            switch (estado) {
+                case CONGELADO -> estadosSufridos.put(estado, estadosSufridos.get(estado) + estado.getEfecto());
+                default -> estadosSufridos.put(estado, estadosSufridos.get(estado) + 1);
+            }
+        } else {
+            //TODO:cambiar a mensaje en la interfaz
+            System.out.println("Eres es inmune a " + estado.getNombre());
+        }
+    }
 
     public void restaurarVida() {
         salud=maxSalud;
@@ -23,16 +38,12 @@ public abstract class Jugador extends Entidad{
         mana=maxMana;
     }
 
-
-
     public boolean cambiarArma(Arma nueva) {
         if (nueva != null) {
-            try {
-                arma = nueva;
-                return true;
-            }catch (Exception e) {
-                return false;
-            }
+            dmg-=arma.getDmg();
+            arma = nueva;
+            aplicarEfectosEquipamiento(1);
+            return true;
         } else {
             return false;
         }
@@ -40,24 +51,45 @@ public abstract class Jugador extends Entidad{
 
     public boolean cambiarArmadura(Armadura nueva) {
         if (nueva != null) {
-            try {
-                armadura = nueva;
-                return true;
-            }catch (Exception e) {
-                return false;
-            }
+            defensa-=armadura.getDefensa();
+            armadura = nueva;
+            aplicarEfectosEquipamiento(2);
+            return true;
         } else {
             return false;
         }
     }
 
     public void ganarOro(int oro) {
-        this.oro +=oro;
+        this.oro += oro;
+    }
+
+    public void aplicarEfectosEquipamiento(int cambio) {
+        switch (cambio) {
+            case 0:
+                defensa+=armadura.getDefensa();
+                dmg+=arma.getDmg();
+                break;
+            case 1:
+                dmg+=arma.getDmg();
+                break;
+            case 2:
+                defensa+=armadura.getDefensa();
+                break;
+        }
+
     }
 
     public void mostrarEstadisticas() {
         System.out.println("Tus estadisticas:" + "\n" +"Vida: " + salud + "/" + maxSalud + "\n" +
                 "Mana" + mana + "/" + maxMana +  "\n" + "Ataque: " + dmg + "\n" + "Defensa: " + defensa);
+    }
+    public void mostrarArmaduras() {
+        armaduras.forEach(Armadura::getNombre);
+    }
+
+    public void mostrarArmas() {
+        armas.forEach(Arma::getNombre);
     }
     @Override
     public void multiplicarEstadisticas(int multiplicador) {

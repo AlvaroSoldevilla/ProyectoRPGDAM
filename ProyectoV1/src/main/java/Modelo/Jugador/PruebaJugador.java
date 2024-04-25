@@ -6,11 +6,12 @@ public class PruebaJugador extends Jugador {
 
     public PruebaJugador() {
         nombre = "Prueba";
-        maxSalud = 9999;
+        maxSalud = 15;
         maxMana = 5;
         salud = maxSalud;
         mana = maxMana;
         dmg = 3;
         ataques = AtaquesJugador.GUERRERO.getAtaques();
+        aplicarEfectosEquipamiento(0);
     }
 }

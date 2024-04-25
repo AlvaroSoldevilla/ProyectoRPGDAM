@@ -7,6 +7,9 @@ import java.util.List;
 
 @Data
 public abstract class Armadura {
-    int defensa;
-    List<Estados> inmunidades;
+    protected String nombre;
+    protected int defensa;
+    protected List<Estados> inmunidades;
+    protected List<Estados> debilidades;
+
 }

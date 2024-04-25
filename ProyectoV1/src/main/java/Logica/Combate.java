@@ -23,20 +23,20 @@ public class Combate {
 
     public void combate() {
         //TODO: Implementar en interfaz gráfica
-        jugador.mostrarEstadisticas();
-        System.out.println();
-        enemigo.mostrarEstadisticas();
-        System.out.println();
+
         while (!jugador.estaMuerto()&&!enemigo.estaMuerto()) {
-            System.out.println("Turno del jugador");
-            accionJugador(MenusConsola.menuCombate());
+            jugador.mostrarEstadisticas();
+            System.out.println();
             enemigo.mostrarEstadisticas();
             System.out.println();
-            if (!enemigo.estaMuerto()) {
+            System.out.println("Turno del jugador");
+            accionJugador(MenusConsola.menuCombate());
+            jugador.aplicarEstados();
+            System.out.println();
+            if (!enemigo.estaMuerto() && !jugador.estaMuerto()) {
                 System.out.println("Turno del enemigo");
                 accionEnemigo(rng.nextInt(1,3));
-                jugador.mostrarEstadisticas();
-                System.out.println();
+                enemigo.aplicarEstados();
             }
         }
         if (jugador.estaMuerto()) {
@@ -46,6 +46,7 @@ public class Combate {
             System.out.println("Has ganado");
         }
         jugador.mostrarEstadisticas();
+        jugador.restaurarMana();
     }
 
     public void accionJugador(int codAccion) {
@@ -109,7 +110,7 @@ public class Combate {
             multiplicadorFallo *= Estados.CEGADO.getEfecto();
         }
 
-        if (!atacante.getEstadosSufridos().containsKey(Estados.CONGELADO)) {
+        if (!atacante.getEstadosSufridos().containsKey(Estados.CONGELADO) && !atacante.getEstadosSufridos().containsKey(Estados.SILENCIADO)) {
             if (atacante instanceof Jugador) {
                 ataque = MenusConsola.elegirAtaqueEspecial(atacante);
             } else {

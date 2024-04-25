@@ -12,7 +12,10 @@ public abstract class Enemigo extends Entidad{
 
     public void InfligirEstado(Estados estado) {
         if (!inmunidades.contains(estado)) {
-            estadosSufridos.put(estado, estadosSufridos.get(estado) + 1);
+            switch (estado) {
+                case CONGELADO -> estadosSufridos.put(estado, estadosSufridos.get(estado) + estado.getEfecto());
+                default -> estadosSufridos.put(estado, estadosSufridos.get(estado) + 1);
+            }
         } else {
             //TODO:cambiar a mensaje en la interfaz
             System.out.println("El enemigo es inmune a " + estado.getNombre());
@@ -24,7 +27,7 @@ public abstract class Enemigo extends Entidad{
         System.out.println("Enemigo:" + "\n" + "Vida: " + salud + "\n" + "Ataque: " + dmg + "\n" + "Defensa: " + defensa);
     }
     @Override
-    public void multiplicarEstadisticas(int multiplicador) {
+    public void multiplicarEstadisticas(double multiplicador) {
         salud *= multiplicador;
         dmg *= multiplicador;
         defensa *= multiplicador;

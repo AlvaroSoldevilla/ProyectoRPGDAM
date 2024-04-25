@@ -36,4 +36,30 @@ public class MenusConsola {
         } while (accion<0||accion>jugador.getAtaques().size());
         return accion;
     }
+
+    public static int menuInventario() {
+        int accion;
+        do {
+            System.out.println("1-Cambiar armadura");
+            System.out.println("2-Cambiar arma");
+            accion = scGen.nextInt();
+        }while (accion<0||accion>2);
+        return accion;
+    }
+
+    public static int menuHoghuera() {
+        int accion;
+        do {
+            System.out.println("1-Curarte");
+            System.out.println("2-Modificar equipamiento");
+            accion = scGen.nextInt();
+        }while (accion<0||accion>2);
+        return accion;
+    }
+
+    //TODO: Implementar menu de tienda
+    public static int menuTienda() {
+
+        return 0;
+    }
 }

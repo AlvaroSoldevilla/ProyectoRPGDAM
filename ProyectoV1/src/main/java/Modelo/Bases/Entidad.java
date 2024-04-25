@@ -36,6 +36,8 @@ public abstract class Entidad {
     public void aplicarEfectoDeEstados(Estados estado) {
         switch (estado) {
             case VENENO,QUEMADURA -> recibirDmg(estado.getEfecto());
+            case MALDITO -> multiplicarEstadisticas(0.5);
+            case BENDITO -> multiplicarEstadisticas(1.5);
         }
     }
 
@@ -46,7 +48,7 @@ public abstract class Entidad {
     public boolean estaMuerto() {
         return salud<=0;
     }
-    public abstract void multiplicarEstadisticas(int multiplicador);
+    public abstract void multiplicarEstadisticas(double multiplicador);
     public abstract void mostrarEstadisticas();
 
 }
