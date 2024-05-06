@@ -12,9 +12,12 @@ import java.util.Map;
 public abstract class Entidad {
     protected String nombre;
     protected int salud;
+    protected int saludTemp;
     protected int maxSalud;
     protected int dmg;
+    protected int dmgTemp;
     protected int defensa;
+    protected int defensaTemp;
     protected List<AtaqueEspecial> ataques;
 
     protected Map<Estados, Integer> estadosSufridos = new HashMap<>();
@@ -44,11 +47,17 @@ public abstract class Entidad {
     public void recibirDmg(int dmg) {
         salud -= dmg-defensa;
     }
-
     public boolean estaMuerto() {
         return salud<=0;
     }
-    public abstract void multiplicarEstadisticas(double multiplicador);
+    public void multiplicarEstadisticas(double multiplicador) {
+        saludTemp = salud;
+        salud *= (int) multiplicador;
+        dmgTemp = dmg;
+        dmg *= (int) multiplicador;
+        defensaTemp = defensa;
+        defensa *= (int) multiplicador;
+    }
     public abstract void mostrarEstadisticas();
 
 }

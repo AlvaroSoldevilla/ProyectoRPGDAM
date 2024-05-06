@@ -1,16 +1,14 @@
-package Logica;
+package Modelo.Eventos;
 
-import Modelo.Bases.AtaqueEspecial;
-import Modelo.Bases.Jugador;
-import Modelo.Bases.Enemigo;
-import Modelo.Bases.Entidad;
+import Modelo.Bases.*;
 import Modelo.Misc.Estados;
 import UI.MenusConsola;
 
 import java.util.Random;
 
-public class Combate {
+public class Combate extends Evento {
     public Combate(Jugador jugador, Enemigo enemigo) {
+        titulo = "Combate";
         turnoActual = 1;
         this.enemigo = enemigo;
         this.jugador = jugador;
@@ -20,34 +18,6 @@ public class Combate {
     Enemigo enemigo;
 
     Random rng = new Random();
-
-    public void combate() {
-        //TODO: Implementar en interfaz gráfica
-
-        while (!jugador.estaMuerto()&&!enemigo.estaMuerto()) {
-            jugador.mostrarEstadisticas();
-            System.out.println();
-            enemigo.mostrarEstadisticas();
-            System.out.println();
-            System.out.println("Turno del jugador");
-            accionJugador(MenusConsola.menuCombate());
-            jugador.aplicarEstados();
-            System.out.println();
-            if (!enemigo.estaMuerto() && !jugador.estaMuerto()) {
-                System.out.println("Turno del enemigo");
-                accionEnemigo(rng.nextInt(1,3));
-                enemigo.aplicarEstados();
-            }
-        }
-        if (jugador.estaMuerto()) {
-            System.out.println("Has perdido");
-        }
-        if (enemigo.estaMuerto()) {
-            System.out.println("Has ganado");
-        }
-        jugador.mostrarEstadisticas();
-        jugador.restaurarMana();
-    }
 
     public void accionJugador(int codAccion) {
         switch (codAccion) {
@@ -77,10 +47,6 @@ public class Combate {
                 }
                 break;
         }
-    }
-
-    public void darRecompensa() {
-
     }
 
     public boolean atacar(Entidad objetivo,Entidad atacante) {
@@ -128,6 +94,40 @@ public class Combate {
         } else {
             return false;
         }
+
+    }
+
+    @Override
+    public void empezarEvento() {
+        //TODO: Implementar en interfaz gráfica
+        while (!jugador.estaMuerto()&&!enemigo.estaMuerto()) {
+            jugador.mostrarEstadisticas();
+            System.out.println();
+            enemigo.mostrarEstadisticas();
+            System.out.println();
+            System.out.println("Turno del jugador");
+            accionJugador(MenusConsola.menuCombate());
+            jugador.aplicarEstados();
+            System.out.println();
+            if (!enemigo.estaMuerto() && !jugador.estaMuerto()) {
+                System.out.println("Turno del enemigo");
+                accionEnemigo(rng.nextInt(1,3));
+                enemigo.aplicarEstados();
+            }
+        }
+        if (jugador.estaMuerto()) {
+            System.out.println("Has perdido");
+        }
+        if (enemigo.estaMuerto()) {
+            System.out.println("Has ganado");
+        }
+        jugador.mostrarEstadisticas();
+        jugador.restaurarMana();
+        terminarEvento();
+    }
+
+    @Override
+    public void terminarEvento() {
 
     }
 }

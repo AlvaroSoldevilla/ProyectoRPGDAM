@@ -2,6 +2,8 @@ package UI;
 
 import Modelo.Bases.AtaqueEspecial;
 import Modelo.Bases.Entidad;
+import Modelo.Bases.Evento;
+import Modelo.Bases.Jugador;
 
 import java.util.Scanner;
 
@@ -61,5 +63,21 @@ public class MenusConsola {
     public static int menuTienda() {
 
         return 0;
+    }
+
+    //TODO: Implementar menu de elección de jugador
+    public static Jugador menuEleccionJugador() {
+
+        return null;
+    }
+
+    public static Evento menuElegirEvento(Evento[] eventosActuales) {
+        for (int i = 0; i < eventosActuales.length; i++) {
+            //TODO: if es temporal
+            if (eventosActuales[i]!=null) {
+                System.out.print(eventosActuales[i].getTitulo() + " ");
+            }
+        }
+        return eventosActuales[scGen.nextInt()];
     }
 }

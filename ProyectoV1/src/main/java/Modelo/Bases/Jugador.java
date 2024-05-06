@@ -1,8 +1,11 @@
 package Modelo.Bases;
 
+import Modelo.Armaduras.ArmaduraCuero;
+import Modelo.Armas.Espada;
 import Modelo.Misc.Estados;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -10,12 +13,13 @@ public abstract class Jugador extends Entidad{
 
     protected int oro;
     protected int mana;
+    protected int manaTemp;
     protected int maxMana;
     protected Arma arma;
     protected Armadura armadura;
-    protected List<Arma> armas;
-    protected List<Armadura> armaduras;
-    protected List<Accesorio> accesorios;
+    protected List<Arma> armas = new ArrayList<>();
+    protected List<Armadura> armaduras = new ArrayList<>();
+    protected List<Accesorio> accesorios = new ArrayList<>();
 
 
     public void InfligirEstado(Estados estado) {
@@ -77,7 +81,6 @@ public abstract class Jugador extends Entidad{
                 defensa+=armadura.getDefensa();
                 break;
         }
-
     }
 
     public void mostrarEstadisticas() {
@@ -93,10 +96,14 @@ public abstract class Jugador extends Entidad{
     }
     @Override
     public void multiplicarEstadisticas(double multiplicador) {
-        salud *= multiplicador;
-        mana *= multiplicador;
-        dmg *= multiplicador;
-        defensa *= multiplicador;
+        saludTemp = salud;
+        salud *= (int) multiplicador;
+        manaTemp = mana;
+        mana *= (int) multiplicador;
+        dmgTemp = dmg;
+        dmg *= (int) multiplicador;
+        defensaTemp = defensa;
+        defensa *= (int) multiplicador;
     }
 
 }

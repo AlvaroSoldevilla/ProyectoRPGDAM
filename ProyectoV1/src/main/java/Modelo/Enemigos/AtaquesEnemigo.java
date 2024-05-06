@@ -12,7 +12,6 @@ public enum AtaquesEnemigo {
     AtaquesEnemigo(AtaqueEspecial[] ataques) {
         this.ataques = Arrays.stream(ataques).toList();
     }
-
     @Getter
     List<AtaqueEspecial> ataques;
 }

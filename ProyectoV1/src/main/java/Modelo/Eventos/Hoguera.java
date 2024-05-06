@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Hoguera extends Evento {
     public Hoguera(Jugador j) {
         titulo = "Hoguera";
-        this.j = j;
+        this.jugador = j;
     }
 
     @Override
@@ -17,17 +17,17 @@ public class Hoguera extends Evento {
         Scanner sc = new Scanner(System.in);
         switch (MenusConsola.menuHoghuera()) {
             case 1:
-                j.restaurarVida();
+                jugador.restaurarVida();
                 break;
             case 2:
                 switch (MenusConsola.menuInventario()) {
                     case 1:
-                        j.mostrarArmaduras();
-                        j.cambiarArmadura(j.getArmaduras().get(sc.nextInt()));
+                        jugador.mostrarArmaduras();
+                        jugador.cambiarArmadura(jugador.getArmaduras().get(sc.nextInt()));
                         break;
                     case 2:
-                        j.mostrarArmas();
-                        j.cambiarArma(j.getArmas().get(sc.nextInt()));
+                        jugador.mostrarArmas();
+                        jugador.cambiarArma(jugador.getArmas().get(sc.nextInt()));
                         break;
                 }
                 break;
@@ -36,7 +36,4 @@ public class Hoguera extends Evento {
 
     @Override
     public void terminarEvento() {}
-
-    @Override
-    public void consecuencias() {}
 }

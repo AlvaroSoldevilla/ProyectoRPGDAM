@@ -26,11 +26,6 @@ public abstract class Enemigo extends Entidad{
     public void mostrarEstadisticas() {
         System.out.println("Enemigo:" + "\n" + "Vida: " + salud + "\n" + "Ataque: " + dmg + "\n" + "Defensa: " + defensa);
     }
-    @Override
-    public void multiplicarEstadisticas(double multiplicador) {
-        salud *= multiplicador;
-        dmg *= multiplicador;
-        defensa *= multiplicador;
-    }
+
 
 }
