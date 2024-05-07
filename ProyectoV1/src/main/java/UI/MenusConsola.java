@@ -1,6 +1,5 @@
 package UI;
 
-import Modelo.Bases.AtaqueEspecial;
 import Modelo.Bases.Entidad;
 import Modelo.Bases.Evento;
 import Modelo.Bases.Jugador;
@@ -60,14 +59,26 @@ public class MenusConsola {
     }
 
     //TODO: Implementar menu de tienda
-    public static int menuTienda() {
-
-        return 0;
+    public static int menuTienda(String objeto1,String objeto2,String objeto3) {
+        int accion;
+        do {
+            System.out.println("1-" + objeto1);
+            System.out.println("2-" + objeto2);
+            System.out.println("3-" + objeto3);
+            accion = scGen.nextInt();
+        }while (accion<0||accion>=3);
+        return accion;
     }
 
     //TODO: Implementar menu de elección de jugador
     public static Jugador menuEleccionJugador() {
-
+        int accion;
+        do {
+            System.out.println("1-Caballero");
+            System.out.println("2-Mago");
+            System.out.println("2-Asesino");
+            accion = scGen.nextInt();
+        }while (accion<0||accion>=2);
         return null;
     }
 
@@ -75,7 +86,7 @@ public class MenusConsola {
         for (int i = 0; i < eventosActuales.length; i++) {
             //TODO: if es temporal
             if (eventosActuales[i]!=null) {
-                System.out.print(eventosActuales[i].getTitulo() + " ");
+                System.out.print(i + " " + eventosActuales[i].getTitulo() + " ");
             }
         }
         return eventosActuales[scGen.nextInt()];

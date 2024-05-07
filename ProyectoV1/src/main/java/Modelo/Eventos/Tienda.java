@@ -1,15 +1,24 @@
 package Modelo.Eventos;
 
+import Modelo.Bases.Accesorio;
+import Modelo.Bases.Arma;
+import Modelo.Bases.Armadura;
 import Modelo.Bases.Evento;
 import UI.MenusConsola;
 
 public class Tienda extends Evento {
     public Tienda() {
-        titulo = "Combate";
+        titulo = "Tienda";
     }
     @Override
     public void empezarEvento() {
-        MenusConsola.menuTienda();
+        Arma arma;
+        Armadura armadura;
+        Accesorio accesorio1;
+        Accesorio accesorio2;
+        int mejora;
+        String estadisticaMejora;
+        MenusConsola.menuTienda("","","");
         terminarEvento();
     }
 
@@ -17,4 +26,6 @@ public class Tienda extends Evento {
     public void terminarEvento() {
         System.out.println("Sales de la tienda");
     }
+
+
 }

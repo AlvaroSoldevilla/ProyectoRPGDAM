@@ -1,7 +1,5 @@
 package Modelo.Bases;
 
-import Modelo.Armaduras.ArmaduraCuero;
-import Modelo.Armas.Espada;
 import Modelo.Misc.Estados;
 import lombok.Data;
 
