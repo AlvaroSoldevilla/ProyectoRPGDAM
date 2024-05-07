@@ -7,13 +7,12 @@ import Modelo.Misc.Estados;
 
 public class MasArmadura extends Accesorio {
     public MasArmadura() {
-        nombre = "Prueba";
-        permanente = false;
+        nombre = "Más armadura";
         inicioTurno = true;
         inicioCombate = true;
     }
     @Override
     public void aplicarEfecto(Jugador jugador) {
-        jugador.setDefensaTemp(jugador.getDefensaTemp()+5);
+        jugador.setDefensa(jugador.getDefensa()+5);
     }
 }

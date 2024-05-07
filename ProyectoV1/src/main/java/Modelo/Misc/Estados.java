@@ -13,7 +13,10 @@ public enum Estados {
     CONGELADO("Congelado", false, true, 1),
     SILENCIADO("Silenciado",true,true,1),
     ELECTRIFICADO("Electrificado",true,true,2),
-    ESPINAS("Espinas",false,false,5);
+    ESPINAS("Espinas",false,false,5),
+    RESISTENCIAVENENO("Resistencia a Veneno",false,true,1),
+    RESISTENCIAQUEMADURA("Resistencia a Quemadura",false,true,1),
+    RESISTENCIAELECTRICIDAD("Resistencia a Electricidad",false,true,1);
 
     Estados(String nombre, boolean puedeMultiples, boolean deterioro,int efecto) {
         this.nombre = nombre;
