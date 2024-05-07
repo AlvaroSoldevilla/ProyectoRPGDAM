@@ -38,7 +38,10 @@ public abstract class Entidad {
 
     public void aplicarEfectoDeEstados(Estados estado) {
         switch (estado) {
-            case VENENO,QUEMADURA -> recibirDmg(estado.getEfecto());
+            case VENENO,QUEMADURA -> {
+
+                recibirDmg(estado.getEfecto());
+            }
             case MALDITO -> multiplicarEstadisticas(0.5);
             case BENDITO -> multiplicarEstadisticas(1.5);
         }

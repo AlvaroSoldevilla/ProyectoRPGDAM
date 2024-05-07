@@ -1,6 +1,10 @@
 package Modelo.Eventos;
 
+import Modelo.Armas.DagaCritica;
+import Modelo.Armas.DagaDoble;
+import Modelo.Armas.DagaRoboVida;
 import Modelo.Bases.*;
+import Modelo.Jugador.Asesino;
 import Modelo.Misc.Estados;
 import UI.MenusConsola;
 
@@ -55,17 +59,37 @@ public class Combate extends Evento {
         if (atacante.getEstadosSufridos().containsKey(Estados.CEGADO)) {
             multiplicadorFallo *= Estados.CEGADO.getEfecto();
         }
+
         if (!atacante.getEstadosSufridos().containsKey(Estados.CONGELADO)) {
             if (rng.nextInt(0,20/multiplicadorFallo) == 1) {
+                if (atacante instanceof Jugador) {
+                    if (((Jugador) atacante).getArma() instanceof DagaDoble) {
+                        atacante.recibirDmg(atacante.getDmg()/4);
+                    }
+                }
                 return false;
             } else {
-                objetivo.recibirDmg(atacante.getDmg());
+                if (atacante instanceof Jugador) {
+                    if (atacante instanceof Asesino) {
+                        objetivo.recibirDmg(atacante.getDmg());
+                        objetivo.recibirDmg(atacante.getDmg());
+                    } else if (((Jugador) atacante).getArma() instanceof DagaRoboVida) {
+                        jugador.curarVida(atacante.getDmg()/3);
+                    } else if (((Jugador) atacante).getArma() instanceof DagaCritica) {
+                        if (rng.nextInt(0,4) == 1) {
+                            objetivo.recibirDmg(atacante.getDmg() * 2);
+                        }
+                    } else {
+                        objetivo.recibirDmg(atacante.getDmg());
+                    }
+                } else {
+                    objetivo.recibirDmg(atacante.getDmg());
+                }
                 return true;
             }
         } else {
             return false;
         }
-
     }
 
     public boolean ataqueEspecial(Entidad objetivo,Entidad atacante) {
@@ -99,6 +123,11 @@ public class Combate extends Evento {
 
     @Override
     public void empezarEvento() {
+        jugador.getAccesorios().forEach((a)->{
+            if (a.isInicioCombate()) {
+                a.aplicarEfecto(jugador);
+            }
+        });
         //TODO: Implementar en interfaz gráfica
         while (!jugador.estaMuerto()&&!enemigo.estaMuerto()) {
             jugador.mostrarEstadisticas();
@@ -113,7 +142,13 @@ public class Combate extends Evento {
                 System.out.println("Turno del enemigo");
                 accionEnemigo(rng.nextInt(1,3));
                 enemigo.aplicarEstados();
+                jugador.getAccesorios().forEach((a)->{
+                    if (a.isInicioTurno()) {
+                        a.aplicarEfecto(jugador);
+                    }
+                });
             }
+
         }
         if (jugador.estaMuerto()) {
             System.out.println("Has perdido");

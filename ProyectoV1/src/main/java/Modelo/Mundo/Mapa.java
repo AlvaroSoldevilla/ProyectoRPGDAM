@@ -20,7 +20,7 @@ public class Mapa {
     }
     Jugador jugador;
     Random rng = new Random();
-    int nivelActual;
+    int nivelActual = 1;
     int sala = 0;
 
     public void avanzarNivel() {
@@ -69,7 +69,7 @@ public class Mapa {
                 return null;
             case 2:
                 //Tienda
-                return new Tienda();
+                return new Tienda(jugador,nivelActual);
             case 3:
                 //Hoguera
                 return new Hoguera(jugador);
@@ -87,7 +87,7 @@ public class Mapa {
                 return null;
             case 2:
                 //Tienda
-                return new Tienda();
+                return new Tienda(jugador,nivelActual);
             case 3:
                 //Hoguera
                 return new Hoguera(jugador);

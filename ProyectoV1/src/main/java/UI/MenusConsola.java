@@ -59,14 +59,15 @@ public class MenusConsola {
     }
 
     //TODO: Implementar menu de tienda
-    public static int menuTienda(String objeto1,String objeto2,String objeto3) {
+    public static int menuTienda(String objeto1, int precio1, String objeto2, int precio2, String objeto3, int precio3) {
         int accion;
         do {
-            System.out.println("1-" + objeto1);
-            System.out.println("2-" + objeto2);
-            System.out.println("3-" + objeto3);
+            System.out.println("0-Salir de la tienda");
+            System.out.println("1-" + objeto1 + " " + precio1 + " de oro");
+            System.out.println("2-" + objeto2 + " " + precio2 + " de oro");
+            System.out.println("3-" + objeto3 + " " + precio3 + " de oro");
             accion = scGen.nextInt();
-        }while (accion<0||accion>=3);
+        } while (accion<0||accion>3);
         return accion;
     }
 

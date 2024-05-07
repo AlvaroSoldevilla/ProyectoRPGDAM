@@ -8,6 +8,5 @@ import lombok.Data;
 public abstract class BatallaConJefe extends Evento {
     protected Enemigo jefe;
     protected int fases;
-
     protected abstract void cambiarFase();
 }

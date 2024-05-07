@@ -32,6 +32,14 @@ public abstract class Jugador extends Entidad{
         }
     }
 
+    public void curarVida(int vida) {
+        if (salud + vida <= maxSalud) {
+            salud += vida;
+        } else {
+            salud = maxSalud;
+        }
+    }
+
     public void restaurarVida() {
         salud=maxSalud;
     }
@@ -64,6 +72,9 @@ public abstract class Jugador extends Entidad{
 
     public void ganarOro(int oro) {
         this.oro += oro;
+    }
+    public void gastarOro(int oro) {
+        this.oro-=oro;
     }
 
     public void aplicarEfectosEquipamiento(int cambio) {
