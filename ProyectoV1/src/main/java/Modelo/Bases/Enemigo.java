@@ -10,12 +10,10 @@ public abstract class Enemigo extends Entidad{
 
     protected List<Estados> inmunidades = new ArrayList<>();
 
-    public void InfligirEstado(Estados estado) {
+    @Override
+    public void infligirEstado(Estados estado) {
         if (!inmunidades.contains(estado)) {
-            switch (estado) {
-                case CONGELADO -> estadosSufridos.put(estado, estadosSufridos.get(estado) + estado.getEfecto());
-                default -> estadosSufridos.put(estado, estadosSufridos.get(estado) + 1);
-            }
+            estadosSufridos.put(estado, estadosSufridos.get(estado) + estado.getDuracion());
         } else {
             //TODO:cambiar a mensaje en la interfaz
             System.out.println("El enemigo es inmune a " + estado.getNombre());

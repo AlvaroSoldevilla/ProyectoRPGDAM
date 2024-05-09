@@ -1,14 +1,16 @@
 package Modelo.Mundo;
 
 import Modelo.Bases.Jugador;
+import Modelo.Eventos.Aleatorio;
+import Modelo.Eventos.Aleatorios.*;
 import Modelo.Eventos.Combate;
 import Modelo.Bases.Evento;
 import Modelo.Enemigos.PruebaEnemigo;
 import Modelo.Eventos.Hoguera;
 import Modelo.Eventos.Tienda;
-import Modelo.Jefes.Jefe1;
-import Modelo.Jefes.Jefe2;
-import Modelo.Jefes.Jefe3;
+import Modelo.Jefes.Bicho;
+import Modelo.Jefes.Lobo;
+import Modelo.Jefes.Dragon;
 import lombok.Data;
 
 import java.util.Random;
@@ -39,7 +41,7 @@ public class Mapa {
             eventos = new Evento[1];
             eventos[0] = generarEvento(5);
             return eventos;
-        } else if (distanciaAJefe() == (5+(2*nivelActual)) / 2) {
+        } else if (distanciaAJefe() == (distanciaTotal() / 2)) {
             eventos = new Evento[1];
             eventos[0] = generarEvento(4);
             return eventos;
@@ -53,20 +55,24 @@ public class Mapa {
     }
 
     int distanciaAJefe() {
-        return (5+(2*nivelActual)) - sala;
+        return (distanciaTotal() - sala);
     }
 
-    Evento generarEvento() {
+    int distanciaTotal() {
+        return 2+(2*nivelActual);
+    }
+
+    private Evento generarEvento() {
 
         int codEvento = rng.nextInt(0,4);
 
         switch (codEvento) {
             case 0:
                 //Combate
-                return new Combate(jugador,new PruebaEnemigo());
+                return new Combate(jugador,new PruebaEnemigo(),nivelActual);
             case 1:
                 //Evento aleatorio
-                return null;
+                return generarEventoAleatorio();
             case 2:
                 //Tienda
                 return new Tienda(jugador,nivelActual);
@@ -77,14 +83,14 @@ public class Mapa {
         return null;
     }
 
-    Evento generarEvento(int codEvento) {
+    private Evento generarEvento(int codEvento) {
         switch (codEvento) {
             case 0:
                 //Combate
-                return new Combate(jugador,new PruebaEnemigo());
+                return new Combate(jugador,new PruebaEnemigo(),nivelActual);
             case 1:
                 //Evento aleatorio
-                return null;
+                return generarEventoAleatorio();
             case 2:
                 //Tienda
                 return new Tienda(jugador,nivelActual);
@@ -98,11 +104,46 @@ public class Mapa {
                 //Jefe
                 switch (nivelActual) {
                     case 1:
-                        return new Jefe1();
+                        return new Bicho(jugador);
                     case 2:
-                        return new Jefe2();
+                        return new Lobo(jugador);
                     case 3:
-                        return new Jefe3();
+                        return new Dragon(jugador);
+                }
+        }
+        return null;
+    }
+
+    private Aleatorio generarEventoAleatorio() {
+        switch (nivelActual) {
+            case 1:
+                switch (rng.nextInt(0,3)) {
+                    case 0:
+                        return new EventoPintorMagico(jugador);
+                    case 1:
+                        return new EventoFuente(jugador, new PruebaEnemigo());
+                    case 2:
+                        return new EventoPiedra(jugador);
+                }
+            case 2:
+                switch (rng.nextInt(0,3)) {
+                    case 0:
+                        return new EventoScammer(jugador);
+                    case 1:
+                        return new EventoGitanos(jugador, new PruebaEnemigo(),nivelActual);
+                    case 2:
+                        return new EventoNerd(jugador, new PruebaEnemigo(), nivelActual);
+                }
+            case 3:
+                switch (rng.nextInt(0,4)) {
+                    case 0:
+                        return new EventoAnciana(jugador);
+                    case 1:
+                        return new EventoHerrero(jugador);
+                    case 2:
+                        return new EventoTaberna(jugador);
+                    case 3:
+                        return new EventoScammer(jugador);
                 }
         }
         return null;

@@ -13,6 +13,6 @@ public class MonedaOro extends Accesorio {
     }
 
     public void aplicarEfecto(Jugador jugador) {
-        jugador.setOro(jugador.getOro() + 5);
+        jugador.ganarOro(5);
     }
 }

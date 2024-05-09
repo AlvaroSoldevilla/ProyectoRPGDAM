@@ -3,6 +3,10 @@ package UI;
 import Modelo.Bases.Entidad;
 import Modelo.Bases.Evento;
 import Modelo.Bases.Jugador;
+import Modelo.Jugador.Asesino;
+import Modelo.Jugador.Caballero;
+import Modelo.Jugador.Mago;
+import Modelo.Jugador.PruebaJugador;
 
 import java.util.Scanner;
 
@@ -15,9 +19,10 @@ public class MenusConsola {
             System.out.println("Elige una accion:");
             System.out.println("1-Ataque normal");
             System.out.println("2-Ataque especial");
-
+            System.out.println("3-Bloquear");
+            System.out.println("4-Finta");
             accion = scGen.nextInt();
-        } while (accion<0||accion>2);
+        } while (accion<0||accion>4);
         return accion;
     }
 
@@ -58,29 +63,33 @@ public class MenusConsola {
         return accion;
     }
 
-    //TODO: Implementar menu de tienda
-    public static int menuTienda(String objeto1, int precio1, String objeto2, int precio2, String objeto3, int precio3) {
+
+    public static int menuTienda(String objeto1, int precio1, String objeto2, int precio2, String estadistica, int cantidadMejora, int precio3) {
         int accion;
         do {
             System.out.println("0-Salir de la tienda");
-            System.out.println("1-" + objeto1 + " " + precio1 + " de oro");
-            System.out.println("2-" + objeto2 + " " + precio2 + " de oro");
-            System.out.println("3-" + objeto3 + " " + precio3 + " de oro");
+            System.out.println("1-" + objeto1 + ": " + precio1 + " de oro");
+            System.out.println("2-" + objeto2 + ": " + precio2 + " de oro");
+            System.out.println("3-Aumentar tu " + estadistica + " por +" + cantidadMejora + ": " + precio3 + " de oro");
             accion = scGen.nextInt();
         } while (accion<0||accion>3);
         return accion;
     }
 
-    //TODO: Implementar menu de elección de jugador
     public static Jugador menuEleccionJugador() {
         int accion;
         do {
             System.out.println("1-Caballero");
             System.out.println("2-Mago");
-            System.out.println("2-Asesino");
+            System.out.println("3-Asesino");
             accion = scGen.nextInt();
-        }while (accion<0||accion>=2);
-        return null;
+        } while (accion<=0||accion>=4);
+        return switch (accion) {
+            case 1 -> new Caballero();
+            case 2 -> new Mago();
+            case 3 -> new Asesino();
+            default -> new PruebaJugador();
+        };
     }
 
     public static Evento menuElegirEvento(Evento[] eventosActuales) {
@@ -90,6 +99,19 @@ public class MenusConsola {
                 System.out.print(i + " " + eventosActuales[i].getTitulo() + " ");
             }
         }
+        System.out.println();
         return eventosActuales[scGen.nextInt()];
+    }
+
+    public static int menuEventoAleatorio(String[] opciones) {
+        int elegida;
+        do {
+            for (int i = 0; i < opciones.length; i++) {
+                System.out.println(i + " " + opciones[i]);
+            }
+            elegida = scGen.nextInt();
+        } while (elegida < 0|| elegida > opciones.length-1);
+
+        return elegida;
     }
 }

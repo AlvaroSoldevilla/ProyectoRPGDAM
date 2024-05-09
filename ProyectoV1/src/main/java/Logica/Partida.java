@@ -2,7 +2,6 @@ package Logica;
 
 import Modelo.Bases.Evento;
 import Modelo.Bases.Jugador;
-import Modelo.Jugador.PruebaJugador;
 import Modelo.Mundo.Mapa;
 import UI.MenusConsola;
 import lombok.Data;
@@ -13,7 +12,7 @@ public class Partida {
     Mapa mapa;
 
     public void iniciar() {
-        jugador = new PruebaJugador();
+        jugador = MenusConsola.menuEleccionJugador();
         Mapa mapa1 = new Mapa(jugador);
         Evento[] eventosActuales;
         Evento evento;
@@ -27,5 +26,6 @@ public class Partida {
             evento = MenusConsola.menuElegirEvento(eventosActuales);
             evento.empezarEvento();
         }
+        System.out.println("Has muerto");
     }
 }

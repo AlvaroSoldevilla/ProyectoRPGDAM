@@ -1,9 +1,6 @@
 package Modelo.Eventos;
 
-import Modelo.Accesorios.Antifuego;
-import Modelo.Accesorios.Antirayos;
-import Modelo.Accesorios.Antiveneno;
-import Modelo.Accesorios.MonedaOro;
+import Modelo.Accesorios.*;
 import Modelo.Armaduras.ArmaduraDragon;
 import Modelo.Armaduras.ArmaduraEspinas;
 import Modelo.Armaduras.ArmaduraMetal;
@@ -15,6 +12,7 @@ import Modelo.Jugador.Mago;
 import UI.MenusConsola;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class Tienda extends Evento {
     public Tienda(Jugador jugador,int nivel) {
@@ -33,13 +31,35 @@ public class Tienda extends Evento {
         boolean compraRealizada = false;
 
         Equipamiento equipamiento;
-        Accesorio accesorio = null;
-        int mejora;
+        Accesorio accesorio;
+        int mejora = 0;
 
         String estadisticaMejora = "";
+        int estadistica;
 
         equipamiento = generarEquipamiento();
         accesorio = generarAccesorio();
+
+        estadistica = rng.nextInt(0,4);
+        switch (estadistica) {
+            case 0:
+                estadisticaMejora = "Salud";
+                mejora = rng.nextInt(5*nivel,10*nivel);
+                break;
+            case 1:
+                estadisticaMejora = "Defensa";
+                mejora = rng.nextInt(2*nivel,6*nivel);
+                break;
+            case 2:
+                estadisticaMejora = "Daño base";
+                mejora = rng.nextInt(3*nivel,6*nivel);
+                break;
+            case 3:
+                estadisticaMejora = "Maná";
+                mejora = rng.nextInt(6*nivel,15*nivel);
+                break;
+        }
+
         //Valores provisionales
         int precio1 = rng.nextInt(20*nivel,50*nivel);
         int precio2 = rng.nextInt(20*nivel,50*nivel);
@@ -47,11 +67,30 @@ public class Tienda extends Evento {
 
         do {
             System.out.println("Tu oro: " + jugador.getOro());
-            compra = MenusConsola.menuTienda(equipamiento.getNombre(), precio1, accesorio.getNombre(), precio2, estadisticaMejora, precio3);
+            compra = MenusConsola.menuTienda(equipamiento.getNombre(), precio1, accesorio.getNombre(), precio2, estadisticaMejora, mejora, precio3);
             switch (compra) {
                 case 1:
                     if (jugador.getOro() >= precio1) {
+                        Scanner sc = new Scanner(System.in);
+                        int accion;
                         jugador.gastarOro(precio1);
+                        if (equipamiento instanceof Arma arma) {
+                            System.out.println("¿Quieres cambiar tu arma actual? 1-Si 0-No");
+                            accion = sc.nextInt();
+                            if (accion == 1) {
+                                jugador.cambiarArma(arma);
+                            } else {
+                                jugador.guardarArma(arma);
+                            }
+                        } else if (equipamiento instanceof Armadura armadura) {
+                            System.out.println("¿Quieres cambiar tu armadura actual? 1-Si 0-No");
+                            accion = sc.nextInt();
+                            if (accion == 1) {
+                                jugador.cambiarArmadura(armadura);
+                            } else {
+                                jugador.guardarArmadura(armadura);
+                            }
+                        }
                         compraRealizada = true;
                     } else {
                         //TODO: Cambiar a mensaje en la GUI
@@ -61,6 +100,7 @@ public class Tienda extends Evento {
                 case 2:
                     if (jugador.getOro() >= precio2) {
                         jugador.gastarOro(precio2);
+                        jugador.addAccesorio(accesorio);
                         compraRealizada = true;
                     } else {
                         //TODO: Cambiar a mensaje en la GUI
@@ -70,6 +110,24 @@ public class Tienda extends Evento {
                 case 3:
                     if (jugador.getOro() >= precio3) {
                         jugador.gastarOro(precio3);
+                        switch (estadistica) {
+                            case 0:
+                                jugador.setMaxSalud(jugador.getMaxSalud() + mejora);
+                                jugador.curarVida(mejora);
+                                break;
+                            case 1:
+                                jugador.setDefensa(jugador.getDefensa() + mejora);
+                                jugador.setDefensaBase(jugador.getDefensa());
+                                break;
+                            case 2:
+                                jugador.setDmg(jugador.getDmg() + mejora);
+                                jugador.setDmgBase(jugador.getDmg());
+                                break;
+                            case 3:
+                                jugador.setMaxMana(jugador.getMaxMana() + mejora);
+                                jugador.restaurarMana();
+                                break;
+                        }
                         compraRealizada = true;
                     } else {
                         //TODO: Cambiar a mensaje en la GUI
@@ -87,17 +145,17 @@ public class Tienda extends Evento {
     }
 
     private Accesorio generarAccesorio() {
-        switch (rng.nextInt(0,4)) {
-            case 0:
-                return new Antiveneno();
-            case 1:
-                return new MonedaOro();
-            case 2:
-                return new Antirayos();
-            case 3:
-                return new Antifuego();
-        }
-        return null;
+        return switch (rng.nextInt(0, 7)) {
+            case 0 -> new Antiveneno();
+            case 1 -> new MonedaOro();
+            case 2 -> new Antirayos();
+            case 3 -> new Antifuego();
+            case 4 -> new MasArmadura();
+            case 5 -> new MasDmg();
+            case 6 -> new MasMana();
+            case 7 -> new MasVida();
+            default -> null;
+        };
     }
 
     private Equipamiento generarEquipamiento() {

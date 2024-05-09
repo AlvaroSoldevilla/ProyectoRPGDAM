@@ -11,7 +11,7 @@ public abstract class Jugador extends Entidad{
 
     protected int oro;
     protected int mana;
-    protected int manaTemp;
+    protected int manaTemp = mana;
     protected int maxMana;
     protected Arma arma;
     protected Armadura armadura;
@@ -20,12 +20,10 @@ public abstract class Jugador extends Entidad{
     protected List<Accesorio> accesorios = new ArrayList<>();
 
 
-    public void InfligirEstado(Estados estado) {
+    @Override
+    public void infligirEstado(Estados estado) {
         if (!armadura.getInmunidades().contains(estado)) {
-            switch (estado) {
-                case CONGELADO -> estadosSufridos.put(estado, estadosSufridos.get(estado) + estado.getEfecto());
-                default -> estadosSufridos.put(estado, estadosSufridos.get(estado) + 1);
-            }
+            estadosSufridos.put(estado, estadosSufridos.get(estado) + estado.getDuracion());
         } else {
             //TODO:cambiar a mensaje en la interfaz
             System.out.println("Eres es inmune a " + estado.getNombre());
@@ -59,6 +57,19 @@ public abstract class Jugador extends Entidad{
         }
     }
 
+    public boolean guardarArma(Arma nueva) {
+        if (nueva!=null) {
+            armas.add(nueva);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void eliminarArma(int index) {
+        armas.remove(index);
+    }
+
     public boolean cambiarArmadura(Armadura nueva) {
         if (nueva != null) {
             defensa-=armadura.getDefensa();
@@ -69,6 +80,18 @@ public abstract class Jugador extends Entidad{
             return false;
         }
     }
+    public boolean guardarArmadura(Armadura nueva) {
+        if (nueva!=null) {
+            armaduras.add(nueva);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public void eliminarArmadura(int index) {
+        armaduras.remove(index);
+    }
+
 
     public void ganarOro(int oro) {
         this.oro += oro;
@@ -90,18 +113,36 @@ public abstract class Jugador extends Entidad{
                 defensa+=armadura.getDefensa();
                 break;
         }
+
+        defensaBase = defensa;
+        dmgBase = dmg;
+    }
+
+    public boolean addAccesorio(Accesorio nuevo) {
+        if (nuevo!=null) {
+            accesorios.add(nuevo);
+            if (nuevo.isPermanente()) {
+                nuevo.aplicarEfecto(this);
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void mostrarEstadisticas() {
         System.out.println("Tus estadisticas:" + "\n" +"Vida: " + salud + "/" + maxSalud + "\n" +
                 "Mana" + mana + "/" + maxMana +  "\n" + "Ataque: " + dmg + "\n" + "Defensa: " + defensa);
     }
+
     public void mostrarArmaduras() {
-        armaduras.forEach(Armadura::getNombre);
+        armaduras.forEach((a)-> System.out.print(a.getNombre()));
+        System.out.println();
     }
 
     public void mostrarArmas() {
-        armas.forEach(Arma::getNombre);
+        armas.forEach((a)-> System.out.print(a.getNombre()));
+        System.out.println();
     }
     @Override
     public void multiplicarEstadisticas(double multiplicador) {
@@ -109,10 +150,17 @@ public abstract class Jugador extends Entidad{
         salud *= (int) multiplicador;
         manaTemp = mana;
         mana *= (int) multiplicador;
-        dmgTemp = dmg;
         dmg *= (int) multiplicador;
-        defensaTemp = defensa;
         defensa *= (int) multiplicador;
+    }
+
+    @Override
+    public void finTurno() {
+        salud = saludTemp;
+        mana = manaTemp;
+        dmg = dmgBase;
+        defensa = defensaBase;
+        bloqueando = false;
     }
 
 }

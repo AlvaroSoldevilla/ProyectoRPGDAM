@@ -11,7 +11,9 @@ public class Caballero extends Jugador {
         dmg=0;
         arma= new Espada();
         armas.add(arma);
-        armadura= new ArmaduraCuero();
+        armadura = new ArmaduraCuero();
         armaduras.add(armadura);
+        ataques = AtaquesJugador.CABALLERO.getAtaques();
+        aplicarEfectosEquipamiento(0);
     }
 }

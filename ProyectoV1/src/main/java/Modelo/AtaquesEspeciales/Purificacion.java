@@ -1,19 +1,20 @@
-package Modelo.AtaquesESpeciales;
+package Modelo.AtaquesEspeciales;
 
 import Modelo.Bases.AtaqueEspecial;
 import Modelo.Bases.Entidad;
+import Modelo.Misc.Estados;
 
-public class PruebaAtaque extends AtaqueEspecial {
+public class Purificacion extends AtaqueEspecial {
 
-    public PruebaAtaque() {
-        nombre = "Prueba";
-        coste = 2;
+    public Purificacion() {
+        nombre = "Purificación";
+        coste = 10;
     }
 
     @Override
     public boolean hacerAtaque(Entidad objetivo, Entidad atacante) {
         if (puedeAtacar(atacante)) {
-            objetivo.recibirDmg(atacante.getDmg()*2);
+            atacante.eliminarEstadosPerjudiciales();
             return true;
         } else {
             return false;
@@ -23,3 +24,4 @@ public class PruebaAtaque extends AtaqueEspecial {
 
 
 }
+

@@ -13,5 +13,7 @@ public class Mago extends Jugador {
         armas.add(arma);
         armadura= new ArmaduraCuero();
         armaduras.add(armadura);
+        ataques = AtaquesJugador.MAGO.getAtaques();
+        aplicarEfectosEquipamiento(0);
     }
 }

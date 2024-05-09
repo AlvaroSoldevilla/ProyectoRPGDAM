@@ -18,7 +18,7 @@ public class PruebaJugador extends Jugador {
         armadura = new ArmaduraCuero();
         armas.add(arma);
         armaduras.add(armadura);
-        ataques = AtaquesJugador.GUERRERO.getAtaques();
+        ataques = AtaquesJugador.CABALLERO.getAtaques();
         aplicarEfectosEquipamiento(0);
     }
 }

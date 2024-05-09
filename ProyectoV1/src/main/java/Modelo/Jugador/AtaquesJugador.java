@@ -1,6 +1,6 @@
 package Modelo.Jugador;
 
-import Modelo.AtaquesESpeciales.PruebaAtaque;
+import Modelo.AtaquesEspeciales.*;
 import Modelo.Bases.AtaqueEspecial;
 import lombok.Getter;
 
@@ -9,7 +9,24 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum AtaquesJugador {
-    GUERRERO(new AtaqueEspecial[]{new PruebaAtaque()}),MAGO(new AtaqueEspecial[]{});
+    CABALLERO(new AtaqueEspecial[]{
+            new Parry(),
+            new Fortaleza(),
+            new GolpeAplastante(),
+            new Rabia()
+    }),
+    MAGO(new AtaqueEspecial[]{
+            new Parry(),
+            new EfectoAleatorio(),
+            new Meteorito(),
+            new Purificacion()
+    }),
+    ASESINO(new AtaqueEspecial[]{
+            new Parry(),
+            new Evasion(),
+            new Silencio(),
+            new VenenoSeguro()
+    });
 
     AtaquesJugador(AtaqueEspecial[] ataques) {
         this.ataques = Arrays.stream(ataques).toList();
