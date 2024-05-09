@@ -16,7 +16,7 @@ public class Bicho extends BatallaConJefe {
 
     @Override
     public void empezarEvento() {
-
+        System.out.println("TBD");
     }
 
     @Override

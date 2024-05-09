@@ -21,8 +21,11 @@ public class MenusConsola {
             System.out.println("2-Ataque especial");
             System.out.println("3-Bloquear");
             System.out.println("4-Finta");
+            System.out.println("5-Ver tus estadísticas");
+            System.out.println("6-Ver tus efectos");
+            System.out.println("7-Ver las estadísticas del enemigo");
             accion = scGen.nextInt();
-        } while (accion<0||accion>4);
+        } while (accion<0||accion>7);
         return accion;
     }
 

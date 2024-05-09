@@ -16,13 +16,13 @@ public enum Estados {
     ESPINAS("Espinas",false,true,5,1),
     FORTALEZA("Fortaleza",true,true,5, 2),
     RABIA("Rabia",false,false,7, 2),
-    EVASION("Evasión",true,true,2, 5),
+    EVASION("Evasión",true,true,2, 4),
     MENOSDEFENSA("Menos defensa",true,true,10, 6),
     DESORIENTADO("Desorientado",false,true,0,1),
     CONTRAATACANDO("Contraatacando",false,true,2,1),
-    RESISTENCIAVENENO("Resistencia a Veneno",false,true,1,1),
-    RESISTENCIAQUEMADURA("Resistencia a Quemadura",false,true,1,1),
-    RESISTENCIAELECTRICIDAD("Resistencia a Electricidad",false,true,1,1);
+    RESISTENCIAVENENO("Resistencia a Veneno",false,true,1,3),
+    RESISTENCIAQUEMADURA("Resistencia a Quemadura",false,true,1,3),
+    RESISTENCIAELECTRICIDAD("Resistencia a Electricidad",false,true,1,3);
 
     Estados(String nombre, boolean puedeMultiples, boolean deterioro,int efecto,int duracion) {
         this.nombre = nombre;

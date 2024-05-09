@@ -50,6 +50,7 @@ public class EventoPintorMagico extends Aleatorio {
                 textoFinal = "Te negaste a ser pintado. El pintor se despide en alemán?...";
                 break;
         }
+
         if (!jugador.estaMuerto()) {
             terminarEvento();
         }

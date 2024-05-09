@@ -10,7 +10,7 @@ public class EventoGitanos extends Aleatorio {
     public EventoGitanos(Jugador jugador, Enemigo enemigo,int nivel) {
         texto = "Illo dame todo tu dinero";
 
-        opciones = new String[3];
+        opciones = new String[4];
         opciones[0] = "Dar todo tu dinero";
         opciones[1] = "Dar 5 de oro";
         opciones[2] = "Negarte y correr";

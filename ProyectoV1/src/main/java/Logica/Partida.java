@@ -19,12 +19,15 @@ public class Partida {
 
         while (!jugador.estaMuerto()) {
             eventosActuales = mapa1.avanzarSala();
-            if (eventosActuales.length == 1) {
-                evento = eventosActuales[0];
-                evento.empezarEvento();
+            if (eventosActuales != null) {
+                if (eventosActuales.length == 1) {
+                    evento = eventosActuales[0];
+                    evento.empezarEvento();
+                } else {
+                    evento = MenusConsola.menuElegirEvento(eventosActuales);
+                    evento.empezarEvento();
+                }
             }
-            evento = MenusConsola.menuElegirEvento(eventosActuales);
-            evento.empezarEvento();
         }
         System.out.println("Has muerto");
     }

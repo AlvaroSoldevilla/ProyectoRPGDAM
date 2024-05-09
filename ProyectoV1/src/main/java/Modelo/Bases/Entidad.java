@@ -25,6 +25,10 @@ public abstract class Entidad {
     protected Map<Estados, Integer> estadosSufridos = new HashMap<>();
 
 
+    public void mostrarEstados() {
+        estadosSufridos.forEach((e,n) -> System.out.println(e.getNombre() + " " + e.getDuracion()));
+    }
+
     public void aplicarEstados() {
         estadosSufridos.forEach((e,s)-> {
             aplicarEfectoDeEstados(e);
@@ -66,6 +70,7 @@ public abstract class Entidad {
 
     public void bloquear() {
         defensa += poderBloqueo;
+        bloqueando = true;
     }
 
     public void recibirDmg(int dmg) {
@@ -108,7 +113,10 @@ public abstract class Entidad {
     public abstract void mostrarEstadisticas();
 
     public void finTurno() {
-        salud = saludTemp;
+        if (saludTemp != 0) {
+            salud = saludTemp;
+            saludTemp = 0;
+        }
         dmg = dmgBase;
         defensa = defensaBase;
         bloqueando = false;

@@ -15,7 +15,7 @@ public class Lobo extends BatallaConJefe {
     Enemigo lobo = new PruebaEnemigo();
     @Override
     public void empezarEvento() {
-
+        System.out.println("TBD");
     }
 
     @Override

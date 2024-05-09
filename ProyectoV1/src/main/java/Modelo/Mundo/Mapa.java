@@ -1,13 +1,10 @@
 package Modelo.Mundo;
 
 import Modelo.Bases.Jugador;
-import Modelo.Eventos.Aleatorio;
+import Modelo.Eventos.*;
 import Modelo.Eventos.Aleatorios.*;
-import Modelo.Eventos.Combate;
 import Modelo.Bases.Evento;
 import Modelo.Enemigos.PruebaEnemigo;
-import Modelo.Eventos.Hoguera;
-import Modelo.Eventos.Tienda;
 import Modelo.Jefes.Bicho;
 import Modelo.Jefes.Lobo;
 import Modelo.Jefes.Dragon;
@@ -99,7 +96,7 @@ public class Mapa {
                 return new Hoguera(jugador);
             case 4:
                 //Recompensa especial
-                break;
+                return new RecompensaEspecial(jugador);
             case 5:
                 //Jefe
                 switch (nivelActual) {

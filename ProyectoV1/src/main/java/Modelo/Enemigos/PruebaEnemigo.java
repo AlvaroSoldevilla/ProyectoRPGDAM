@@ -9,6 +9,9 @@ public class PruebaEnemigo extends Enemigo {
         maxSalud = 40;
         salud = maxSalud;
         dmg = 10;
+        dmgBase = dmg;
+        defensa = 5;
+        defensaBase = defensa;
         ataques = AtaquesEnemigo.PRUEBA.getAtaques();
     }
 }

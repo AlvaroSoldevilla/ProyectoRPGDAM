@@ -53,23 +53,36 @@ public class Combate extends Evento {
                     } else {
                         System.out.println("Intentas bloquear pero no puedes");
                     }
+                    accion = true;
                     break;
                 case 4:
                     fintaJugador = true;
+                    accion = true;
                     break;
+                case 5:
+                    jugador.mostrarEstadisticas();
+                    break;
+                case 6:
+                    jugador.mostrarEstados();
+                    break;
+                case 7:
+                    enemigo.mostrarEstadisticas();
+                    break;
+            }
+            if (!accion) {
+                accionJugador(MenusConsola.menuCombate());
+                accion = true;
             }
         }
     }
 
     public void accionEnemigo(int codAccion) {
-        boolean accionRealizada = false;
-        while (!accionRealizada) {
             switch (codAccion) {
                 case 1:
                     if (!atacar(jugador,enemigo)) {
                         System.out.println("El ataque ha fallado");
                     } else {
-                        System.out.println("El ataque ha te ha dado");
+                        System.out.println("El ataque te ha dado");
                     }
                     break;
                 case 2:
@@ -78,29 +91,22 @@ public class Combate extends Evento {
                     } else {
                         System.out.println("EL enemigo intentó bloquear pero no pudo");
                     }
-
                     break;
                 case 3:
-                    if (!finta(jugador,enemigo)) {
+                    if (finta(jugador,enemigo)) {
                         System.out.println("Has caido en la trampa del enemigo, estás desorientado");
                     } else {
                         System.out.println("El ataque del enemigo era una finta, por eso, no hace nada");
                     }
                     break;
-                case 4:
-                    jugador.mostrarEstadisticas();
-                    break;
-                case 5:
-                    enemigo.mostrarEstadisticas();
-                    break;
+
             }
-        }
     }
 
     public boolean finta(Entidad objetivo,Entidad atacante) {
         if (!atacante.getEstadosSufridos().containsKey(Estados.SILENCIADO)) {
             if (objetivo.isBloqueando()) {
-                objetivo.aplicarEfectoDeEstados(Estados.DESORIENTADO);
+                objetivo.infligirEstado(Estados.DESORIENTADO);
                 return true;
             } else {
                 return false;
@@ -235,31 +241,37 @@ public class Combate extends Evento {
             enemigo.mostrarEstadisticas();
             System.out.println();
 
+
             System.out.println("Turno del jugador");
             accionJugador(MenusConsola.menuCombate());
             jugador.aplicarEstados();
             System.out.println();
 
             if (!enemigo.estaMuerto() && !jugador.estaMuerto()) {
+                enemigo.finTurno();
                 System.out.println("Turno del enemigo");
+
                 accionEnemigo(rng.nextInt(1,4));
+
                 enemigo.aplicarEstados();
                 jugador.getAccesorios().forEach((a)->{
                     if (a.isInicioTurno()) {
                         a.aplicarEfecto(jugador);
                     }
                 });
+
                 if (fintaJugador) {
-                    if (!finta(enemigo,jugador)) {
+                    if (finta(enemigo,jugador)) {
                         System.out.println("EL enemigo estaba bloqueando, le has desorientado");
                     } else {
                         System.out.println("La finta Ha fallado");
                     }
                 }
+
+                jugador.finTurno();
             }
 
-            jugador.finTurno();
-            enemigo.finTurno();
+
         }
         terminarEvento();
     }
@@ -269,8 +281,7 @@ public class Combate extends Evento {
         int recompensaOro;
         if (jugador.estaMuerto()) {
             System.out.println("Has perdido");
-        }
-        if (enemigo.estaMuerto()) {
+        } else if (enemigo.estaMuerto()) {
             recompensaOro = rng.nextInt(10*nivel,20*nivel);
             System.out.println("Has ganado");
             System.out.println("Recibes " + recompensaOro + " de oro");

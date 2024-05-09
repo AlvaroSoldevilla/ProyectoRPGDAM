@@ -12,11 +12,19 @@ public abstract class Enemigo extends Entidad{
 
     @Override
     public void infligirEstado(Estados estado) {
-        if (!inmunidades.contains(estado)) {
-            estadosSufridos.put(estado, estadosSufridos.get(estado) + estado.getDuracion());
+        if (inmunidades == null) {
+            try {
+                estadosSufridos.put(estado, estadosSufridos.get(estado) + estado.getDuracion());
+            } catch (NullPointerException e) {
+                estadosSufridos.put(estado, estado.getDuracion());
+            }
         } else {
-            //TODO:cambiar a mensaje en la interfaz
-            System.out.println("El enemigo es inmune a " + estado.getNombre());
+            if (!inmunidades.contains(estado)) {
+                estadosSufridos.put(estado, estadosSufridos.get(estado) + estado.getDuracion());
+            } else {
+                //TODO:cambiar a mensaje en la interfaz
+                System.out.println("El enemigo es inmune a " + estado.getNombre());
+            }
         }
     }
 

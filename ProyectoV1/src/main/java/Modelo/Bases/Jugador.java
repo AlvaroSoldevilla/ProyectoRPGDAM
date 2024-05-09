@@ -22,11 +22,19 @@ public abstract class Jugador extends Entidad{
 
     @Override
     public void infligirEstado(Estados estado) {
-        if (!armadura.getInmunidades().contains(estado)) {
-            estadosSufridos.put(estado, estadosSufridos.get(estado) + estado.getDuracion());
+        if (armadura.getInmunidades() == null) {
+            try {
+                estadosSufridos.put(estado, estadosSufridos.get(estado) + estado.getDuracion());
+            } catch (NullPointerException e) {
+                estadosSufridos.put(estado, estado.getDuracion());
+            }
         } else {
-            //TODO:cambiar a mensaje en la interfaz
-            System.out.println("Eres es inmune a " + estado.getNombre());
+            if (!armadura.getInmunidades().contains(estado)) {
+                estadosSufridos.put(estado, estadosSufridos.get(estado) + estado.getDuracion());
+            } else {
+                //TODO:cambiar a mensaje en la interfaz
+                System.out.println("Eres es inmune a " + estado.getNombre());
+            }
         }
     }
 
@@ -132,7 +140,7 @@ public abstract class Jugador extends Entidad{
 
     public void mostrarEstadisticas() {
         System.out.println("Tus estadisticas:" + "\n" +"Vida: " + salud + "/" + maxSalud + "\n" +
-                "Mana" + mana + "/" + maxMana +  "\n" + "Ataque: " + dmg + "\n" + "Defensa: " + defensa);
+                "Mana: " + mana + "/" + maxMana +  "\n" + "Ataque: " + dmg + "\n" + "Defensa: " + defensa);
     }
 
     public void mostrarArmaduras() {
@@ -156,8 +164,14 @@ public abstract class Jugador extends Entidad{
 
     @Override
     public void finTurno() {
-        salud = saludTemp;
-        mana = manaTemp;
+        if (saludTemp != 0) {
+            salud = saludTemp;
+            saludTemp = 0;
+        }
+        if (manaTemp != 0) {
+            mana = manaTemp;
+            manaTemp = 0;
+        }
         dmg = dmgBase;
         defensa = defensaBase;
         bloqueando = false;
