@@ -43,6 +43,12 @@ public abstract class Entidad {
             case VENENO,QUEMADURA -> recibirDmg(estado.getEfecto());
             case MALDITO -> multiplicarEstadisticas(0.5);
             case BENDITO -> multiplicarEstadisticas(1.5);
+            case FORTALEZA -> aumentarDefensa(Estados.FORTALEZA.getEfecto());
+            case RABIA -> {
+                aumentarDmg(Estados.RABIA.getEfecto());
+                recibirDmg(3);
+            }
+            case MENOSDEFENSA -> bajarDefensa(Estados.MENOSDEFENSA.getEfecto());
         }
     }
 

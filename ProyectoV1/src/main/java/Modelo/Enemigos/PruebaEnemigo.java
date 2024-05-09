@@ -6,9 +6,9 @@ import Modelo.Misc.Estados;
 public class PruebaEnemigo extends Enemigo {
     public PruebaEnemigo() {
         nombre = "Prueba";
-        maxSalud = 15;
+        maxSalud = 40;
         salud = maxSalud;
-        dmg = 3;
+        dmg = 10;
         ataques = AtaquesEnemigo.PRUEBA.getAtaques();
     }
 }

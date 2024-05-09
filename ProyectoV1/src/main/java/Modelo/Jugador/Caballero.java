@@ -7,9 +7,15 @@ import Modelo.Bases.Jugador;
 
 public class Caballero extends Jugador {
     public Caballero() {
-        nombre="Caballero";
-        dmg=0;
-        arma= new Espada();
+        nombre = "Caballero";
+        maxSalud = 100;
+        salud = maxSalud;
+        maxMana = 30;
+        mana = maxMana;
+        dmg = 5;
+        defensa = 5;
+        oro = 30;
+        arma = new Espada();
         armas.add(arma);
         armadura = new ArmaduraCuero();
         armaduras.add(armadura);
