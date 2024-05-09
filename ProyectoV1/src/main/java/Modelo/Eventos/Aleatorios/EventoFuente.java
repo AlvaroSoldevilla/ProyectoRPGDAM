@@ -9,7 +9,7 @@ public class EventoFuente extends Aleatorio {
     public EventoFuente(Jugador jugador, Enemigo enemigo) {
         texto = "Ante ti se alza una fuente desgastada por el paso de los siglos. De su centro emana un flujo constante de agua transparente. Desconoces si este agua es potable";
 
-        opciones = new String[3];
+        opciones = new String[2];
         opciones[0] = "Ignorar la fuente";
         opciones[1] = "Beber de la fuente";
 
