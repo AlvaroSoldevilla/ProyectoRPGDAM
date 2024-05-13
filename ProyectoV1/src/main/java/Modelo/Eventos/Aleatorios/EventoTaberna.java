@@ -2,10 +2,12 @@ package Modelo.Eventos.Aleatorios;
 
 import Modelo.Bases.Jugador;
 import Modelo.Eventos.Aleatorio;
+import UI.Interfaces.Interfaz;
 import UI.MenusConsola;
 
 public class EventoTaberna extends Aleatorio {
-    public EventoTaberna(Jugador jugador) {
+    public EventoTaberna(Jugador jugador, Interfaz interfaz) {
+        super(interfaz);
         texto = "En tu camino hayaste una taberna a los pies de un río. Estás sediento y decides entrar";
 
         opciones = new String[3];

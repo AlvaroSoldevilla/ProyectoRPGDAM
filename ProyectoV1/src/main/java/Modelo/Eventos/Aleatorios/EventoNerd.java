@@ -4,10 +4,12 @@ import Modelo.Bases.Enemigo;
 import Modelo.Bases.Jugador;
 import Modelo.Eventos.Aleatorio;
 import Modelo.Eventos.Combate;
+import UI.Interfaces.Interfaz;
 import UI.MenusConsola;
 
 public class EventoNerd extends Aleatorio {
-    public EventoNerd(Jugador jugador , Enemigo enemigo, int nivel) {
+    public EventoNerd(Jugador jugador , Enemigo enemigo, int nivel, Interfaz interfaz) {
+        super(interfaz);
         texto = "En tu camino te topas con un chico con gafas que llora. ¿Qué deberías hacer?";
 
         opciones = new String[3];
@@ -56,7 +58,7 @@ public class EventoNerd extends Aleatorio {
                                 break;
                             case 1:
                                 textoFinal = "El chico se enfada y te lanza un cuchillo que tenía escondido pero falla dandole a un monstruo, esto pinta feo...";
-                                Combate c = new Combate(jugador,enemigo,nivel);
+                                Combate c = new Combate(jugador,enemigo,nivel,interfaz);
                                 c.empezarEvento();
                         }
                         break;

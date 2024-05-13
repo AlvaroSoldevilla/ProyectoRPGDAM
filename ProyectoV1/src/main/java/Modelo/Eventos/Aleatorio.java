@@ -1,9 +1,11 @@
 package Modelo.Eventos;
 
 import Modelo.Bases.Evento;
+import UI.Interfaces.Interfaz;
 
 public abstract class Aleatorio extends Evento {
-    public Aleatorio() {
+    public Aleatorio(Interfaz interfaz) {
+        super(interfaz);
         titulo = "Evento";
     }
     protected String texto;

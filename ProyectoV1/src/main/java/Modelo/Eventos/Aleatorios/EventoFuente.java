@@ -3,10 +3,12 @@ package Modelo.Eventos.Aleatorios;
 import Modelo.Bases.Enemigo;
 import Modelo.Bases.Jugador;
 import Modelo.Eventos.Aleatorio;
+import UI.Interfaces.Interfaz;
 import UI.MenusConsola;
 
 public class EventoFuente extends Aleatorio {
-    public EventoFuente(Jugador jugador, Enemigo enemigo) {
+    public EventoFuente(Jugador jugador, Enemigo enemigo, Interfaz interfaz) {
+        super(interfaz);
         texto = "Ante ti se alza una fuente desgastada por el paso de los siglos. De su centro emana un flujo constante de agua transparente. Desconoces si este agua es potable";
 
         opciones = new String[2];

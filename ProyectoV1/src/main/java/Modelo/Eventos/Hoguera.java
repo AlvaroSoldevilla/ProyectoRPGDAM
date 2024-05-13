@@ -2,12 +2,14 @@ package Modelo.Eventos;
 
 import Modelo.Bases.Evento;
 import Modelo.Bases.Jugador;
+import UI.Interfaces.Interfaz;
 import UI.MenusConsola;
 
 import java.util.Scanner;
 
 public class Hoguera extends Evento {
-    public Hoguera(Jugador j) {
+    public Hoguera(Jugador j, Interfaz interfaz) {
+        super(interfaz);
         titulo = "Hoguera";
         this.jugador = j;
     }

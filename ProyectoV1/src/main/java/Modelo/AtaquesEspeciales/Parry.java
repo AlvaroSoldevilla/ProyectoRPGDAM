@@ -7,7 +7,7 @@ import Modelo.Misc.Estados;
 public class Parry extends AtaqueEspecial {
 
     public Parry() {
-        nombre = "Aplomo";
+        nombre = "Parry";
         coste = 2;
     }
 

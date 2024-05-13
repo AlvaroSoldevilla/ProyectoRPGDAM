@@ -7,7 +7,7 @@ import Modelo.Misc.Estados;
 
 public class MasArmadura extends Accesorio {
     public MasArmadura() {
-        nombre = "Más armadura";
+        nombre = "Collar de armadura";
         inicioTurno = true;
         inicioCombate = true;
     }

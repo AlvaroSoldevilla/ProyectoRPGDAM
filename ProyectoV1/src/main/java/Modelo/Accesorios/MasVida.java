@@ -5,7 +5,7 @@ import Modelo.Bases.Jugador;
 
 public class MasVida extends Accesorio {
     public MasVida(){
-        nombre = "Más vida";
+        nombre = "Collar de vida";
         inicioTurno = true;
         inicioCombate = true;
     }

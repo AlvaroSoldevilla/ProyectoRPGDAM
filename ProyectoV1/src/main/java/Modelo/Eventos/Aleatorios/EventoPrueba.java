@@ -2,10 +2,12 @@ package Modelo.Eventos.Aleatorios;
 
 import Modelo.Bases.Jugador;
 import Modelo.Eventos.Aleatorio;
+import UI.Interfaces.Interfaz;
 import UI.MenusConsola;
 
 public class EventoPrueba extends Aleatorio {
-    public EventoPrueba(Jugador jugador) {
+    public EventoPrueba(Jugador jugador, Interfaz interfaz) {
+        super(interfaz);
         texto = "Esto es un ejemplo de evento aleatorio";
 
         opciones = new String[3];

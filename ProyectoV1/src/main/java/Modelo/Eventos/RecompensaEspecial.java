@@ -4,12 +4,15 @@ import Modelo.Accesorios.*;
 import Modelo.Bases.Accesorio;
 import Modelo.Bases.Evento;
 import Modelo.Bases.Jugador;
+import UI.Interfaces.Interfaz;
 import UI.MenusConsola;
 
 import java.util.Random;
 
 public class RecompensaEspecial extends Evento {
-    public RecompensaEspecial(Jugador jugador) {
+    public RecompensaEspecial(Jugador jugador, Interfaz interfaz) {
+        super(interfaz);
+        titulo = "Tesoro";
         this.jugador = jugador;
     }
 

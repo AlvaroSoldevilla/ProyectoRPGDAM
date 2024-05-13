@@ -9,13 +9,15 @@ import Modelo.Bases.*;
 import Modelo.Jugador.Asesino;
 import Modelo.Jugador.Caballero;
 import Modelo.Jugador.Mago;
+import UI.Interfaces.Interfaz;
 import UI.MenusConsola;
 
 import java.util.Random;
 import java.util.Scanner;
 
 public class Tienda extends Evento {
-    public Tienda(Jugador jugador,int nivel) {
+    public Tienda(Jugador jugador, int nivel, Interfaz interfaz) {
+        super(interfaz);
         titulo = "Tienda";
         this.jugador = jugador;
         this.nivel = nivel;
@@ -145,15 +147,11 @@ public class Tienda extends Evento {
     }
 
     private Accesorio generarAccesorio() {
-        return switch (rng.nextInt(0, 7)) {
-            case 0 -> new Antiveneno();
-            case 1 -> new MonedaOro();
-            case 2 -> new Antirayos();
-            case 3 -> new Antifuego();
-            case 4 -> new MasArmadura();
-            case 5 -> new MasDmg();
-            case 6 -> new MasMana();
-            case 7 -> new MasVida();
+        return switch (rng.nextInt(0, 4)) {
+            case 0 -> new MasArmadura();
+            case 1 -> new MasDmg();
+            case 2 -> new MasMana();
+            case 3 -> new MasVida();
             default -> null;
         };
     }
@@ -187,7 +185,7 @@ public class Tienda extends Evento {
                         case 2:
                             return new DagaRoboVida();
                         case 3:
-                            return null;
+                            return new DagaCritica();
                     }
                 } else {
                     switch (nivel) {
@@ -206,9 +204,10 @@ public class Tienda extends Evento {
                                 default -> null;
                             };
                         case 3:
-                            return switch (rng.nextInt(0, 2)) {
+                            return switch (rng.nextInt(0, 3)) {
                                 case 0 -> new Matadragones();
                                 case 1 -> new BastonMaldito();
+                                case 2 -> new DagaCritica();
                                 default -> null;
                             };
                     }

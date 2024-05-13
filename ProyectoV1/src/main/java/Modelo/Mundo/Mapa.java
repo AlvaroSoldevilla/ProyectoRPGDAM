@@ -5,22 +5,25 @@ import Modelo.Eventos.*;
 import Modelo.Eventos.Aleatorios.*;
 import Modelo.Bases.Evento;
 import Modelo.Enemigos.PruebaEnemigo;
-import Modelo.Jefes.Bicho;
-import Modelo.Jefes.Lobo;
-import Modelo.Jefes.Dragon;
+import Modelo.Eventos.Jefes.CombateWendigo;
+import Modelo.Eventos.Jefes.CombateLobo;
+import Modelo.Eventos.Jefes.CombateDragon;
+import UI.Interfaces.Interfaz;
 import lombok.Data;
 
 import java.util.Random;
 
 @Data
 public class Mapa {
-    public Mapa(Jugador jugador) {
+    public Mapa(Jugador jugador, Interfaz interfaz) {
         this.jugador = jugador;
+        this.interfaz = interfaz;
     }
     Jugador jugador;
     Random rng = new Random();
     int nivelActual = 1;
     int sala = 0;
+    Interfaz interfaz;
 
     public void avanzarNivel() {
         nivelActual++;
@@ -31,6 +34,7 @@ public class Mapa {
         sala++;
         Evento[] eventos;
         if (distanciaAJefe() == -1) {
+            jugador.restaurarVida();
             avanzarNivel();
             avanzarSala();
             return null;
@@ -56,56 +60,56 @@ public class Mapa {
     }
 
     int distanciaTotal() {
-        return 2+(2*nivelActual);
+        return 3+(2*nivelActual);
     }
 
     private Evento generarEvento() {
 
-        int codEvento = rng.nextInt(0,4);
+        int codEvento = rng.nextInt(0,15);
 
-        switch (codEvento) {
-            case 0:
+        return switch (codEvento) {
+            case 0, 1, 2, 3, 4, 5 ->
                 //Combate
-                return new Combate(jugador,new PruebaEnemigo(),nivelActual);
-            case 1:
+                    new Combate(jugador, new PruebaEnemigo(), nivelActual, interfaz);
+            case 6, 7, 8, 9, 10, 11 ->
                 //Evento aleatorio
-                return generarEventoAleatorio();
-            case 2:
+                    generarEventoAleatorio();
+            case 12, 13 ->
                 //Tienda
-                return new Tienda(jugador,nivelActual);
-            case 3:
+                    new Tienda(jugador, nivelActual, interfaz);
+            case 14 ->
                 //Hoguera
-                return new Hoguera(jugador);
-        }
-        return null;
+                    new Hoguera(jugador, interfaz);
+            default -> null;
+        };
     }
 
     private Evento generarEvento(int codEvento) {
         switch (codEvento) {
             case 0:
                 //Combate
-                return new Combate(jugador,new PruebaEnemigo(),nivelActual);
+                return new Combate(jugador,new PruebaEnemigo(),nivelActual, interfaz);
             case 1:
                 //Evento aleatorio
                 return generarEventoAleatorio();
             case 2:
                 //Tienda
-                return new Tienda(jugador,nivelActual);
+                return new Tienda(jugador,nivelActual, interfaz);
             case 3:
                 //Hoguera
-                return new Hoguera(jugador);
+                return new Hoguera(jugador, interfaz);
             case 4:
                 //Recompensa especial
-                return new RecompensaEspecial(jugador);
+                return new RecompensaEspecial(jugador, interfaz);
             case 5:
                 //Jefe
                 switch (nivelActual) {
                     case 1:
-                        return new Bicho(jugador);
+                        return new CombateWendigo(jugador, interfaz);
                     case 2:
-                        return new Lobo(jugador);
+                        return new CombateLobo(jugador, interfaz);
                     case 3:
-                        return new Dragon(jugador);
+                        return new CombateDragon(jugador, interfaz);
                 }
         }
         return null;
@@ -116,31 +120,31 @@ public class Mapa {
             case 1:
                 switch (rng.nextInt(0,3)) {
                     case 0:
-                        return new EventoPintorMagico(jugador);
+                        return new EventoPintorMagico(jugador,interfaz);
                     case 1:
-                        return new EventoFuente(jugador, new PruebaEnemigo());
+                        return new EventoFuente(jugador, new PruebaEnemigo(), interfaz);
                     case 2:
-                        return new EventoPiedra(jugador);
+                        return new EventoPiedra(jugador , interfaz);
                 }
             case 2:
                 switch (rng.nextInt(0,3)) {
                     case 0:
-                        return new EventoScammer(jugador);
+                        return new EventoScammer(jugador, interfaz);
                     case 1:
-                        return new EventoGitanos(jugador, new PruebaEnemigo(),nivelActual);
+                        return new EventoGitanos(jugador, new PruebaEnemigo(),nivelActual, interfaz);
                     case 2:
-                        return new EventoNerd(jugador, new PruebaEnemigo(), nivelActual);
+                        return new EventoNerd(jugador, new PruebaEnemigo(), nivelActual, interfaz);
                 }
             case 3:
                 switch (rng.nextInt(0,4)) {
                     case 0:
-                        return new EventoAnciana(jugador);
+                        return new EventoAnciana(jugador, interfaz);
                     case 1:
-                        return new EventoHerrero(jugador);
+                        return new EventoHerrero(jugador, interfaz);
                     case 2:
-                        return new EventoTaberna(jugador);
+                        return new EventoTaberna(jugador, interfaz);
                     case 3:
-                        return new EventoScammer(jugador);
+                        return new EventoScammer(jugador, interfaz);
                 }
         }
         return null;

@@ -3,10 +3,12 @@ package Modelo.Eventos.Aleatorios;
 import Modelo.Bases.Enemigo;
 import Modelo.Bases.Jugador;
 import Modelo.Eventos.Aleatorio;
+import UI.Interfaces.Interfaz;
 import UI.MenusConsola;
 
 public class EventoHerrero extends Aleatorio {
-    public EventoHerrero(Jugador jugador) {
+    public EventoHerrero(Jugador jugador, Interfaz interfaz) {
+        super(interfaz);
         texto = "A lo lejos escuchas el sonido de un martillo golpeando el acero. Hallaste a un viejo herrero.";
 
         opciones = new String[3];

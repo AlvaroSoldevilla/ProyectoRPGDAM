@@ -4,10 +4,12 @@ import Modelo.Armas.Palo;
 import Modelo.Bases.Enemigo;
 import Modelo.Bases.Jugador;
 import Modelo.Eventos.Aleatorio;
+import UI.Interfaces.Interfaz;
 import UI.MenusConsola;
 
 public class EventoAnciana extends Aleatorio {
-    public EventoAnciana(Jugador jugador) {
+    public EventoAnciana(Jugador jugador, Interfaz interfaz) {
+        super(interfaz);
         texto = "En la distancia, avistas a una anciana tendida en el suelo. Te acercas a ella con paso firme.";
         opciones = new String[3];
         opciones[0] = "Ayudas a la anciana a levantarse";

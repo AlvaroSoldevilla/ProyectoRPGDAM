@@ -3,10 +3,12 @@ package Modelo.Eventos.Aleatorios;
 import Modelo.Bases.Enemigo;
 import Modelo.Bases.Jugador;
 import Modelo.Eventos.Aleatorio;
+import UI.Interfaces.Interfaz;
 import UI.MenusConsola;
 
 public class EventoPiedra extends Aleatorio {
-    public EventoPiedra(Jugador jugador) {
+    public EventoPiedra(Jugador jugador, Interfaz interfaz) {
+        super(interfaz);
         texto = "Hay una piedra en el camino. ¿Que quieres hacer?";
 
         opciones = new String[3];

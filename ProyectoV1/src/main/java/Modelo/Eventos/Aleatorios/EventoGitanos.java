@@ -4,10 +4,12 @@ import Modelo.Bases.Enemigo;
 import Modelo.Bases.Jugador;
 import Modelo.Eventos.Aleatorio;
 import Modelo.Eventos.Combate;
+import UI.Interfaces.Interfaz;
 import UI.MenusConsola;
 
 public class EventoGitanos extends Aleatorio {
-    public EventoGitanos(Jugador jugador, Enemigo enemigo,int nivel) {
+    public EventoGitanos(Jugador jugador, Enemigo enemigo, int nivel, Interfaz interfaz) {
+        super(interfaz);
         texto = "Illo dame todo tu dinero";
 
         opciones = new String[4];
@@ -50,7 +52,7 @@ public class EventoGitanos extends Aleatorio {
                 break;
             case 3:
                 textoFinal = "Decidiste enfrentarlos.";
-                Combate c = new Combate(jugador,enemigo,nivel);
+                Combate c = new Combate(jugador,enemigo,nivel,interfaz);
                 c.empezarEvento();
         }
         if (!jugador.estaMuerto()) {

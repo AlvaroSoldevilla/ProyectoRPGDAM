@@ -7,20 +7,29 @@ import Modelo.Armas.DagaRoboVida;
 import Modelo.Bases.*;
 import Modelo.Jugador.Asesino;
 import Modelo.Misc.Estados;
+import UI.Interfaces.Interfaz;
 import UI.MenusConsola;
 
 import java.util.Random;
 
 public class Combate extends Evento {
-    public Combate(Jugador jugador, Enemigo enemigo,int nivel) {
+    public Combate(Jugador jugador, Enemigo enemigo, int nivel, Interfaz interfaz) {
+        super(interfaz);
         titulo = "Combate";
         turnoActual = 1;
         this.enemigo = enemigo;
         this.jugador = jugador;
         this.nivel = nivel;
     }
+    public Combate(Jugador jugador, Enemigo enemigo, Interfaz interfaz) {
+        super(interfaz);
+        titulo = "Combate";
+        turnoActual = 1;
+        this.enemigo = enemigo;
+        this.jugador = jugador;
+    }
     int turnoActual;
-    int nivel;
+    int nivel = -1;
     boolean fintaJugador = false;
     Jugador jugador;
     Enemigo enemigo;
@@ -128,10 +137,7 @@ public class Combate extends Evento {
     public boolean atacar(Entidad objetivo,Entidad atacante) {
         int multiplicadorFallo = 1;
 
-        if (objetivo.getEstadosSufridos().containsKey(Estados.CONTRAATACANDO)) {
-            atacante.recibirDmg(atacante.getDmg());
-            return false;
-        }
+        if (estaContraatacando(objetivo, atacante)) return false;
 
         if (atacante.getEstadosSufridos().containsKey(Estados.CEGADO)) {
             multiplicadorFallo *= Estados.CEGADO.getEfecto();
@@ -162,12 +168,15 @@ public class Combate extends Evento {
 
                     } else if (((Jugador) atacante).getArma() instanceof DagaRoboVida) {
 
+                        objetivo.recibirDmg(atacante.getDmg());
                         jugador.curarVida(atacante.getDmg()/3);
 
                     } else if (((Jugador) atacante).getArma() instanceof DagaCritica) {
 
                         if (rng.nextInt(0,4) == 1) {
                             objetivo.recibirDmg(atacante.getDmg() * 2);
+                        } else {
+                            objetivo.recibirDmg(atacante.getDmg());
                         }
 
                     } else {
@@ -176,6 +185,16 @@ public class Combate extends Evento {
                 } else {
                     objetivo.recibirDmg(atacante.getDmg());
                 }
+
+                if (atacante instanceof Jugador) {
+                    if (jugador.getArma().getBonus() != null && !jugador.getArma().getBonus().isEmpty())
+                        for (int i = 0; i < jugador.getArma().getBonus().size(); i++) {
+                            if (rng.nextInt(0,5) == 1) {
+                                objetivo.infligirEstado(jugador.getArma().getBonus().get(i));
+                            }
+                        }
+                }
+
                 return true;
             }
         } else {
@@ -183,14 +202,19 @@ public class Combate extends Evento {
         }
     }
 
+    private static boolean estaContraatacando(Entidad objetivo, Entidad atacante) {
+        if (objetivo.getEstadosSufridos().containsKey(Estados.CONTRAATACANDO)) {
+            atacante.recibirDmg(atacante.getDmg());
+            return true;
+        }
+        return false;
+    }
+
     public boolean ataqueEspecial(Entidad objetivo,Entidad atacante) {
         int multiplicadorFallo = 1;
         int ataque;
 
-        if (objetivo.getEstadosSufridos().containsKey(Estados.CONTRAATACANDO)) {
-            atacante.recibirDmg(atacante.getDmg());
-            return false;
-        }
+        if (estaContraatacando(objetivo, atacante)) return false;
 
         if (atacante.getEstadosSufridos().containsKey(Estados.CEGADO)) {
             multiplicadorFallo *= Estados.CEGADO.getEfecto();
@@ -282,17 +306,19 @@ public class Combate extends Evento {
         if (jugador.estaMuerto()) {
             System.out.println("Has perdido");
         } else if (enemigo.estaMuerto()) {
-            recompensaOro = rng.nextInt(10*nivel,20*nivel);
-            System.out.println("Has ganado");
-            System.out.println("Recibes " + recompensaOro + " de oro");
-            jugador.ganarOro(recompensaOro);
-            jugador.restaurarMana();
+            if (nivel!=-1) {
+                recompensaOro = rng.nextInt(10*nivel,20*nivel);
+                System.out.println("Has ganado");
+                System.out.println("Recibes " + recompensaOro + " de oro");
+                jugador.ganarOro(recompensaOro);
+                jugador.restaurarMana();
 
-            jugador.getAccesorios().forEach((a) -> {
-                if (a.isFinCombate()) {
-                    a.aplicarEfecto(jugador);
-                }
-            });
+                jugador.getAccesorios().forEach((a) -> {
+                    if (a.isFinCombate()) {
+                        a.aplicarEfecto(jugador);
+                    }
+                });
+            }
         }
     }
 }

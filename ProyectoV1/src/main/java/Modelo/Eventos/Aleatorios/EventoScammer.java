@@ -5,10 +5,12 @@ import Modelo.Bases.Arma;
 import Modelo.Bases.Enemigo;
 import Modelo.Bases.Jugador;
 import Modelo.Eventos.Aleatorio;
+import UI.Interfaces.Interfaz;
 import UI.MenusConsola;
 
 public class EventoScammer extends Aleatorio {
-    public EventoScammer(Jugador jugador) {
+    public EventoScammer(Jugador jugador, Interfaz interfaz) {
+        super(interfaz);
         texto = "Un enigmático mago aparece frente ante ti, te ofrece un arma de gran poder a cambio de la tuya. Su fiabilidad es cuestionable...";
 
         opciones = new String[2];

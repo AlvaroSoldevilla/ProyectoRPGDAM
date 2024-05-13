@@ -4,10 +4,12 @@ import Modelo.Armas.Palo;
 import Modelo.Bases.Enemigo;
 import Modelo.Bases.Jugador;
 import Modelo.Eventos.Aleatorio;
+import UI.Interfaces.Interfaz;
 import UI.MenusConsola;
 
 public class EventoPintorMagico extends Aleatorio {
-    public EventoPintorMagico(Jugador jugador) {
+    public EventoPintorMagico(Jugador jugador, Interfaz interfaz) {
+        super(interfaz);
         texto = "Encuentras a un pintor plasmando sus pensamientos con pintura mágica en un lienzo. El pintor al verte dice que serías un buen lienzo para su arte.";
 
         opciones = new String[5];

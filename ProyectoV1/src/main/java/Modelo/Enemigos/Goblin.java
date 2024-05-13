@@ -7,6 +7,6 @@ public class Goblin extends Enemigo {
         salud = 20;
         dmg = 5;
         defensa = 2;
-        ataques = AtaquesEnemigo.GOBLIN.getAtaques();
+        ataques = AtaquesEnemigo.PERRO.getAtaques();
     }
 }

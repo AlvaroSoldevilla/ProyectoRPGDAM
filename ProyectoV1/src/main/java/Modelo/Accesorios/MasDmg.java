@@ -5,7 +5,7 @@ import Modelo.Bases.Jugador;
 
 public class MasDmg extends Accesorio {
     public MasDmg(){
-        nombre = "Más daño";
+        nombre = "Collar de daño";
         inicioTurno = true;
         inicioCombate = true;
     }
