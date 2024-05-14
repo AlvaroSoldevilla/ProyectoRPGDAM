@@ -1,16 +1,16 @@
 package Modelo.Eventos;
 
-import Modelo.Accesorios.MonedaOro;
 import Modelo.Armas.DagaCritica;
 import Modelo.Armas.DagaDoble;
 import Modelo.Armas.DagaRoboVida;
 import Modelo.Bases.*;
 import Modelo.Jugador.Asesino;
-import Modelo.Misc.Estados;
+import Modelo.Enums.Estados;
+import Modelo.Enums.Iconos;
 import UI.Interfaces.Interfaz;
-import UI.MenusConsola;
 
 import java.util.Random;
+
 
 public class Combate extends Evento {
     public Combate(Jugador jugador, Enemigo enemigo, int nivel, Interfaz interfaz) {
@@ -20,6 +20,7 @@ public class Combate extends Evento {
         this.enemigo = enemigo;
         this.jugador = jugador;
         this.nivel = nivel;
+        icono = Iconos.COMBATE;
     }
     public Combate(Jugador jugador, Enemigo enemigo, Interfaz interfaz) {
         super(interfaz);
@@ -68,19 +69,6 @@ public class Combate extends Evento {
                     fintaJugador = true;
                     accion = true;
                     break;
-                case 5:
-                    jugador.mostrarEstadisticas();
-                    break;
-                case 6:
-                    jugador.mostrarEstados();
-                    break;
-                case 7:
-                    enemigo.mostrarEstadisticas();
-                    break;
-            }
-            if (!accion) {
-                accionJugador(MenusConsola.menuCombate());
-                accion = true;
             }
         }
     }
@@ -108,7 +96,6 @@ public class Combate extends Evento {
                         System.out.println("El ataque del enemigo era una finta, por eso, no hace nada");
                     }
                     break;
-
             }
     }
 
@@ -155,7 +142,7 @@ public class Combate extends Evento {
             if (rng.nextInt(0,20/multiplicadorFallo) == 1) {
                 if (atacante instanceof Jugador) {
                     if (((Jugador) atacante).getArma() instanceof DagaDoble) {
-                        atacante.recibirDmg(atacante.getDmg()/4);
+                        atacante.recibirDmg(atacante.getDmg()/4,interfaz);
                     }
                 }
                 return false;
@@ -163,27 +150,27 @@ public class Combate extends Evento {
                 if (atacante instanceof Jugador) {
                     if (atacante instanceof Asesino) {
 
-                        objetivo.recibirDmg(atacante.getDmg());
-                        objetivo.recibirDmg(atacante.getDmg() / 2);
+                        objetivo.recibirDmg(atacante.getDmg(),interfaz);
+                        objetivo.recibirDmg(atacante.getDmg() / 2,interfaz);
 
                     } else if (((Jugador) atacante).getArma() instanceof DagaRoboVida) {
 
-                        objetivo.recibirDmg(atacante.getDmg());
+                        objetivo.recibirDmg(atacante.getDmg(),interfaz);
                         jugador.curarVida(atacante.getDmg()/3);
 
                     } else if (((Jugador) atacante).getArma() instanceof DagaCritica) {
 
                         if (rng.nextInt(0,4) == 1) {
-                            objetivo.recibirDmg(atacante.getDmg() * 2);
+                            objetivo.recibirDmg(atacante.getDmg() * 2,interfaz);
                         } else {
-                            objetivo.recibirDmg(atacante.getDmg());
+                            objetivo.recibirDmg(atacante.getDmg(),interfaz);
                         }
 
                     } else {
-                        objetivo.recibirDmg(atacante.getDmg());
+                        objetivo.recibirDmg(atacante.getDmg(),interfaz);
                     }
                 } else {
-                    objetivo.recibirDmg(atacante.getDmg());
+                    objetivo.recibirDmg(atacante.getDmg(),interfaz);
                 }
 
                 if (atacante instanceof Jugador) {
@@ -202,9 +189,9 @@ public class Combate extends Evento {
         }
     }
 
-    private static boolean estaContraatacando(Entidad objetivo, Entidad atacante) {
+    private boolean estaContraatacando(Entidad objetivo, Entidad atacante) {
         if (objetivo.getEstadosSufridos().containsKey(Estados.CONTRAATACANDO)) {
-            atacante.recibirDmg(atacante.getDmg());
+            atacante.recibirDmg(atacante.getDmg(),interfaz);
             return true;
         }
         return false;
@@ -212,7 +199,7 @@ public class Combate extends Evento {
 
     public boolean ataqueEspecial(Entidad objetivo,Entidad atacante) {
         int multiplicadorFallo = 1;
-        int ataque;
+        int ataque = 0;
 
         if (estaContraatacando(objetivo, atacante)) return false;
 
@@ -230,7 +217,19 @@ public class Combate extends Evento {
 
         if (!atacante.getEstadosSufridos().containsKey(Estados.CONGELADO) && !atacante.getEstadosSufridos().containsKey(Estados.SILENCIADO)) {
             if (atacante instanceof Jugador) {
-                ataque = MenusConsola.elegirAtaqueEspecial(atacante);
+                interfaz.getContenedorActual().actualizarEscena(3);
+                while (interfaz.botonPulsado() == -1) {
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    if (interfaz.getBotonPulsado() != -1) {
+                        ataque = interfaz.getBotonPulsado();
+                        interfaz.setBotonPulsado(-1);
+                    }
+                }
+
             } else {
                 ataque = rng.nextInt(0,atacante.getAtaques().size());
             }
@@ -240,13 +239,12 @@ public class Combate extends Evento {
             if (rng.nextInt(0,20/multiplicadorFallo) == 1) {
                 return false;
             } else {
-                as.hacerAtaque(objetivo, atacante);
+                as.hacerAtaque(objetivo, atacante,interfaz);
                 return true;
             }
         } else {
             return false;
         }
-
     }
 
     @Override
@@ -259,25 +257,36 @@ public class Combate extends Evento {
         //TODO: Implementar en interfaz gráfica
         while (!jugador.estaMuerto()&&!enemigo.estaMuerto()) {
 
-            jugador.mostrarEstadisticas();
-            System.out.println();
-
-            enemigo.mostrarEstadisticas();
-            System.out.println();
-
-
             System.out.println("Turno del jugador");
-            accionJugador(MenusConsola.menuCombate());
-            jugador.aplicarEstados();
+            //TODO: Cambiar a interfaz
+            interfaz.getContenedorActual().actualizarEscena(1);
+
+            while (interfaz.botonPulsado() == -1) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                if (interfaz.botonPulsado() != -1) {
+                    accionJugador(interfaz.botonPulsado());
+                    interfaz.setBotonPulsado(-1);
+                }
+            }
+
+            jugador.aplicarEstados(interfaz);
             System.out.println();
 
             if (!enemigo.estaMuerto() && !jugador.estaMuerto()) {
+
                 enemigo.finTurno();
-                System.out.println("Turno del enemigo");
+                System.out.println("Turno del primer enemigo");
 
-                accionEnemigo(rng.nextInt(1,4));
 
-                enemigo.aplicarEstados();
+                accionEnemigo(rng.nextInt(1, 4));
+
+                enemigo.aplicarEstados(interfaz);
+
+
                 jugador.getAccesorios().forEach((a)->{
                     if (a.isInicioTurno()) {
                         a.aplicarEfecto(jugador);

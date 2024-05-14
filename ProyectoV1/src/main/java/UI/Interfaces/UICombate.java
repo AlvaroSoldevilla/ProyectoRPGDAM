@@ -1,17 +1,13 @@
 package UI.Interfaces;
 
 import UI.Elementos.Contenedor;
-import UI.Elementos.ImagenDeFondo;
 import lombok.Data;
 
-import java.awt.*;
-
 @Data
-public class UIEvento extends Contenedor {
+public class UICombate extends Contenedor {
 
-    public UIEvento(String nombreRutaImagen) {
+    public UICombate(String nombreRutaImagen) {
         super(nombreRutaImagen);
-        setLayout(new BorderLayout());
     }
 
     @Override

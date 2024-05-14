@@ -2,7 +2,8 @@ package Modelo.AtaquesEspeciales;
 
 import Modelo.Bases.AtaqueEspecial;
 import Modelo.Bases.Entidad;
-import Modelo.Misc.Estados;
+import Modelo.Enums.Estados;
+import UI.Interfaces.Interfaz;
 
 import java.util.Random;
 
@@ -14,7 +15,7 @@ public class EfectoAleatorio extends AtaqueEspecial {
     }
 
     @Override
-    public boolean hacerAtaque(Entidad objetivo, Entidad atacante) {
+    public boolean hacerAtaque(Entidad objetivo, Entidad atacante, Interfaz interfaz) {
         Random rng = new Random();
         if (puedeAtacar(atacante)) {
             switch (rng.nextInt(0,3)) {
@@ -27,7 +28,7 @@ public class EfectoAleatorio extends AtaqueEspecial {
                     break;
 
                 case 2:
-                    objetivo.aplicarEfectoDeEstados(Estados.CONGELADO);
+                    objetivo.infligirEstado(Estados.CONGELADO);
                     break;
             }
             return true;
@@ -35,9 +36,4 @@ public class EfectoAleatorio extends AtaqueEspecial {
             return false;
         }
     }
-
-
-
 }
-
-

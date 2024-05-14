@@ -28,6 +28,6 @@ public class CombateLobo extends BatallaConJefe {
 
     @Override
     public void terminarEvento() {
-
+        System.out.println("Has ganado");
     }
 }

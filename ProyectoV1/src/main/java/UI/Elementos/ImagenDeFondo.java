@@ -1,4 +1,4 @@
-package UI.Interfaces;
+package UI.Elementos;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,6 +8,9 @@ public class ImagenDeFondo extends JPanel {
 
     public ImagenDeFondo(String nombreRutaImagen) {
         imagenDeFondo = new ImageIcon(nombreRutaImagen).getImage();
+    }
+
+    public ImagenDeFondo() {
     }
 
     @Override

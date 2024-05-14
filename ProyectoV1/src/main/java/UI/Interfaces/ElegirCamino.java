@@ -1,14 +1,16 @@
 package UI.Interfaces;
 
 import Modelo.Bases.Evento;
-import UI.Contenedor;
+import UI.Elementos.BotonOculto;
+import UI.Elementos.Contenedor;
+import UI.Elementos.ImagenDeFondo;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class ElegirCamino extends Contenedor {
-    public ElegirCamino(Evento[] eventos, int numEventos) {
-        fondo = new ImagenDeFondo("Imagenes/Fondos/Fondo1.png");
+    public ElegirCamino(Evento[] eventos, int numEventos,String nombreRutaImagen) {
+        super(nombreRutaImagen);
         this.eventos = eventos;
         botones = new JButton[numEventos];
         this.numEventos = numEventos;
@@ -21,25 +23,30 @@ public class ElegirCamino extends Contenedor {
         setLayout(new BorderLayout()); // Establece el BorderLayout para el contenedor
 
         // Agrega la imagen de fondo al centro del contenedor
-        add(fondo, BorderLayout.CENTER);
 
         // Crea un panel para los botones y configura su diseño
         JPanel panelBotones = new JPanel();
         panelBotones.setLayout(new GridLayout(numEventos, 1));
 
-        // Crea los botones y agrégalos al panel de botones
-        botones[0] = new JButton("Camino 1");
-        botones[1] = new JButton("Camino 2");
-        //botones[2] = new JButton("Camino 3");
+        for (int i = 0; i < eventos.length; i++) {
+            botones[i] = new BotonOculto(new ImagenDeFondo(eventos[i].getIcono().getRutaIcono()));
+        }
 
-        panelBotones.add(botones[0]);
-        panelBotones.add(botones[1]);
-        //panelBotones.add(botones[2]);
+        // Crea los botones y agrégalos al panel de botones
+
+        for (int i = 0; i < botones.length; i++) {
+            panelBotones.add(botones[i]);
+        }
 
         // Agrega el panel de botones al lado derecho del contenedor
         add(panelBotones, BorderLayout.EAST);
 
         setVisible(true);
+    }
+
+    @Override
+    public void actualizarEscena(int fase) {
+
     }
 }
 

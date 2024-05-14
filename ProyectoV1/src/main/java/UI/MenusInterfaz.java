@@ -1,5 +1,6 @@
 package UI;
 
+import Modelo.Bases.AtaqueEspecial;
 import Modelo.Bases.Entidad;
 import Modelo.Bases.Evento;
 import Modelo.Bases.Jugador;
@@ -7,6 +8,7 @@ import Modelo.Jugador.Asesino;
 import Modelo.Jugador.Caballero;
 import Modelo.Jugador.Mago;
 import Modelo.Jugador.PruebaJugador;
+import UI.Interfaces.Interfaz;
 
 public class MenusInterfaz {
 
@@ -22,4 +24,5 @@ public class MenusInterfaz {
     public static Evento menuElegirEvento(Evento[] eventosActuales,int elegido) {
         return eventosActuales[elegido];
     }
+
 }

@@ -2,6 +2,7 @@ package Modelo.AtaquesEspeciales;
 
 import Modelo.Bases.AtaqueEspecial;
 import Modelo.Bases.Entidad;
+import UI.Interfaces.Interfaz;
 
 public class PruebaAtaque extends AtaqueEspecial {
 
@@ -11,9 +12,9 @@ public class PruebaAtaque extends AtaqueEspecial {
     }
 
     @Override
-    public boolean hacerAtaque(Entidad objetivo, Entidad atacante) {
+    public boolean hacerAtaque(Entidad objetivo, Entidad atacante, Interfaz interfaz) {
         if (puedeAtacar(atacante)) {
-            objetivo.recibirDmg(atacante.getDmg()*2);
+            objetivo.recibirDmg(atacante.getDmg()*2,interfaz);
             return true;
         } else {
             return false;

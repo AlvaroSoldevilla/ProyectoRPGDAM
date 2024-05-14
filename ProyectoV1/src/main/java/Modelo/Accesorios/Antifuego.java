@@ -2,7 +2,8 @@ package Modelo.Accesorios;
 
 import Modelo.Bases.Accesorio;
 import Modelo.Bases.Jugador;
-import Modelo.Misc.Estados;
+import Modelo.Enums.Estados;
+import UI.Interfaces.Interfaz;
 
 public class Antifuego extends Accesorio {
 
@@ -13,6 +14,6 @@ public class Antifuego extends Accesorio {
     }
 
     public void aplicarEfecto(Jugador jugador) {
-        jugador.aplicarEfectoDeEstados(Estados.RESISTENCIAQUEMADURA);
+        jugador.infligirEstado(Estados.RESISTENCIAQUEMADURA);
     }
 }

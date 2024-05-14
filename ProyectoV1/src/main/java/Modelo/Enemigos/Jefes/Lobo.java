@@ -1,7 +1,7 @@
 package Modelo.Enemigos.Jefes;
 
 import Modelo.Bases.Enemigo;
-import Modelo.Enemigos.AtaquesEnemigo;
+import Modelo.Enums.AtaquesEnemigo;
 
 public class Lobo extends Enemigo {
     public Lobo(){

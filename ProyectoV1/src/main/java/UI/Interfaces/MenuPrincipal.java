@@ -1,19 +1,22 @@
 package UI.Interfaces;
 
-import UI.Contenedor;
+import UI.Elementos.Contenedor;
+import UI.Elementos.ImagenDeFondo;
+import lombok.Data;
 
 import javax.swing.*;
 import java.awt.*;
 
+@Data
 public class MenuPrincipal extends Contenedor {
-    public MenuPrincipal() {
-        fondo = new ImagenDeFondo("Imagenes/Fondos/Fondo1.png");
+
+    public MenuPrincipal(String nombreRutaImagen) {
+        super(nombreRutaImagen);
         setLayout(new BorderLayout());
     }
 
     @Override
     public void addElementos() {
-        add(fondo);
         JPanel panelBotones = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
@@ -35,5 +38,8 @@ public class MenuPrincipal extends Contenedor {
         add(panelBotones, BorderLayout.SOUTH);
 
     }
+
+    @Override
+    public void actualizarEscena(int fase) {}
 }
 

@@ -1,6 +1,6 @@
 package Modelo.Bases;
 
-import Modelo.Misc.Estados;
+import Modelo.Enums.Estados;
 import lombok.Data;
 
 import java.util.ArrayList;

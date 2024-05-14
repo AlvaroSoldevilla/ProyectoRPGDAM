@@ -2,7 +2,7 @@ package Modelo.Accesorios;
 
 import Modelo.Bases.Accesorio;
 import Modelo.Bases.Jugador;
-import Modelo.Misc.Estados;
+import Modelo.Enums.Estados;
 
 public class Antirayos extends Accesorio {
 
@@ -13,6 +13,6 @@ public class Antirayos extends Accesorio {
     }
 
     public void aplicarEfecto(Jugador jugador) {
-        jugador.aplicarEfectoDeEstados(Estados.RESISTENCIAELECTRICIDAD);
+        jugador.infligirEstado(Estados.RESISTENCIAELECTRICIDAD);
     }
 }

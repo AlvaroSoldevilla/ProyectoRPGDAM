@@ -3,6 +3,7 @@ package Modelo.Jugador;
 import Modelo.Armaduras.ArmaduraCuero;
 import Modelo.Armas.Daga;
 import Modelo.Bases.Jugador;
+import Modelo.Enums.AtaquesJugador;
 
 public class Asesino extends Jugador {
    public Asesino(){

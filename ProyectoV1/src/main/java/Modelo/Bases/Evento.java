@@ -1,5 +1,6 @@
 package Modelo.Bases;
 
+import Modelo.Enums.Iconos;
 import UI.Interfaces.Interfaz;
 import lombok.Data;
 
@@ -11,6 +12,7 @@ public abstract class Evento {
     protected Interfaz interfaz;
     protected String titulo;
     protected Jugador jugador;
+    protected Iconos icono;
 
     public abstract void empezarEvento();
     public abstract void terminarEvento();

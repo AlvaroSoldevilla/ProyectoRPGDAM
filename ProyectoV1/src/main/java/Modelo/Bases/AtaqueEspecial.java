@@ -1,10 +1,12 @@
 package Modelo.Bases;
 
+import UI.Interfaces.Interfaz;
+
 public abstract class AtaqueEspecial {
 
     protected String nombre;
     protected int coste;
-    public abstract boolean hacerAtaque(Entidad objetivo,Entidad atatcante);
+    public abstract boolean hacerAtaque(Entidad objetivo, Entidad atatcante, Interfaz interfaz);
     public boolean puedeAtacar(Entidad atatcante) {
         if ((atatcante instanceof Jugador jugador)) {
             if (jugador.getMana()>=coste) {

@@ -2,7 +2,7 @@ package Modelo.Accesorios;
 
 import Modelo.Bases.Accesorio;
 import Modelo.Bases.Jugador;
-import Modelo.Misc.Estados;
+import Modelo.Enums.Estados;
 
 public class Antiveneno extends Accesorio {
 
@@ -13,6 +13,6 @@ public class Antiveneno extends Accesorio {
     }
 
     public void aplicarEfecto(Jugador jugador) {
-        jugador.aplicarEfectoDeEstados(Estados.RESISTENCIAVENENO);
+        jugador.infligirEstado(Estados.RESISTENCIAVENENO);
     }
 }

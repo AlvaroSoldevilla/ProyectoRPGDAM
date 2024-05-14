@@ -1,7 +1,9 @@
 package Modelo.Bases;
 
-import Modelo.Misc.Estados;
+import Modelo.Enums.Estados;
 
+import Modelo.Enums.Iconos;
+import UI.Interfaces.Interfaz;
 import lombok.Data;
 
 import java.util.HashMap;
@@ -21,6 +23,7 @@ public abstract class Entidad {
     protected int poderBloqueo;
     protected boolean bloqueando = false;
     protected List<AtaqueEspecial> ataques;
+    protected Iconos icono;
 
     protected Map<Estados, Integer> estadosSufridos = new HashMap<>();
 
@@ -29,9 +32,9 @@ public abstract class Entidad {
         estadosSufridos.forEach((e,n) -> System.out.println(e.getNombre() + " " + e.getDuracion()));
     }
 
-    public void aplicarEstados() {
+    public void aplicarEstados(Interfaz interfaz) {
         estadosSufridos.forEach((e,s)-> {
-            aplicarEfectoDeEstados(e);
+            aplicarEfectoDeEstados(e,interfaz);
             if (e.isDeterioro()) {
                 if (s-1==0) {
                     estadosSufridos.remove(e);
@@ -42,15 +45,15 @@ public abstract class Entidad {
         });
     }
 
-    public void aplicarEfectoDeEstados(Estados estado) {
+    public void aplicarEfectoDeEstados(Estados estado,Interfaz interfaz) {
         switch (estado) {
-            case VENENO,QUEMADURA -> recibirDmg(estado.getEfecto());
+            case VENENO,QUEMADURA -> recibirDmg(estado.getEfecto(),interfaz);
             case MALDITO -> multiplicarEstadisticas(0.5);
             case BENDITO -> multiplicarEstadisticas(1.5);
             case FORTALEZA -> aumentarDefensa(Estados.FORTALEZA.getEfecto());
             case RABIA -> {
                 aumentarDmg(Estados.RABIA.getEfecto());
-                recibirDmg(3);
+                recibirDmg(3,interfaz);
             }
             case MENOSDEFENSA -> bajarDefensa(Estados.MENOSDEFENSA.getEfecto());
         }
@@ -73,12 +76,13 @@ public abstract class Entidad {
         bloqueando = true;
     }
 
-    public void recibirDmg(int dmg) {
+    public void recibirDmg(int dmg, Interfaz interfaz) {
         if (dmg - defensa >= 0) {
             salud -= dmg-defensa;
         } else {
             salud -= 1;
         }
+        interfaz.imprimirMensaje("Recibe " + dmg + " de daño");
     }
 
     public void eliminarEstadosPerjudiciales() {

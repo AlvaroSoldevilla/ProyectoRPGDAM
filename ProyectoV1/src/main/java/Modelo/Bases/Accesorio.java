@@ -1,5 +1,6 @@
 package Modelo.Bases;
 
+import UI.Interfaces.Interfaz;
 import lombok.Data;
 
 

@@ -2,7 +2,7 @@ package Modelo.AtaquesEspeciales;
 
 import Modelo.Bases.AtaqueEspecial;
 import Modelo.Bases.Entidad;
-import Modelo.Misc.Estados;
+import UI.Interfaces.Interfaz;
 
 public class Purificacion extends AtaqueEspecial {
 
@@ -12,7 +12,7 @@ public class Purificacion extends AtaqueEspecial {
     }
 
     @Override
-    public boolean hacerAtaque(Entidad objetivo, Entidad atacante) {
+    public boolean hacerAtaque(Entidad objetivo, Entidad atacante, Interfaz interfaz) {
         if (puedeAtacar(atacante)) {
             atacante.eliminarEstadosPerjudiciales();
             return true;

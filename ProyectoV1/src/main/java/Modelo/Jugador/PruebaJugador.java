@@ -3,8 +3,7 @@ package Modelo.Jugador;
 import Modelo.Armaduras.ArmaduraCuero;
 import Modelo.Armas.Espada;
 import Modelo.Bases.Jugador;
-
-import java.util.ArrayList;
+import Modelo.Enums.AtaquesJugador;
 
 public class PruebaJugador extends Jugador {
     public PruebaJugador() {

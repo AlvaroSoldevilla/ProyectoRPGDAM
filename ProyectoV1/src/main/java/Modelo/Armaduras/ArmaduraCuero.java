@@ -1,7 +1,7 @@
 package Modelo.Armaduras;
 
 import Modelo.Bases.Armadura;
-import Modelo.Misc.Estados;
+import Modelo.Enums.Estados;
 
 import java.util.ArrayList;
 

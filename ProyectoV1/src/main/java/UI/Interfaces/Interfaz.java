@@ -1,6 +1,7 @@
 package UI.Interfaces;
 
-import UI.Contenedor;
+import UI.Elementos.Contenedor;
+import UI.Elementos.ImagenDeFondo;
 import lombok.Data;
 
 import javax.swing.*;
@@ -20,10 +21,9 @@ public class Interfaz extends JFrame{
     ImagenDeFondo fondo;
 
     private void createAndShowGUI() {
-        contenedorActual = new MenuPrincipal();
+        contenedorActual = new MenuPrincipal("Imagenes/Fondos/Fondo1.png");
         contenedorActual.addElementos();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
         add(contenedorActual, BorderLayout.CENTER);
         pack();
 
@@ -44,5 +44,14 @@ public class Interfaz extends JFrame{
 
     public int botonPulsado() {
         return contenedorActual.getElegido();
+    }
+
+    public void setBotonPulsado(int botonPulsado) {
+        this.botonPulsado = botonPulsado;
+        contenedorActual.setElegido(-1);
+    }
+
+    public void imprimirMensaje(String mensaje) {
+
     }
 }

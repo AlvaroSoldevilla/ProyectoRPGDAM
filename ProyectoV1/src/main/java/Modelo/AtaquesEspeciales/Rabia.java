@@ -2,7 +2,8 @@ package Modelo.AtaquesEspeciales;
 
 import Modelo.Bases.AtaqueEspecial;
 import Modelo.Bases.Entidad;
-import Modelo.Misc.Estados;
+import Modelo.Enums.Estados;
+import UI.Interfaces.Interfaz;
 
 public class Rabia extends AtaqueEspecial {
 
@@ -12,9 +13,9 @@ public class Rabia extends AtaqueEspecial {
     }
 
     @Override
-    public boolean hacerAtaque(Entidad objetivo, Entidad atacante) {
+    public boolean hacerAtaque(Entidad objetivo, Entidad atacante, Interfaz interfaz) {
         if (puedeAtacar(atacante)) {
-            atacante.aplicarEfectoDeEstados(Estados.FORTALEZA);
+            atacante.infligirEstado(Estados.FORTALEZA);
             return true;
         } else {
             return false;

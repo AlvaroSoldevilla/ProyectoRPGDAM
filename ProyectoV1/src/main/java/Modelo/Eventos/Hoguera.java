@@ -2,6 +2,7 @@ package Modelo.Eventos;
 
 import Modelo.Bases.Evento;
 import Modelo.Bases.Jugador;
+import Modelo.Enums.Iconos;
 import UI.Interfaces.Interfaz;
 import UI.MenusConsola;
 
@@ -12,6 +13,7 @@ public class Hoguera extends Evento {
         super(interfaz);
         titulo = "Hoguera";
         this.jugador = j;
+        icono = Iconos.HOGUERA;
     }
 
     @Override

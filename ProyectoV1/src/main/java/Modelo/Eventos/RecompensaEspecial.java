@@ -4,6 +4,7 @@ import Modelo.Accesorios.*;
 import Modelo.Bases.Accesorio;
 import Modelo.Bases.Evento;
 import Modelo.Bases.Jugador;
+import Modelo.Enums.Iconos;
 import UI.Interfaces.Interfaz;
 import UI.MenusConsola;
 
@@ -14,6 +15,7 @@ public class RecompensaEspecial extends Evento {
         super(interfaz);
         titulo = "Tesoro";
         this.jugador = jugador;
+        icono = Iconos.TESORO;
     }
 
     Jugador jugador;

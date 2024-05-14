@@ -97,10 +97,7 @@ public class MenusConsola {
 
     public static Evento menuElegirEvento(Evento[] eventosActuales) {
         for (int i = 0; i < eventosActuales.length; i++) {
-            //TODO: if es temporal
-            if (eventosActuales[i]!=null) {
-                System.out.print(i + " " + eventosActuales[i].getTitulo() + " ");
-            }
+            System.out.print(i + " " + eventosActuales[i].getTitulo() + " ");
         }
         System.out.println();
         return eventosActuales[scGen.nextInt()];

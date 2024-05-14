@@ -9,6 +9,7 @@ import Modelo.Bases.*;
 import Modelo.Jugador.Asesino;
 import Modelo.Jugador.Caballero;
 import Modelo.Jugador.Mago;
+import Modelo.Enums.Iconos;
 import UI.Interfaces.Interfaz;
 import UI.MenusConsola;
 
@@ -21,6 +22,7 @@ public class Tienda extends Evento {
         titulo = "Tienda";
         this.jugador = jugador;
         this.nivel = nivel;
+        icono = Iconos.TIENDA;
     }
     Random rng = new Random();
     Jugador jugador;

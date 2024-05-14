@@ -2,8 +2,8 @@ package Modelo.Jugador;
 
 import Modelo.Armaduras.ArmaduraCuero;
 import Modelo.Armas.Baston;
-import Modelo.Bases.Armadura;
 import Modelo.Bases.Jugador;
+import Modelo.Enums.AtaquesJugador;
 
 public class Mago extends Jugador {
     public Mago() {
