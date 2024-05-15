@@ -4,6 +4,10 @@ import lombok.Getter;
 
 @Getter
 public enum Iconos {
+    //Fondos
+    NIVEL1("Imagenes/Fondos/Fondo1.png"),
+    NIVEL2("Imagenes/Fondos/Fondo2.png"),
+    NIVEL3("Imagenes/Fondos/Fondo3.png"),
     //Iconos Generales
     ALEATORIO("Imagenes/Iconos/IconoEventoAleatorio.png"),
     BATALLAJEFE("Imagenes/Iconos/IconoJefe.png"),
@@ -35,9 +39,9 @@ public enum Iconos {
     EVASION("Imagenes/Iconos/Efectos de Estado/IconoEvasion.png"),
     ENVENENADO("Imagenes/Iconos/Efectos de Estado/IconoVeneno.png"),
     //Jugadores
-    CABALLERO(""),
-    MAGO(""),
-    ASESINO(""),
+    CABALLERO("Imagenes/Enemigos/HombreLobo.png"),
+    MAGO("Imagenes/Enemigos/HombreLobo.png"),
+    ASESINO("Imagenes/Enemigos/HombreLobo.png"),
     //Jefes
     DRAGON("Imagenes/Enemigos/Dragon.png"),
     WENDIGO("Imagenes/Enemigos/Wendigo.png"),

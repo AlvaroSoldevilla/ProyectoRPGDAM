@@ -4,6 +4,7 @@ import Modelo.Armaduras.ArmaduraCuero;
 import Modelo.Armas.Baston;
 import Modelo.Bases.Jugador;
 import Modelo.Enums.AtaquesJugador;
+import Modelo.Enums.Iconos;
 
 public class Mago extends Jugador {
     public Mago() {
@@ -21,5 +22,6 @@ public class Mago extends Jugador {
         armaduras.add(armadura);
         ataques = AtaquesJugador.MAGO.getAtaques();
         aplicarEfectosEquipamiento(0);
+        icono = Iconos.MAGO;
     }
 }

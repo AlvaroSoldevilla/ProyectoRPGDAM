@@ -51,7 +51,7 @@ public class Partida {
                     rutaFondo = "Imagenes/Fondos/Fondo3.png";
                     break;
             }
-            interfaz.cambiarEscena(new ElegirCamino(eventosActuales,eventosActuales.length-1,rutaFondo));
+            //interfaz.cambiarEscena(new ElegirCamino(eventosActuales,eventosActuales.length-1,rutaFondo));
             if (eventosActuales != null) {
                 while (interfaz.getBotonPulsado() == -1) {
                     try {

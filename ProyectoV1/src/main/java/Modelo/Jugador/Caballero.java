@@ -4,6 +4,7 @@ import Modelo.Armaduras.ArmaduraCuero;
 import Modelo.Armas.Espada;
 import Modelo.Bases.Jugador;
 import Modelo.Enums.AtaquesJugador;
+import Modelo.Enums.Iconos;
 
 public class Caballero extends Jugador {
     public Caballero() {
@@ -21,5 +22,6 @@ public class Caballero extends Jugador {
         armaduras.add(armadura);
         ataques = AtaquesJugador.CABALLERO.getAtaques();
         aplicarEfectosEquipamiento(0);
+        icono = Iconos.CABALLERO;
     }
 }

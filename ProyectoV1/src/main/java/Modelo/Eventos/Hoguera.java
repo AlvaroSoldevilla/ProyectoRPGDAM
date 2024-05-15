@@ -12,6 +12,7 @@ public class Hoguera extends Evento {
     public Hoguera(Jugador j, Interfaz interfaz) {
         super(interfaz);
         titulo = "Hoguera";
+        texto = "Encuentras una hoguera";
         this.jugador = j;
         icono = Iconos.HOGUERA;
     }

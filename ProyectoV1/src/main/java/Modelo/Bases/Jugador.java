@@ -143,6 +143,11 @@ public abstract class Jugador extends Entidad{
                 "Mana: " + mana + "/" + maxMana +  "\n" + "Ataque: " + dmg + "\n" + "Defensa: " + defensa);
     }
 
+    @Override
+    public String getEstadisticas() {
+        return "Vida: " + salud + "/" + maxSalud + "\n" + "Mana: " + mana + "/" + maxMana +  "\n" + "Ataque: " + dmg + "\n" + "Defensa: " + defensa;
+    }
+
     public void mostrarArmaduras() {
         armaduras.forEach((a)-> System.out.print(a.getNombre()));
         System.out.println();

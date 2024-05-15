@@ -5,7 +5,7 @@ import Modelo.Enums.AtaquesEnemigo;
 
 public class Lobo extends Enemigo {
     public Lobo(){
-        nombre = "Lobo guardían de Azeroth";
+        nombre = "Lobo guardían de Adula";
         salud = 170;
         dmg = 20;
         defensa = 30;

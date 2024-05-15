@@ -20,11 +20,11 @@ public class EfectoAleatorio extends AtaqueEspecial {
         if (puedeAtacar(atacante)) {
             switch (rng.nextInt(0,3)) {
                 case 0:
-                    objetivo.aplicarEfectoDeEstados(Estados.QUEMADURA);
+                    objetivo.infligirEstado(Estados.QUEMADURA);
                     break;
 
                 case 1:
-                    objetivo.aplicarEfectoDeEstados(Estados.ELECTRIFICADO);
+                    objetivo.infligirEstado(Estados.ELECTRIFICADO);
                     break;
 
                 case 2:

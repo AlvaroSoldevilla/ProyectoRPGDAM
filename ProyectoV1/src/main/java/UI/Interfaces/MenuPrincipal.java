@@ -1,13 +1,13 @@
 package UI.Interfaces;
 
 import UI.Elementos.Contenedor;
-import UI.Elementos.ImagenDeFondo;
-import lombok.Data;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-@Data
+
 public class MenuPrincipal extends Contenedor {
 
     public MenuPrincipal(String nombreRutaImagen) {
@@ -17,29 +17,68 @@ public class MenuPrincipal extends Contenedor {
 
     @Override
     public void addElementos() {
-        JPanel panelBotones = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        JLabel backgroundLabel = new JLabel(new ImageIcon(imagenDeFondo));
+        backgroundLabel.setBounds(0, 0, width, height);
+        add(backgroundLabel);
 
-        JButton boton1 = new JButton("Botón 1");
-        JButton boton2 = new JButton("Botón 2");
-        JButton boton3 = new JButton("Botón 3");
+        // Personaje 1
+        JButton character1Button = new JButton(new ImageIcon("Imagenes/Enemigos/Dragon.png"));
+        character1Button.setBounds(100, 150, 150, 198); // Ajusta las posiciones y tamaños según sea necesario
+        character1Button.setBorderPainted(false);
+        character1Button.setContentAreaFilled(false);
+        character1Button.setFocusPainted(false);
+        character1Button.setOpaque(false);
+        backgroundLabel.add(character1Button);
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        panelBotones.add(boton1, gbc);
+        // Personaje 2
+        JButton character2Button = new JButton(new ImageIcon("Imagenes/Enemigos/HombreLobo.png"));
+        character2Button.setBounds(430, 150, 150, 198);
+        character2Button.setBorderPainted(false);
+        character2Button.setContentAreaFilled(false);
+        character2Button.setFocusPainted(false);
+        character2Button.setOpaque(false);
+        backgroundLabel.add(character2Button);
 
-        gbc.gridy = 1;
-        panelBotones.add(boton2, gbc);
+        // Personaje 3
+        JButton character3Button = new JButton(new ImageIcon("Imagenes/Enemigos/Wendigo.png"));
+        character3Button.setBounds(750, 150, 150, 198);
+        character3Button.setBorderPainted(false);
+        character3Button.setContentAreaFilled(false);
+        character3Button.setFocusPainted(false);
+        character3Button.setOpaque(false);
+        backgroundLabel.add(character3Button);
 
-        gbc.gridy = 2;
-        panelBotones.add(boton3, gbc);
+        // Añadir acción a los botones
+        character1Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Acción para el personaje 1
+                System.out.println("Personaje 1 seleccionado");
+            }
+        });
 
-        add(panelBotones, BorderLayout.SOUTH);
+        character2Button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Acción para el personaje 2
+                System.out.println("Personaje 2 seleccionado");
+            }
+        });
 
+        character3Button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Acción para el personaje 3
+                System.out.println("Personaje 3 seleccionado");
+            }
+        });
     }
 
     @Override
     public void actualizarEscena(int fase) {}
+
+    @Override
+    public void mostrarMensaje(String mensaje) {
+
+    }
 }
 

@@ -30,8 +30,11 @@ public abstract class Enemigo extends Entidad{
 
     @Override
     public void mostrarEstadisticas() {
-        System.out.println("Enemigo:" + "\n" + "Vida: " + salud + "\n" + "Ataque: " + dmg + "\n" + "Defensa: " + defensa);
+        System.out.println();
     }
 
-
+    @Override
+    public String getEstadisticas() {
+        return "Enemigo:" + "\n" + "Vida: " + salud + "\n" + "Ataque: " + dmg + "\n" + "Defensa: " + defensa;
+    }
 }

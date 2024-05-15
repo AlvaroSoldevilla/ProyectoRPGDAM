@@ -4,6 +4,7 @@ import Modelo.Armaduras.ArmaduraCuero;
 import Modelo.Armas.Daga;
 import Modelo.Bases.Jugador;
 import Modelo.Enums.AtaquesJugador;
+import Modelo.Enums.Iconos;
 
 public class Asesino extends Jugador {
    public Asesino(){
@@ -21,5 +22,6 @@ public class Asesino extends Jugador {
     armaduras.add(armadura);
     ataques = AtaquesJugador.ASESINO.getAtaques();
     aplicarEfectosEquipamiento(0);
+    icono = Iconos.ASESINO;
    }
 }

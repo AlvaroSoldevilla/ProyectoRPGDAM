@@ -115,6 +115,7 @@ public abstract class Entidad {
     }
 
     public abstract void mostrarEstadisticas();
+    public abstract String getEstadisticas();
 
     public void finTurno() {
         if (saludTemp != 0) {

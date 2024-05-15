@@ -5,6 +5,7 @@ import Modelo.Enums.AtaquesEnemigo;
 
 public class Enemigo2 extends Enemigo {
     public Enemigo2() {
+        nombre= "Little Wendigo";
         salud = 50;
         dmg = 15;
         defensa = 8;

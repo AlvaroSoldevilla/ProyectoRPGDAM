@@ -1,52 +1,98 @@
 package UI.Interfaces;
 
 import Modelo.Bases.Evento;
-import UI.Elementos.BotonOculto;
+import Modelo.Bases.Jugador;
 import UI.Elementos.Contenedor;
-import UI.Elementos.ImagenDeFondo;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 
 public class ElegirCamino extends Contenedor {
-    public ElegirCamino(Evento[] eventos, int numEventos,String nombreRutaImagen) {
-        super(nombreRutaImagen);
+
+    public ElegirCamino(String imagenDeFondo, Jugador jugador, Evento[] eventos) {
+        super(imagenDeFondo);
+        setLayout(new BorderLayout());
+        this.jugador = jugador;
         this.eventos = eventos;
-        botones = new JButton[numEventos];
-        this.numEventos = numEventos;
+        botones = new JButton[eventos.length];
     }
+
+    Jugador jugador;
     Evento[] eventos;
-    int numEventos;
+    JButton[] botones;
+    int minHeight = 0;
+
+    ActionListener botonElegido = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == botones[0]) {
+                System.out.println("Camino 1 elegido");
+                elegido = 0;
+            } else if (e.getSource() == botones[1]) {
+                System.out.println("Camino 2 elegido");
+                elegido = 1;
+            } else if (e.getSource() == botones[2]) {
+                System.out.println("Camino 3 elegido");
+                elegido = 2;
+            }
+        }
+    };
 
     @Override
     public void addElementos() {
-        setLayout(new BorderLayout()); // Establece el BorderLayout para el contenedor
+        JLabel backgroundLabel = new JLabel(new ImageIcon(imagenDeFondo));
+        backgroundLabel.setBounds(0, 0, width, height);
+        add(backgroundLabel);
 
-        // Agrega la imagen de fondo al centro del contenedor
+        // Personaje 1
+        JButton character1Button = new JButton(new ImageIcon(jugador.getIcono().getRutaIcono()));
+        character1Button.setBounds(50, 200, 150, 198);
+        character1Button.setBorderPainted(false);
+        character1Button.setContentAreaFilled(false);
+        character1Button.setFocusPainted(false);
+        character1Button.setOpaque(false);
+        backgroundLabel.add(character1Button);
 
-        // Crea un panel para los botones y configura su diseño
-        JPanel panelBotones = new JPanel();
-        panelBotones.setLayout(new GridLayout(numEventos, 1));
+        int numCaminos = eventos.length;
 
-        for (int i = 0; i < eventos.length; i++) {
-            botones[i] = new BotonOculto(new ImagenDeFondo(eventos[i].getIcono().getRutaIcono()));
+        switch (eventos.length) {
+            case 1:
+                minHeight = 270;
+                break;
+            case 2:
+                minHeight = 200;
+                break;
+            case 3:
+                minHeight = 150;
+                break;
         }
 
-        // Crea los botones y agrégalos al panel de botones
+        // Mostrar los botones de camino según el número aleatorio generado
+        for (int i = 0; i < numCaminos; i++) {
+            botones[i] = new JButton(new ImageIcon(eventos[i].getIcono().getRutaIcono())); // Seleccionar la imagen secuencialmente
+            botones[i].setBounds(740, minHeight + i * 120, 150, 98); // Ajustar posiciones verticalmente
+            botones[i].setBorderPainted(false);
+            botones[i].setContentAreaFilled(false);
+            botones[i].setFocusPainted(false);
+            botones[i].setOpaque(false);
+            backgroundLabel.add(botones[i]);
 
-        for (int i = 0; i < botones.length; i++) {
-            panelBotones.add(botones[i]);
+            // Añadir acción al botón del camino
+            botones[i].addActionListener(botonElegido);
         }
 
-        // Agrega el panel de botones al lado derecho del contenedor
-        add(panelBotones, BorderLayout.EAST);
-
-        setVisible(true);
     }
 
     @Override
-    public void actualizarEscena(int fase) {
+    public void actualizarEscena(int fase) {}
+
+    @Override
+    public void mostrarMensaje(String mensaje) {
 
     }
 }
+
 

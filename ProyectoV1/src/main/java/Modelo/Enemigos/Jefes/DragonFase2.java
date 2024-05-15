@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class DragonFase2 extends Enemigo {
     public DragonFase2(){
-        nombre = "Azeroth, el Dragón del Infierno";
+        nombre = "Adula, Dragón Lunar";
         salud = 300;
         dmg = 40;
         defensa = 45;

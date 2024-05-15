@@ -1,7 +1,14 @@
 package UI.Interfaces;
 
+import Modelo.Bases.Evento;
+import Modelo.Bases.Jugador;
+import Modelo.Enemigos.PruebaEnemigo;
+import Modelo.Enums.Iconos;
+import Modelo.Eventos.Aleatorios.EventoFuente;
+import Modelo.Eventos.Hoguera;
+import Modelo.Eventos.RecompensaEspecial;
+import Modelo.Jugador.Mago;
 import UI.Elementos.Contenedor;
-import UI.Elementos.ImagenDeFondo;
 import lombok.Data;
 
 import javax.swing.*;
@@ -14,23 +21,25 @@ public class Interfaz extends JFrame{
         createAndShowGUI();
     }
 
-    private int width = 660;
-    private int height = 450;
+    private int width = 1024;
+    private int height = 576;
     int botonPulsado = -1;
     Contenedor contenedorActual;
-    ImagenDeFondo fondo;
 
     private void createAndShowGUI() {
-        contenedorActual = new MenuPrincipal("Imagenes/Fondos/Fondo1.png");
+        contenedorActual = new MenuPrincipal(Iconos.NIVEL1.getRutaIcono());
         contenedorActual.addElementos();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         add(contenedorActual, BorderLayout.CENTER);
-        pack();
 
         setSize(width,height);
         setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
+
+        Jugador j = new Mago();
+        Evento evento = new Hoguera(j,this);
+        cambiarEscena(new UICombate(Iconos.NIVEL1.getRutaIcono(),evento));
     }
 
     public void cambiarEscena(Contenedor contenedor) {
@@ -52,6 +61,10 @@ public class Interfaz extends JFrame{
     }
 
     public void imprimirMensaje(String mensaje) {
+        contenedorActual.mostrarMensaje(mensaje);
+    }
 
+    public void CambiarFase(int fase) {
+        contenedorActual.actualizarEscena(fase);
     }
 }

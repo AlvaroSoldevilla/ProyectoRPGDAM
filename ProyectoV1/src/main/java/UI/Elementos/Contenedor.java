@@ -1,35 +1,25 @@
 package UI.Elementos;
 
-import UI.Elementos.ImagenDeFondo;
 import lombok.Data;
 
 import javax.swing.*;
-import java.awt.*;
 
 @Data
-public abstract class Contenedor extends ImagenDeFondo{
+public abstract class Contenedor extends JPanel{
 
-    private Image imagenDeFondo;
+    protected String imagenDeFondo;
 
     private Contenedor(){}
-    public Contenedor(String nombreRutaImagen) {
-        imagenDeFondo = new ImageIcon(nombreRutaImagen).getImage();
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(imagenDeFondo, 0, 0, getWidth(), getHeight(), this);
+    public Contenedor(String fondo) {
+        imagenDeFondo = fondo;
     }
     protected JButton[] botones;
     protected int elegido = -1;
+    protected int width = 1024;
+    protected int height = 576;
 
-
-
-    public void cargar() {
-        addElementos();
-    }
 
     public abstract void addElementos();
     public abstract void actualizarEscena(int fase);
+    public abstract void mostrarMensaje(String mensaje);
 }

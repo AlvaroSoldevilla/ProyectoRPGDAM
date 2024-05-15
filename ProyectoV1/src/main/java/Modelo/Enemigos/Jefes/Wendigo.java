@@ -5,7 +5,7 @@ import Modelo.Enums.AtaquesEnemigo;
 
 public class Wendigo extends Enemigo {
     public Wendigo(){
-        nombre ="Frostreaper";
+        nombre ="Wendigo";
         salud = 200;
         dmg = 36;
         defensa = 36;
