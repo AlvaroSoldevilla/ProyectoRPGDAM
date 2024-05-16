@@ -17,9 +17,11 @@ public abstract class Contenedor extends JPanel{
     protected int elegido = -1;
     protected int width = 1024;
     protected int height = 576;
+    protected boolean seguir = false;
 
 
     public abstract void addElementos();
     public abstract void actualizarEscena(int fase);
     public abstract void mostrarMensaje(String mensaje);
+    public abstract void actualizarInterfaz();
 }

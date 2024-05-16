@@ -1,6 +1,6 @@
 package Modelo.Enums;
 
-import Modelo.AtaquesEspeciales.*;
+import Modelo.Equipamiento.AtaquesEspeciales.*;
 import Modelo.Bases.AtaqueEspecial;
 import lombok.Getter;
 
@@ -10,8 +10,8 @@ import java.util.List;
 public enum AtaquesEnemigo {
     //TODO: poner bien los ataques
     PRUEBA(new AtaqueEspecial[]{new PruebaAtaque()}),
-    PERRO(new AtaqueEspecial[]{new PruebaAtaque()}),
-    ENEMIGO2(new AtaqueEspecial[]{new MiniGarraMaldita()}),
+    GOBLIN(new AtaqueEspecial[]{new PruebaAtaque()}),
+    PERRO(new AtaqueEspecial[]{new MiniGarraMaldita()}),
     SERPIENTE(new AtaqueEspecial[]{new VenenoSeguro()}),
     LOBO(new AtaqueEspecial[]{new TormentaLunar()}),
     WENDIGO(new AtaqueEspecial[]{new GarraMaldita()}),

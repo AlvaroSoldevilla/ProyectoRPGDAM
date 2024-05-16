@@ -2,6 +2,7 @@ package Modelo.Enemigos.Jefes;
 
 import Modelo.Bases.Enemigo;
 import Modelo.Enums.AtaquesEnemigo;
+import Modelo.Enums.Iconos;
 import lombok.Data;
 
 @Data
@@ -12,6 +13,7 @@ public class DragonFase2 extends Enemigo {
         dmg = 40;
         defensa = 45;
         ataques = AtaquesEnemigo.DRAGONFASE2.getAtaques();
+        icono = Iconos.DRAGON;
     }
     int hieloAcumulado = 0;
 }

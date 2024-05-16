@@ -11,28 +11,20 @@ import java.awt.event.ActionListener;
 public class UIEvento extends Contenedor {
     private Evento evento;
     private JButton[] botones;
+    private String[] opciones;
 
     public UIEvento(String imagenDeFondo, Evento evento) {
         super(imagenDeFondo);
         this.evento = evento;
-        this.botones = new JButton[3]; // Asumimos que hay tres opciones
         setLayout(null); // Usamos null para posicionar los componentes manualmente
     }
 
     public void addElementos() {
+        botones = new JButton[evento.getOpciones().length];
         // Fondo
         JLabel backgroundLabel = new JLabel(new ImageIcon(imagenDeFondo));
         backgroundLabel.setBounds(0, 0, getWidth(), getHeight());
         add(backgroundLabel);
-
-        // Caja de estadísticas
-        JPanel estadisticasPanel = new JPanel();
-        estadisticasPanel.setBounds(0, 0, getWidth(), 50);
-        estadisticasPanel.setBackground(new Color(255, 255, 255, 255)); // Fondo semitransparente
-        estadisticasPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        JLabel estadisticasLabel = new JLabel("Aquí irían ciertas estadísticas");
-        estadisticasPanel.add(estadisticasLabel);
-        backgroundLabel.add(estadisticasPanel);
 
         // Panel del evento
         JPanel eventoPanel = new JPanel();
@@ -40,11 +32,13 @@ public class UIEvento extends Contenedor {
         eventoPanel.setBackground(new Color(255, 255, 255, 128)); // Fondo semitransparente
         eventoPanel.setLayout(null);
 
+        //Titulo del evento
         JLabel tituloLabel = new JLabel(evento.getTitulo());
         tituloLabel.setBounds(20, 20, eventoPanel.getWidth() - 40, 30);
         eventoPanel.add(tituloLabel);
 
-        JLabel textoLabel = new JLabel("<html>" + evento.getTexto().replace("\n", "<br>") + "</html>");
+        //Texto
+        JLabel textoLabel = new JLabel(evento.getTexto());
         textoLabel.setBounds(20, 60, eventoPanel.getWidth() - 40, 100);
         eventoPanel.add(textoLabel);
 
@@ -55,16 +49,20 @@ public class UIEvento extends Contenedor {
         int totalWidth = botonWidth * botones.length + espacioEntreBotones * (botones.length - 1);
         int startX = (eventoPanel.getWidth() - totalWidth) / 2;
 
-        String[] opciones = {"Opción 1", "Opción 2", "Opción 3"};
+
+        opciones = evento.getOpciones();
+
         for (int i = 0; i < botones.length; i++) {
             botones[i] = new JButton(opciones[i]);
             botones[i].setBounds(startX + i * (botonWidth + espacioEntreBotones), opcionY, botonWidth, botonHeight);
             eventoPanel.add(botones[i]);
+            int finalI = i;
             botones[i].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     // Aquí puedes manejar la lógica cuando se selecciona una opción
                     System.out.println(((JButton) e.getSource()).getText() + " seleccionada");
+                    elegido = finalI;
                 }
             });
         }
@@ -74,12 +72,20 @@ public class UIEvento extends Contenedor {
 
     @Override
     public void actualizarEscena(int fase) {
-        // Implementar si es necesario
+
     }
 
     @Override
     public void mostrarMensaje(String mensaje) {
         // Implementar si es necesario
+    }
+
+    @Override
+    public void actualizarInterfaz() {
+        this.removeAll();
+        addElementos();
+        this.revalidate();
+        this.repaint();
     }
 }
 

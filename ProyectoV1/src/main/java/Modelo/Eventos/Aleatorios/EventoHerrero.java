@@ -11,10 +11,7 @@ public class EventoHerrero extends Aleatorio {
         super(interfaz);
         texto = "A lo lejos escuchas el sonido de un martillo golpeando el acero. Hallaste a un viejo herrero.";
 
-        opciones = new String[3];
-        opciones[0] = "Pedirle que refuerce tu arma por 10 monedas de oro";
-        opciones[1] = "Pedirle que refuerce tu armadura por 10 monedas de oro";
-        opciones[2] = "Saludarle e irte.";
+        opciones = new String[]{"Pedirle que refuerce tu arma","Pedirle que refuerce tu armadura","Saludarle e irte."};
 
         this.jugador = jugador;
     }
@@ -22,23 +19,35 @@ public class EventoHerrero extends Aleatorio {
     Jugador jugador;
     @Override
     public void empezarEvento() {
-        int opcionElegida;
-
-        System.out.println(texto);
-
-        opcionElegida = MenusConsola.menuEventoAleatorio(opciones);
-
-        switch (opcionElegida) {
+        interfaz.actualizar();
+        while (interfaz.botonPulsado()==-1) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            if (interfaz.botonPulsado() != -1) {
+                opcion = interfaz.botonPulsado();
+            }
+        }
+        interfaz.reiniciarPulsado();
+        switch (opcion) {
             case 0:
-                textoFinal = "El herrero accedió";
+                setTexto("El herrero accedió");
                 jugador.getArma().setDmg(jugador.getArma().getDmg() + 10);
+                opciones = new String[]{"Seguir"};
+                interfaz.actualizar();
                 break;
             case 1:
-                textoFinal = "El herrero accedió";
+                setTexto("El herrero accedió");
                 jugador.getArmadura().setDefensa(jugador.getArmadura().getDefensa() + 10);
+                opciones = new String[]{"Seguir"};
+                interfaz.actualizar();
                 break;
             case 2:
-                textoFinal = "El herrero te saludó de vuelta y siguió trabajando";
+                setTexto("El herrero te saludó de vuelta y siguió trabajando");
+                opciones = new String[]{"Seguir"};
+                interfaz.actualizar();
                 break;
         }
         if (!jugador.estaMuerto()) {

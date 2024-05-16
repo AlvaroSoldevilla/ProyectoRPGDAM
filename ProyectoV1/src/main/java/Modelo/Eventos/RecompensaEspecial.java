@@ -1,11 +1,15 @@
 package Modelo.Eventos;
 
-import Modelo.Accesorios.*;
 import Modelo.Bases.Accesorio;
 import Modelo.Bases.Evento;
 import Modelo.Bases.Jugador;
 import Modelo.Enums.Iconos;
+import Modelo.Equipamiento.Accesorios.Antifuego;
+import Modelo.Equipamiento.Accesorios.Antirayos;
+import Modelo.Equipamiento.Accesorios.Antiveneno;
+import Modelo.Equipamiento.Accesorios.MonedaOro;
 import UI.Interfaces.Interfaz;
+import UI.Interfaces.UIEvento;
 import UI.MenusConsola;
 
 import java.util.Random;
@@ -14,6 +18,7 @@ public class RecompensaEspecial extends Evento {
     public RecompensaEspecial(Jugador jugador, Interfaz interfaz) {
         super(interfaz);
         titulo = "Tesoro";
+        texto = "Se te ofrecen tres accesorios";
         this.jugador = jugador;
         icono = Iconos.TESORO;
     }
@@ -22,9 +27,8 @@ public class RecompensaEspecial extends Evento {
 
     @Override
     public void empezarEvento() {
-        System.out.println("Se te ofrecen tres accesorios");
         Accesorio[] accesorios = new Accesorio[3];
-        String[] opciones = new String[3];
+        opciones = new String[3];
         accesorios[0] = generarAccesorio();
         accesorios[1] = generarAccesorio();
         while (accesorios[1].getNombre().equals(accesorios[0].getNombre())) {
@@ -38,7 +42,7 @@ public class RecompensaEspecial extends Evento {
         for (int i = 0; i < accesorios.length; i++) {
             opciones[i] = accesorios[i].getNombre();
         }
-
+        interfaz.cambiarEscena(new UIEvento(interfaz.getFondo(),this));
         int elegido = MenusConsola.menuEventoAleatorio(opciones);
 
         jugador.addAccesorio(accesorios[elegido]);

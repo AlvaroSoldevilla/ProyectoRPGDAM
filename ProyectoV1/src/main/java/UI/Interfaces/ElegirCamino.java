@@ -29,7 +29,7 @@ public class ElegirCamino extends Contenedor {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == botones[0]) {
-                System.out.println("Camino 1 elegido");
+
                 elegido = 0;
             } else if (e.getSource() == botones[1]) {
                 System.out.println("Camino 2 elegido");
@@ -81,18 +81,28 @@ public class ElegirCamino extends Contenedor {
             backgroundLabel.add(botones[i]);
 
             // Añadir acción al botón del camino
-            botones[i].addActionListener(botonElegido);
+            int finalI = i;
+            botones[i].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("Camino " + finalI + " elegido");
+                    elegido = finalI;
+                }
+            });
         }
 
     }
 
     @Override
-    public void actualizarEscena(int fase) {}
-
-    @Override
     public void mostrarMensaje(String mensaje) {
 
     }
+
+
+    @Override
+    public void actualizarEscena(int fase) {}
+    @Override
+    public void actualizarInterfaz() {}
 }
 
 

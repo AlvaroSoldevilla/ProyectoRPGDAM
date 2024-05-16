@@ -11,10 +11,7 @@ public class EventoPiedra extends Aleatorio {
         super(interfaz);
         texto = "Hay una piedra en el camino. ¿Que quieres hacer?";
 
-        opciones = new String[3];
-        opciones[0] = "Patearla";
-        opciones[1] = "Tirarla al río";
-        opciones[2] = "Pasar de largo";
+        opciones = new String[]{"Patearla","Tirarla al río","Pasar de largo"};
 
         this.jugador = jugador;
     }
@@ -22,28 +19,49 @@ public class EventoPiedra extends Aleatorio {
     Jugador jugador;
     @Override
     public void empezarEvento() {
-        int opcionElegida;
-
-        System.out.println(texto);
-
-        opcionElegida = MenusConsola.menuEventoAleatorio(opciones);
-
-        switch (opcionElegida) {
+        interfaz.actualizar();
+        while (interfaz.botonPulsado()==-1) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            if (interfaz.botonPulsado() != -1) {
+                opcion = interfaz.botonPulsado();
+            }
+        }
+        interfaz.reiniciarPulsado();
+        switch (opcion) {
             case 0:
-                textoFinal = "La piedra estaba muy dura y te hiciste daño. Pierdes 3 de vida.";
+                setTexto("La piedra estaba muy dura y te hiciste daño. Pierdes 3 de vida.");
+                interfaz.actualizar();
+                opciones = new String[]{"Seguir"};
                 jugador.setSalud(jugador.getSalud() - 3);
+                esperar();
                 break;
             case 1:
-                textoFinal = "Lanzar la piedra al río te hace sentirte bien contigo mismo. Aumenta tu daño en 5";
+                setTexto("Lanzar la piedra al río te hace sentirte bien contigo mismo. Aumenta tu daño en 5");
                 jugador.setDmg(jugador.getDmg() + 5);
+                opciones = new String[]{"Seguir"};
+                interfaz.actualizar();
+                esperar();
                 break;
             case 2:
-                textoFinal = "Continúas tu camino";
+                setTexto("Continúas tu camino");
+                opciones = new String[]{"Seguir"};
+                interfaz.actualizar();
+                esperar();
                 break;
         }
-        if (!jugador.estaMuerto()) {
-            terminarEvento();
-        }
+    }
 
+    private void esperar() {
+        while (interfaz.botonPulsado()==-1) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

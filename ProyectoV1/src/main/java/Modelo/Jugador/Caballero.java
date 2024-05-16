@@ -1,7 +1,7 @@
 package Modelo.Jugador;
 
-import Modelo.Armaduras.ArmaduraCuero;
-import Modelo.Armas.Espada;
+import Modelo.Equipamiento.Armaduras.ArmaduraCuero;
+import Modelo.Equipamiento.Armas.Espada;
 import Modelo.Bases.Jugador;
 import Modelo.Enums.AtaquesJugador;
 import Modelo.Enums.Iconos;

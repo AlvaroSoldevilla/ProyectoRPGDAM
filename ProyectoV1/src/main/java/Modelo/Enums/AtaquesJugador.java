@@ -1,7 +1,7 @@
 package Modelo.Enums;
 
-import Modelo.AtaquesEspeciales.*;
 import Modelo.Bases.AtaqueEspecial;
+import Modelo.Equipamiento.AtaquesEspeciales.*;
 import lombok.Getter;
 
 

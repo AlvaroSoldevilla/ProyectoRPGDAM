@@ -1,14 +1,18 @@
 package Logica;
 
+import Modelo.Bases.Enemigo;
 import Modelo.Bases.Evento;
 import Modelo.Bases.Jugador;
-import Modelo.Eventos.RecompensaEspecial;
-import Modelo.Eventos.Tienda;
+import Modelo.Enums.Iconos;
+import Modelo.Eventos.BatallaConJefe;
+import Modelo.Eventos.Combate;
+import Modelo.Eventos.Hoguera;
+import Modelo.Eventos.Jefes.CombateWendigo;
 import Modelo.Mundo.Mapa;
 import UI.Interfaces.ElegirCamino;
 import UI.Interfaces.Interfaz;
+import UI.Interfaces.UICombate;
 import UI.Interfaces.UIEvento;
-import UI.MenusConsola;
 import UI.MenusInterfaz;
 import lombok.Data;
 
@@ -20,53 +24,62 @@ public class Partida {
 
     public void iniciar() {
 
-        while (interfaz.getBotonPulsado()==-1) {
+        while (interfaz.botonPulsado()==-1) {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            if (interfaz.getBotonPulsado()!=-1) {
-                jugador = MenusInterfaz.menuEleccionJugador(interfaz.getBotonPulsado());
-                interfaz.setBotonPulsado(-1);
+            if (interfaz.botonPulsado()!=-1) {
+                jugador = MenusInterfaz.menuEleccionJugador(interfaz.botonPulsado());
             }
         }
+        interfaz.reiniciarPulsado();
 
-        Mapa mapa1 = new Mapa(jugador,interfaz);
+        Mapa mapa = new Mapa(jugador,interfaz);
         Evento[] eventosActuales;
         Evento evento;
         String rutaFondo = "";
 
-
         while (!jugador.estaMuerto()) {
-            eventosActuales = mapa1.avanzarSala();
+            eventosActuales = mapa.avanzarSala();
             switch (mapa.getNivelActual()) {
                 case 1:
-                    rutaFondo = "Imagenes/Fondos/Fondo1.png";
+                    rutaFondo = Iconos.NIVEL1.getRutaIcono();
                     break;
                 case 2:
-                    rutaFondo = "Imagenes/Fondos/Fondo2.png";
+                    rutaFondo = Iconos.NIVEL2.getRutaIcono();
                     break;
                 case 3:
-                    rutaFondo = "Imagenes/Fondos/Fondo3.png";
+                    rutaFondo = Iconos.NIVEL3.getRutaIcono();
                     break;
             }
-            //interfaz.cambiarEscena(new ElegirCamino(eventosActuales,eventosActuales.length-1,rutaFondo));
-            if (eventosActuales != null) {
-                while (interfaz.getBotonPulsado() == -1) {
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
+
+            interfaz.cambiarEscena(new ElegirCamino(rutaFondo,jugador,eventosActuales));
+            while (interfaz.botonPulsado() == -1) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                if (interfaz.botonPulsado() != -1) {
+                    evento = MenusInterfaz.menuElegirEvento(eventosActuales, interfaz.botonPulsado());
+                    interfaz.reiniciarPulsado();
+                    if (evento instanceof CombateWendigo combateWendigo) {
+                        interfaz.cambiarEscena(new UICombate(rutaFondo,jugador, combateWendigo.getEnemigos()));
+                    } else if (evento instanceof Combate combate) {
+                        interfaz.cambiarEscena(new UICombate(rutaFondo,jugador,new Enemigo[]{combate.getEnemigo()}));
+                    } else if (evento instanceof BatallaConJefe combate) {
+                        interfaz.cambiarEscena(new UICombate(rutaFondo,jugador,new Enemigo[]{combate.getJefe()}));
+                    } else {
+                        interfaz.cambiarEscena(new UIEvento(rutaFondo,evento));
                     }
-                    if (interfaz.getBotonPulsado() != -1) {
-                        evento = MenusInterfaz.menuElegirEvento(eventosActuales, interfaz.getBotonPulsado());
-                        interfaz.setBotonPulsado(-1);
-                        evento.empezarEvento();
-                    }
+                    interfaz.reiniciarPulsado();
+                    evento.empezarEvento();
+
                 }
             }
+            interfaz.reiniciarPulsado();
         }
-        System.out.println("Has muerto");
     }
 }

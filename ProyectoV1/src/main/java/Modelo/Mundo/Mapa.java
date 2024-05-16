@@ -1,6 +1,10 @@
 package Modelo.Mundo;
 
+import Modelo.Bases.Enemigo;
 import Modelo.Bases.Jugador;
+import Modelo.Enemigos.Enemigo3;
+import Modelo.Enemigos.Goblin;
+import Modelo.Enemigos.Perro;
 import Modelo.Eventos.*;
 import Modelo.Eventos.Aleatorios.*;
 import Modelo.Bases.Evento;
@@ -70,7 +74,7 @@ public class Mapa {
         return switch (codEvento) {
             case 0, 1, 2, 3, 4, 5 ->
                 //Combate
-                    new Combate(jugador, new PruebaEnemigo(), nivelActual, interfaz);
+                    new Combate(jugador, generarEnemigo(), nivelActual, interfaz);
             case 6, 7, 8, 9, 10, 11 ->
                 //Evento aleatorio
                     generarEventoAleatorio();
@@ -88,7 +92,7 @@ public class Mapa {
         switch (codEvento) {
             case 0:
                 //Combate
-                return new Combate(jugador,new PruebaEnemigo(),nivelActual, interfaz);
+                return new Combate(jugador,generarEnemigo(),nivelActual, interfaz);
             case 1:
                 //Evento aleatorio
                 return generarEventoAleatorio();
@@ -122,18 +126,19 @@ public class Mapa {
                     case 0:
                         return new EventoPintorMagico(jugador,interfaz);
                     case 1:
-                        return new EventoFuente(jugador, new PruebaEnemigo(), interfaz);
+                        return new EventoFuente(jugador, interfaz);
                     case 2:
-                        return new EventoPiedra(jugador , interfaz);
+                        return new EventoPiedra(jugador, interfaz);
                 }
             case 2:
                 switch (rng.nextInt(0,3)) {
                     case 0:
                         return new EventoScammer(jugador, interfaz);
                     case 1:
-                        return new EventoGitanos(jugador, new PruebaEnemigo(),nivelActual, interfaz);
+                        //TODO: Poner enemigos especificos
+                        return new EventoGitanos(jugador, generarEnemigo(),nivelActual, interfaz);
                     case 2:
-                        return new EventoNerd(jugador, new PruebaEnemigo(), nivelActual, interfaz);
+                        return new EventoNerd(jugador, generarEnemigo(), nivelActual, interfaz);
                 }
             case 3:
                 switch (rng.nextInt(0,4)) {
@@ -145,6 +150,40 @@ public class Mapa {
                         return new EventoTaberna(jugador, interfaz);
                     case 3:
                         return new EventoScammer(jugador, interfaz);
+                }
+        }
+        return null;
+    }
+
+    //TODO: Poner los enemigos de cada nivel
+    private Enemigo generarEnemigo() {
+        switch (nivelActual) {
+            case 1:
+                switch (rng.nextInt(0,3)) {
+                    case 0:
+                        return new Goblin();
+                    case 1:
+                        return new Enemigo3();
+                    case 2:
+                        return new Enemigo3();
+                }
+            case 2:
+                switch (rng.nextInt(0,3)) {
+                    case 0:
+                        return new Enemigo3();
+                    case 1:
+                        return new Perro();
+                    case 2:
+                        return new Enemigo3();
+                }
+            case 3:
+                switch (rng.nextInt(0,4)) {
+                    case 0:
+                        return new Enemigo3();
+                    case 1:
+                        return new Enemigo3();
+                    case 2:
+                        return new Enemigo3();
                 }
         }
         return null;

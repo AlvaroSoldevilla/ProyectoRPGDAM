@@ -15,6 +15,8 @@ public abstract class Evento {
     protected String texto;
     protected Jugador jugador;
     protected Iconos icono;
+    protected String[] opciones;
+    protected int opcion;
 
     public abstract void empezarEvento();
     public abstract void terminarEvento();

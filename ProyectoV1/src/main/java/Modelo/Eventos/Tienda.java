@@ -1,11 +1,14 @@
 package Modelo.Eventos;
 
-import Modelo.Accesorios.*;
-import Modelo.Armaduras.ArmaduraDragon;
-import Modelo.Armaduras.ArmaduraEspinas;
-import Modelo.Armaduras.ArmaduraMetal;
-import Modelo.Armas.*;
+import Modelo.Equipamiento.Accesorios.MasArmadura;
+import Modelo.Equipamiento.Accesorios.MasDmg;
+import Modelo.Equipamiento.Accesorios.MasMana;
+import Modelo.Equipamiento.Accesorios.MasVida;
+import Modelo.Equipamiento.Armaduras.ArmaduraDragon;
+import Modelo.Equipamiento.Armaduras.ArmaduraEspinas;
+import Modelo.Equipamiento.Armaduras.ArmaduraMetal;
 import Modelo.Bases.*;
+import Modelo.Equipamiento.Armas.*;
 import Modelo.Jugador.Asesino;
 import Modelo.Jugador.Caballero;
 import Modelo.Jugador.Mago;
@@ -23,6 +26,7 @@ public class Tienda extends Evento {
         this.jugador = jugador;
         this.nivel = nivel;
         icono = Iconos.TIENDA;
+        opciones = new String[4];
     }
     Random rng = new Random();
     Jugador jugador;

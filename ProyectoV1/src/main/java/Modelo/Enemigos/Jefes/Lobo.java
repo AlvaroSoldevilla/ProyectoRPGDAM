@@ -2,6 +2,7 @@ package Modelo.Enemigos.Jefes;
 
 import Modelo.Bases.Enemigo;
 import Modelo.Enums.AtaquesEnemigo;
+import Modelo.Enums.Iconos;
 
 public class Lobo extends Enemigo {
     public Lobo(){
@@ -10,5 +11,6 @@ public class Lobo extends Enemigo {
         dmg = 20;
         defensa = 30;
         ataques = AtaquesEnemigo.LOBO.getAtaques();
+        icono = Iconos.LOBO;
     }
 }

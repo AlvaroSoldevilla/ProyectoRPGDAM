@@ -12,10 +12,7 @@ public class EventoNerd extends Aleatorio {
         super(interfaz);
         texto = "En tu camino te topas con un chico con gafas que llora. ¿Qué deberías hacer?";
 
-        opciones = new String[3];
-        opciones[0] = "Preguntarle que le pasa";
-        opciones[1] = "Robarle";
-        opciones[2] = "Ignorarlo";
+        opciones = new String[]{"Preguntarle que le pasa","Robarle","Ignorarlo"};
 
         this.jugador = jugador;
         this.enemigo = enemigo;
@@ -28,52 +25,85 @@ public class EventoNerd extends Aleatorio {
 
     @Override
     public void empezarEvento() {
-        int opcionElegida;
-
-        System.out.println(texto);
-
-        opcionElegida = MenusConsola.menuEventoAleatorio(opciones);
-
-        switch (opcionElegida) {
+        interfaz.actualizar();
+        while (interfaz.botonPulsado()==-1) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            if (interfaz.botonPulsado() != -1) {
+                opcion = interfaz.botonPulsado();
+            }
+        }
+        interfaz.reiniciarPulsado();
+        switch (opcion) {
             case 0:
-                textoFinal = "El chico dice que unos chicos se burlaron de él por su aspecto y por como habla" ;
-                opciones = new String[3];
-                opciones[0] = "Consolarlo";
-                opciones[1] = "Decirle que con razón se burlaron de él, menudas pintas...";
-                opciones[2] = "Decirle que te da igual y marcharte";
-                opcionElegida = MenusConsola.menuEventoAleatorio(opciones);
-                switch (opcionElegida){
+                setTexto("El chico dice que unos chicos se burlaron de él por su aspecto y por como habla");
+                opciones = new String[]{"Consolarlo","Decirle que con razón se burlaron de él, menudas pintas...","Decirle que te da igual y marcharte"};
+
+                interfaz.actualizar();
+                while (interfaz.botonPulsado()==-1) {
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    if (interfaz.botonPulsado() != -1) {
+                        opcion = interfaz.botonPulsado();
+                    }
+                }
+                interfaz.reiniciarPulsado();
+                switch (opcion){
                     case 0:
-                        textoFinal = "El chico, al secarse las lágrimas, te ofrece una figura de colección como agradecimiento por consolarlo. Parece que podría venderse por un buen precio. Ganas 25 de oro" ;
+                        setTexto("El chico, al secarse las lágrimas, te ofrece una figura de colección como agradecimiento por consolarlo. Parece que podría venderse por un buen precio. Ganas 25 de oro");
                         jugador.setOro(jugador.getOro() + 25 );
                     case 1:
-                        textoFinal = "El chico se ofende y llora más diciendo: \\\"De hecho *snif* solo tengo 6 dioptrías en cada ojo es algo normal.\\\" ";
-                        opciones = new String[2];
-                        opciones[0] = "\\\"Tienes razón lo siento.\\\"";
-                        opciones[1] = "\\\"Estás cegato chaval.\\\"";
-                        opcionElegida = MenusConsola.menuEventoAleatorio(opciones);
-                        switch (opcionElegida){
+                        setTexto("El chico se ofende y llora más diciendo: \\\"De hecho *snif* solo tengo 6 dioptrías en cada ojo es algo normal.\\\" ");
+                        opciones = new String[]{"\\\"Tienes razón lo siento.\\\"","\\\"Estás cegato chaval.\\\""};
+
+                        interfaz.actualizar();
+                        while (interfaz.botonPulsado()==-1) {
+                            try {
+                                Thread.sleep(10);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                            if (interfaz.botonPulsado() != -1) {
+                                opcion = interfaz.botonPulsado();
+                            }
+                        }
+                        interfaz.reiniciarPulsado();
+                        switch (opcion){
                             case 0:
-                                textoFinal = "El chico se marcha con los ojos rojos a causa de las lágrimas";
+                                setTexto("El chico se marcha con los ojos rojos a causa de las lágrimas");
+                                opciones = new String[]{"Seguir"};
+                                interfaz.actualizar();
                                 break;
                             case 1:
-                                textoFinal = "El chico se enfada y te lanza un cuchillo que tenía escondido pero falla dandole a un monstruo, esto pinta feo...";
+                                setTexto("El chico se enfada y te lanza un cuchillo que tenía escondido pero falla dandole a un monstruo, esto pinta feo...");
                                 Combate c = new Combate(jugador,enemigo,nivel,interfaz);
                                 c.empezarEvento();
                         }
                         break;
 
                     case 2:
-                        textoFinal = "Te marchas dejando atrás al niño que sigue llorando.";
+                        setTexto("Te marchas dejando atrás al niño que sigue llorando.");
+                        opciones = new String[]{"Seguir"};
+                        interfaz.actualizar();
                         break;
                 }
                 break;
             case 1:
-                textoFinal = "Eres un ser avaricioso y detestable pero el chico tenía bastante oro. Consigues 20 de oro";
+                setTexto("Eres un ser avaricioso y detestable pero el chico tenía bastante oro. Consigues 20 de oro");
                 jugador.setOro(jugador.getOro() + 20 );
+                opciones = new String[]{"Seguir"};
+                interfaz.actualizar();
                 break;
             case 2:
-                textoFinal = "Pasaste de largo";
+                setTexto("Pasaste de largo");
+                opciones = new String[]{"Seguir"};
+                interfaz.actualizar();
                 break;
 
 

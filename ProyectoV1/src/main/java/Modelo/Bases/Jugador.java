@@ -31,9 +31,6 @@ public abstract class Jugador extends Entidad{
         } else {
             if (!armadura.getInmunidades().contains(estado)) {
                 estadosSufridos.put(estado, estadosSufridos.get(estado) + estado.getDuracion());
-            } else {
-                //TODO:cambiar a mensaje en la interfaz
-                System.out.println("Eres es inmune a " + estado.getNombre());
             }
         }
     }
@@ -99,7 +96,6 @@ public abstract class Jugador extends Entidad{
     public void eliminarArmadura(int index) {
         armaduras.remove(index);
     }
-
 
     public void ganarOro(int oro) {
         this.oro += oro;

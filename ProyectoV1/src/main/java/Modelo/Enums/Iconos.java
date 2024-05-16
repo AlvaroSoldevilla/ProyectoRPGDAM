@@ -39,15 +39,16 @@ public enum Iconos {
     EVASION("Imagenes/Iconos/Efectos de Estado/IconoEvasion.png"),
     ENVENENADO("Imagenes/Iconos/Efectos de Estado/IconoVeneno.png"),
     //Jugadores
-    CABALLERO("Imagenes/Enemigos/HombreLobo.png"),
-    MAGO("Imagenes/Enemigos/HombreLobo.png"),
-    ASESINO("Imagenes/Enemigos/HombreLobo.png"),
+    CABALLERO("Imagenes/Personajes/CaballeroTemp.png"),
+    MAGO("Imagenes/Personajes/Mago.png"),
+    ASESINO("Imagenes/Personajes/Mago.png"),
     //Jefes
     DRAGON("Imagenes/Enemigos/Dragon.png"),
     WENDIGO("Imagenes/Enemigos/Wendigo.png"),
     LOBO("Imagenes/Enemigos/HombreLobo.png"),
     //Enemigos
-
+    GOBLIN("Imagenes/Enemigos/Goblin.png"),
+    PERRO("Imagenes/Enemigos/Perro.png"),
     ;
 
 

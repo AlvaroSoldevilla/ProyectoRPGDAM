@@ -24,4 +24,9 @@ public abstract class AtaqueEspecial {
     public void mostrar() {
         System.out.println("Ataque: " + nombre + "\n" +  "Coste: " + coste);
     }
+
+    @Override
+    public String toString() {
+        return nombre + " " + coste;
+    }
 }

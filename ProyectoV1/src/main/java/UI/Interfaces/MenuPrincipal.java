@@ -1,5 +1,6 @@
 package UI.Interfaces;
 
+import Modelo.Enums.Iconos;
 import UI.Elementos.Contenedor;
 
 import javax.swing.*;
@@ -22,7 +23,7 @@ public class MenuPrincipal extends Contenedor {
         add(backgroundLabel);
 
         // Personaje 1
-        JButton character1Button = new JButton(new ImageIcon("Imagenes/Enemigos/Dragon.png"));
+        JButton character1Button = new JButton(new ImageIcon(Iconos.CABALLERO.getRutaIcono()));
         character1Button.setBounds(100, 150, 150, 198); // Ajusta las posiciones y tamaños según sea necesario
         character1Button.setBorderPainted(false);
         character1Button.setContentAreaFilled(false);
@@ -31,7 +32,7 @@ public class MenuPrincipal extends Contenedor {
         backgroundLabel.add(character1Button);
 
         // Personaje 2
-        JButton character2Button = new JButton(new ImageIcon("Imagenes/Enemigos/HombreLobo.png"));
+        JButton character2Button = new JButton(new ImageIcon(Iconos.MAGO.getRutaIcono()));
         character2Button.setBounds(430, 150, 150, 198);
         character2Button.setBorderPainted(false);
         character2Button.setContentAreaFilled(false);
@@ -40,7 +41,7 @@ public class MenuPrincipal extends Contenedor {
         backgroundLabel.add(character2Button);
 
         // Personaje 3
-        JButton character3Button = new JButton(new ImageIcon("Imagenes/Enemigos/Wendigo.png"));
+        JButton character3Button = new JButton(new ImageIcon(Iconos.ASESINO.getRutaIcono()));
         character3Button.setBounds(750, 150, 150, 198);
         character3Button.setBorderPainted(false);
         character3Button.setContentAreaFilled(false);
@@ -53,7 +54,8 @@ public class MenuPrincipal extends Contenedor {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Acción para el personaje 1
-                System.out.println("Personaje 1 seleccionado");
+                System.out.println("Caballero seleccionado");
+                elegido = 1;
             }
         });
 
@@ -61,14 +63,16 @@ public class MenuPrincipal extends Contenedor {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Acción para el personaje 2
-                System.out.println("Personaje 2 seleccionado");
+                System.out.println("Mago seleccionado");
+                elegido = 2;
             }
         });
 
         character3Button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Acción para el personaje 3
-                System.out.println("Personaje 3 seleccionado");
+                System.out.println("Asesino seleccionado");
+                elegido = 3;
             }
         });
     }
@@ -78,6 +82,11 @@ public class MenuPrincipal extends Contenedor {
 
     @Override
     public void mostrarMensaje(String mensaje) {
+
+    }
+
+    @Override
+    public void actualizarInterfaz() {
 
     }
 }

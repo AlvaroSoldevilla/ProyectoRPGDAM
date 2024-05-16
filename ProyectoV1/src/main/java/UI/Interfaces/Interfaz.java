@@ -1,10 +1,12 @@
 package UI.Interfaces;
 
+import Modelo.Bases.Enemigo;
 import Modelo.Bases.Evento;
 import Modelo.Bases.Jugador;
-import Modelo.Enemigos.PruebaEnemigo;
+import Modelo.Enemigos.Jefes.Lobo;
+import Modelo.Enemigos.Jefes.Wendigo;
+import Modelo.Enums.Estados;
 import Modelo.Enums.Iconos;
-import Modelo.Eventos.Aleatorios.EventoFuente;
 import Modelo.Eventos.Hoguera;
 import Modelo.Eventos.RecompensaEspecial;
 import Modelo.Jugador.Mago;
@@ -23,11 +25,12 @@ public class Interfaz extends JFrame{
 
     private int width = 1024;
     private int height = 576;
-    int botonPulsado = -1;
     Contenedor contenedorActual;
+    String fondo;
 
     private void createAndShowGUI() {
-        contenedorActual = new MenuPrincipal(Iconos.NIVEL1.getRutaIcono());
+        fondo = Iconos.NIVEL1.getRutaIcono();
+        contenedorActual = new MenuPrincipal(fondo);
         contenedorActual.addElementos();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         add(contenedorActual, BorderLayout.CENTER);
@@ -36,10 +39,6 @@ public class Interfaz extends JFrame{
         setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
-
-        Jugador j = new Mago();
-        Evento evento = new Hoguera(j,this);
-        cambiarEscena(new UICombate(Iconos.NIVEL1.getRutaIcono(),evento));
     }
 
     public void cambiarEscena(Contenedor contenedor) {
@@ -51,20 +50,31 @@ public class Interfaz extends JFrame{
         setSize(width,height);
     }
 
+    public boolean seguir() {
+        return contenedorActual.isSeguir();
+    }
+
+    public void setSeguir() {
+        contenedorActual.setSeguir(false);
+    }
+
     public int botonPulsado() {
         return contenedorActual.getElegido();
     }
 
-    public void setBotonPulsado(int botonPulsado) {
-        this.botonPulsado = botonPulsado;
+    public void reiniciarPulsado() {
         contenedorActual.setElegido(-1);
     }
 
     public void imprimirMensaje(String mensaje) {
         contenedorActual.mostrarMensaje(mensaje);
     }
+    public void actualizar() {
+        contenedorActual.actualizarInterfaz();
+    }
 
-    public void CambiarFase(int fase) {
+    public void cambiarFase(int fase) {
         contenedorActual.actualizarEscena(fase);
+        contenedorActual.actualizarInterfaz();
     }
 }
