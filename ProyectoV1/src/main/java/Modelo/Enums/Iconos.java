@@ -41,7 +41,7 @@ public enum Iconos {
     //Jugadores
     CABALLERO("Imagenes/Personajes/CaballeroTemp.png"),
     MAGO("Imagenes/Personajes/Mago.png"),
-    ASESINO("Imagenes/Personajes/Mago.png"),
+    ASESINO("Imagenes/Personajes/Asesino.png"),
     //Jefes
     DRAGON("Imagenes/Enemigos/Dragon.png"),
     WENDIGO("Imagenes/Enemigos/Wendigo.png"),
@@ -49,6 +49,7 @@ public enum Iconos {
     //Enemigos
     GOBLIN("Imagenes/Enemigos/Goblin.png"),
     PERRO("Imagenes/Enemigos/Perro.png"),
+    SERPIENTE("Imagenes/Enemigos/Serpiente.png"),
     ;
 
 

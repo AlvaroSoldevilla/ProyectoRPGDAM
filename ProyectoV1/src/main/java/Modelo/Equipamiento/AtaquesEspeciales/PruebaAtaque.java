@@ -13,7 +13,7 @@ public class PruebaAtaque extends AtaqueEspecial {
 
     @Override
     public boolean hacerAtaque(Entidad objetivo, Entidad atacante, Interfaz interfaz) {
-        if (puedeAtacar(atacante)) {
+        if (puedeAtacar(atacante,interfaz)) {
             objetivo.recibirDmg(atacante.getDmg()*2,interfaz);
             return true;
         } else {

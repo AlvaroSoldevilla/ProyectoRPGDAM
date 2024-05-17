@@ -57,6 +57,12 @@ public class Interfaz extends JFrame{
     public void setSeguir() {
         contenedorActual.setSeguir(false);
     }
+    public void deshabilitarBotones() {
+        contenedorActual.deshabilitarBotones();
+    }
+    public void habilitarBotones() {
+        contenedorActual.habilitarBotones();
+    }
 
     public int botonPulsado() {
         return contenedorActual.getElegido();
@@ -64,6 +70,7 @@ public class Interfaz extends JFrame{
 
     public void reiniciarPulsado() {
         contenedorActual.setElegido(-1);
+    contenedorActual.setSeguir(false);
     }
 
     public void imprimirMensaje(String mensaje) {

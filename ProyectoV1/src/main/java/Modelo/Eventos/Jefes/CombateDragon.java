@@ -4,7 +4,6 @@ import Modelo.Bases.Enemigo;
 import Modelo.Bases.Jugador;
 import Modelo.Enemigos.Jefes.DragonFase1;
 import Modelo.Enemigos.Jefes.DragonFase2;
-import Modelo.Enemigos.PruebaEnemigo;
 import Modelo.Enums.Iconos;
 import Modelo.Eventos.BatallaConJefe;
 import Modelo.Eventos.Combate;
@@ -21,8 +20,6 @@ public class CombateDragon extends BatallaConJefe {
         jefe = new DragonFase1();
         opciones = new String[] {"Combatir"};
     }
-
-    Jugador jugador;
 
     @Override
     public void empezarEvento() {

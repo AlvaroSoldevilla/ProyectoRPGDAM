@@ -12,7 +12,7 @@ public class MasVida extends Accesorio {
     }
 
     @Override
-    public void aplicarEfecto(Jugador jugador) {
+    public void aplicarEfecto(Jugador jugador, Interfaz interfaz) {
         jugador.setSalud(jugador.getSalud() + 5);
 
     }

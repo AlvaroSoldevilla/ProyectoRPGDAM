@@ -3,6 +3,7 @@ package Modelo.Equipamiento.Accesorios;
 import Modelo.Bases.Accesorio;
 import Modelo.Bases.Jugador;
 import Modelo.Enums.Estados;
+import UI.Interfaces.Interfaz;
 
 public class Antiveneno extends Accesorio {
 
@@ -12,7 +13,7 @@ public class Antiveneno extends Accesorio {
         inicioCombate = true;
     }
 
-    public void aplicarEfecto(Jugador jugador) {
-        jugador.infligirEstado(Estados.RESISTENCIAVENENO);
+    public void aplicarEfecto(Jugador jugador,Interfaz interfaz) {
+        jugador.infligirEstado(Estados.RESISTENCIAVENENO, interfaz);
     }
 }

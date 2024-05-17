@@ -13,8 +13,6 @@ public class EventoPintorMagico extends Aleatorio {
 
         this.jugador = jugador;
     }
-
-    Jugador jugador;
     @Override
     public void empezarEvento() {
         interfaz.actualizar();

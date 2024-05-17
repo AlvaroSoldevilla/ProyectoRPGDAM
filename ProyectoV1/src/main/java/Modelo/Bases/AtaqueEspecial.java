@@ -1,19 +1,22 @@
 package Modelo.Bases;
 
 import UI.Interfaces.Interfaz;
+import lombok.Data;
 
+@Data
 public abstract class AtaqueEspecial {
 
     protected String nombre;
     protected int coste;
     public abstract boolean hacerAtaque(Entidad objetivo, Entidad atatcante, Interfaz interfaz);
-    public boolean puedeAtacar(Entidad atatcante) {
+
+    public boolean puedeAtacar(Entidad atatcante, Interfaz interfaz) {
         if ((atatcante instanceof Jugador jugador)) {
             if (jugador.getMana()>=coste) {
                 jugador.setMana(jugador.getMana()-coste);
                 return true;
             } else {
-                System.out.println("No tienes mana suficiente");
+                interfaz.imprimirMensaje("No tienes mana suficiente");
                 return false;
             }
         } else {

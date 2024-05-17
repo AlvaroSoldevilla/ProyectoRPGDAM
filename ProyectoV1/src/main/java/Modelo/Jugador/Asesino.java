@@ -10,11 +10,13 @@ public class Asesino extends Jugador {
    public Asesino(){
     nombre="Asesino";
     dmg=3;
+    dmgBase = dmg;
     maxSalud = 30;
     salud=maxSalud;
     maxMana = 30;
     mana=maxMana;
     defensa = 5;
+    defensaBase = defensa;
     oro = 40;
     arma= new Daga();
     armas.add(arma);

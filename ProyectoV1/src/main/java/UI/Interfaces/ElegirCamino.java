@@ -3,6 +3,7 @@ package UI.Interfaces;
 import Modelo.Bases.Evento;
 import Modelo.Bases.Jugador;
 import UI.Elementos.Contenedor;
+import UI.Elementos.PanelEstadisticas;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,6 +47,13 @@ public class ElegirCamino extends Contenedor {
         JLabel backgroundLabel = new JLabel(new ImageIcon(imagenDeFondo));
         backgroundLabel.setBounds(0, 0, width, height);
         add(backgroundLabel);
+
+        //Barra Estadísticas
+        JPanel panelEstadisticas = new PanelEstadisticas(jugador);
+        panelEstadisticas.setBounds(0, 0, getWidth(), 50);
+        panelEstadisticas.setBackground(new Color(255, 255, 255, 150)); // Fondo semitransparente
+        panelEstadisticas.setLayout(null);
+        add(panelEstadisticas);
 
         // Personaje 1
         JButton character1Button = new JButton(new ImageIcon(jugador.getIcono().getRutaIcono()));
@@ -103,6 +111,16 @@ public class ElegirCamino extends Contenedor {
     public void actualizarEscena(int fase) {}
     @Override
     public void actualizarInterfaz() {}
+
+    @Override
+    public void deshabilitarBotones() {
+
+    }
+
+    @Override
+    public void habilitarBotones() {
+
+    }
 }
 
 

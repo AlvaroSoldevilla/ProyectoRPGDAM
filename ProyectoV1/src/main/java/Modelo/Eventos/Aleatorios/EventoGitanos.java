@@ -20,8 +20,6 @@ public class EventoGitanos extends Aleatorio {
         this.enemigo = enemigo;
         this.nivel = nivel;
     }
-
-    Jugador jugador;
     Enemigo enemigo;
     int nivel;
     @Override
@@ -77,7 +75,6 @@ public class EventoGitanos extends Aleatorio {
         }
 
     }
-
     private void esperar() {
         while (interfaz.botonPulsado()==-1) {
             try {

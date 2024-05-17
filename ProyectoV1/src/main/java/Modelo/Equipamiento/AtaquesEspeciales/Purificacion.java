@@ -13,7 +13,7 @@ public class Purificacion extends AtaqueEspecial {
 
     @Override
     public boolean hacerAtaque(Entidad objetivo, Entidad atacante, Interfaz interfaz) {
-        if (puedeAtacar(atacante)) {
+        if (puedeAtacar(atacante,interfaz)) {
             atacante.eliminarEstadosPerjudiciales();
             return true;
         } else {

@@ -2,6 +2,7 @@ package Modelo.Equipamiento.Accesorios;
 
 import Modelo.Bases.Accesorio;
 import Modelo.Bases.Jugador;
+import UI.Interfaces.Interfaz;
 
 public class MasMana extends Accesorio {
     public MasMana(){
@@ -11,7 +12,7 @@ public class MasMana extends Accesorio {
     }
 
     @Override
-    public void aplicarEfecto(Jugador jugador) {
+    public void aplicarEfecto(Jugador jugador, Interfaz interfaz) {
     jugador.setMana(jugador.getMana() + 5);
     }
 }

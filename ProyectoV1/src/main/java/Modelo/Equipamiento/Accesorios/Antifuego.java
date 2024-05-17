@@ -13,7 +13,7 @@ public class Antifuego extends Accesorio {
         inicioCombate = true;
     }
 
-    public void aplicarEfecto(Jugador jugador) {
-        jugador.infligirEstado(Estados.RESISTENCIAQUEMADURA);
+    public void aplicarEfecto(Jugador jugador, Interfaz interfaz) {
+        jugador.infligirEstado(Estados.RESISTENCIAQUEMADURA,interfaz);
     }
 }

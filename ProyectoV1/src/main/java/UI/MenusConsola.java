@@ -91,7 +91,7 @@ public class MenusConsola {
             case 1 -> new Caballero();
             case 2 -> new Mago();
             case 3 -> new Asesino();
-            default -> new PruebaJugador();
+            default -> null;
         };
     }
 

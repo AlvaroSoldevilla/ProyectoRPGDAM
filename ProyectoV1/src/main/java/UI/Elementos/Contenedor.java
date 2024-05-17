@@ -24,4 +24,8 @@ public abstract class Contenedor extends JPanel{
     public abstract void actualizarEscena(int fase);
     public abstract void mostrarMensaje(String mensaje);
     public abstract void actualizarInterfaz();
+
+    public abstract void deshabilitarBotones();
+
+    public abstract void habilitarBotones();
 }

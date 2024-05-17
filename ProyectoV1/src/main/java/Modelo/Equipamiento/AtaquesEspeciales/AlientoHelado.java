@@ -15,18 +15,18 @@ public class AlientoHelado extends AtaqueEspecial {
 
     @Override
     public boolean hacerAtaque(Entidad objetivo, Entidad atacante, Interfaz interfaz) {
-        if (puedeAtacar(atacante)) {
+        if (puedeAtacar(atacante,interfaz)) {
             objetivo.recibirDmg(atacante.getDmg(),interfaz);
             if (atacante instanceof DragonFase1 dragon) {
                 if (dragon.getHieloAcumulado() == 5) {
-                    objetivo.infligirEstado(Estados.CONGELADO);
+                    objetivo.infligirEstado(Estados.CONGELADO,interfaz);
                     dragon.setHieloAcumulado(0);
                 } else {
                     dragon.setHieloAcumulado(dragon.getHieloAcumulado()+1);
                 }
             } else if (atacante instanceof DragonFase2 dragon) {
                 if (dragon.getHieloAcumulado() == 3) {
-                    objetivo.infligirEstado(Estados.CONGELADO);
+                    objetivo.infligirEstado(Estados.CONGELADO,interfaz);
                     dragon.setHieloAcumulado(0);
                 } else {
                     dragon.setHieloAcumulado(dragon.getHieloAcumulado()+1);

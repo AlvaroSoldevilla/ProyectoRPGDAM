@@ -3,7 +3,6 @@ package Modelo.Eventos.Jefes;
 import Modelo.Bases.Enemigo;
 import Modelo.Bases.Jugador;
 import Modelo.Enemigos.Jefes.Lobo;
-import Modelo.Enemigos.PruebaEnemigo;
 import Modelo.Enums.Iconos;
 import Modelo.Eventos.BatallaConJefe;
 import Modelo.Eventos.Combate;
@@ -20,8 +19,6 @@ public class CombateLobo extends BatallaConJefe {
         jefe = new Lobo();
         opciones = new String[] {"Combatir"};
     }
-
-    Jugador jugador;
     @Override
     public void empezarEvento() {
         setTexto("Te encuentras frente a ti un hombre lobo que decidido a acabar tu aventura");

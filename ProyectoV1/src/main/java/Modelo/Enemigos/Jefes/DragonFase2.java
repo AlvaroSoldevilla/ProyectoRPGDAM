@@ -9,9 +9,12 @@ import lombok.Data;
 public class DragonFase2 extends Enemigo {
     public DragonFase2(){
         nombre = "Adula, Dragón Lunar";
-        salud = 300;
-        dmg = 40;
-        defensa = 45;
+        maxSalud = 150;
+        salud = maxSalud;
+        dmg = 35;
+        dmgBase = dmg;
+        defensa = 20;
+        defensaBase = defensa;
         ataques = AtaquesEnemigo.DRAGONFASE2.getAtaques();
         icono = Iconos.DRAGON;
     }

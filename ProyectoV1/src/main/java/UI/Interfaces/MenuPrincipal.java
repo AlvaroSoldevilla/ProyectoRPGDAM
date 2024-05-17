@@ -89,5 +89,15 @@ public class MenuPrincipal extends Contenedor {
     public void actualizarInterfaz() {
 
     }
+
+    @Override
+    public void deshabilitarBotones() {
+
+    }
+
+    @Override
+    public void habilitarBotones() {
+
+    }
 }
 

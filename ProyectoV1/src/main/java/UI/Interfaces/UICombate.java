@@ -6,6 +6,7 @@ import Modelo.Bases.Entidad;
 import Modelo.Enums.Estados;
 import Modelo.Enums.Iconos;
 import UI.Elementos.Contenedor;
+import UI.Elementos.PanelEstadisticas;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,6 +38,13 @@ public class UICombate extends Contenedor {
     }
 
     public void addElementos() {
+        //Barra Estadísticas
+        JPanel panelEstadisticas = new PanelEstadisticas(jugador);
+        panelEstadisticas.setBounds(0, 0, getWidth(), 50);
+        panelEstadisticas.setBackground(new Color(255, 255, 255, 150)); // Fondo semitransparente
+        panelEstadisticas.setLayout(null);
+        add(panelEstadisticas);
+
         // Fondo
         JLabel backgroundLabel = new JLabel(new ImageIcon(imagenDeFondo));
         backgroundLabel.setBounds(0, 0, getWidth(), getHeight());
@@ -61,7 +69,7 @@ public class UICombate extends Contenedor {
         backgroundLabel.add(estadosJugadorPanel);
 
         JPanel estadisticasJugadorPanel = new JPanel();
-        estadisticasJugadorPanel.setBounds(50, 370, 150, 50);
+        estadisticasJugadorPanel.setBounds(50, 370, 150, 65);
         estadisticasJugadorPanel.setLayout(new BoxLayout(estadisticasJugadorPanel, BoxLayout.Y_AXIS));
 
         addEstadisticas(estadisticasJugadorPanel, jugador);
@@ -199,9 +207,12 @@ public class UICombate extends Contenedor {
     }
 
     private void addEstadisticas(JPanel panel, Entidad entidad) {
-        panel.add(new JLabel("Salud: " + entidad.getSalud()));
-        panel.add(new JLabel("Daño: " + entidad.getDmg()));
-        panel.add(new JLabel("Defensa: " + entidad.getDefensa()));
+        panel.add(new JLabel(String.valueOf(entidad.getSalud()),new ImageIcon(Iconos.SALUD.getRutaIcono()), SwingConstants.LEFT ));
+        panel.add(new JLabel(String.valueOf(entidad.getDmg()),new ImageIcon(Iconos.DMG.getRutaIcono()), SwingConstants.LEFT ));
+        panel.add(new JLabel(String.valueOf(entidad.getDefensa()),new ImageIcon(Iconos.DEFENSA.getRutaIcono()), SwingConstants.LEFT ));
+        if (entidad instanceof Jugador jugador) {
+            panel.add(new JLabel(String.valueOf(((Jugador) entidad).getMana()),new ImageIcon(Iconos.MANA.getRutaIcono()), SwingConstants.LEFT ));
+        }
         // Agrega aquí más estadísticas si es necesario
     }
 
@@ -223,5 +234,20 @@ public class UICombate extends Contenedor {
         addElementos();
         this.revalidate();
         this.repaint();
+        deshabilitarBotones();
+    }
+
+    @Override
+    public void deshabilitarBotones() {
+        for (JButton boton : botones) {
+            boton.setEnabled(false);
+        }
+    }
+
+    @Override
+    public void habilitarBotones() {
+        for (JButton boton : botones) {
+            boton.setEnabled(true);
+        }
     }
 }

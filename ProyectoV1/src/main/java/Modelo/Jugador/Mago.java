@@ -14,7 +14,9 @@ public class Mago extends Jugador {
         maxMana = 80;
         mana=maxMana;
         dmg=3;
+        dmgBase = dmg;
         defensa = 0;
+        defensaBase = defensa;
         oro = 30;
         arma= new Baston();
         armas.add(arma);

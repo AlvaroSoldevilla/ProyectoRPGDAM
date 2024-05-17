@@ -33,8 +33,6 @@ public class CombateWendigo extends BatallaConJefe {
         opciones = new String[] {"Combatir"};
     }
 
-    Jugador jugador;
-
     int turnoActual;
     int enemigoElegido = 0;
     boolean fintaJugador = false;
@@ -99,6 +97,14 @@ public class CombateWendigo extends BatallaConJefe {
                 }
                 break;
             case 2:
+                if (!ataqueEspecial(jugador, enemigo)) {
+                    interfaz.imprimirMensaje("El ataque especial del enemigo ha fallado");
+                    esperar(1000);
+                } else {
+                    interfaz.imprimirMensaje("El ataque especial del enemigo ha sido un éxito");
+                    esperar(1000);
+                }
+            case 3:
                 if (bloquear(enemigo)) {
                     interfaz.imprimirMensaje("El enemigo se prepara para bloquear el siguiente ataque");
                     esperar(1000);
@@ -107,7 +113,7 @@ public class CombateWendigo extends BatallaConJefe {
                     esperar(1000);
                 }
                 break;
-            case 3:
+            case 4:
                 if (finta(jugador, enemigo)) {
                     interfaz.imprimirMensaje("Has caído en la trampa del enemigo, estás desorientado");
                     esperar(1000);
@@ -116,7 +122,7 @@ public class CombateWendigo extends BatallaConJefe {
                     esperar(1000);
                 }
                 break;
-            case 4:
+            case 5:
                 interfaz.imprimirMensaje("El enemigo intenta invocar ayuda\n(Pulsa sobre los enemigos para cambiar el objetivo)");
                 addEnemigo(new Perro());
                 break;
@@ -126,7 +132,7 @@ public class CombateWendigo extends BatallaConJefe {
     public boolean finta(Entidad objetivo, Entidad atacante) {
         if (!atacante.getEstadosSufridos().containsKey(Estados.SILENCIADO)) {
             if (objetivo.isBloqueando()) {
-                objetivo.infligirEstado(Estados.DESORIENTADO);
+                objetivo.infligirEstado(Estados.DESORIENTADO,interfaz);
                 return true;
             } else {
                 return false;
@@ -171,42 +177,49 @@ public class CombateWendigo extends BatallaConJefe {
                 }
                 return false;
             } else {
-                if (atacante instanceof Jugador) {
-                    if (atacante instanceof Asesino) {
+                if (!objetivo.getEstadosSufridos().containsKey(Estados.CONTRAATACANDO)) {
+                    if (atacante instanceof Jugador) {
+                        if (atacante instanceof Asesino) {
 
-                        objetivo.recibirDmg(atacante.getDmg(), interfaz);
-                        objetivo.recibirDmg(atacante.getDmg() / 2, interfaz);
+                            objetivo.recibirDmg(atacante.getDmg(), interfaz);
+                            objetivo.recibirDmg(atacante.getDmg() / 2, interfaz);
 
-                    } else if (((Jugador) atacante).getArma() instanceof DagaRoboVida) {
+                        } else if (((Jugador) atacante).getArma() instanceof DagaRoboVida) {
 
-                        objetivo.recibirDmg(atacante.getDmg(), interfaz);
-                        jugador.curarVida(atacante.getDmg() / 3);
+                            objetivo.recibirDmg(atacante.getDmg(), interfaz);
+                            jugador.curarVida(atacante.getDmg() / 3);
 
-                    } else if (((Jugador) atacante).getArma() instanceof DagaCritica) {
+                        } else if (((Jugador) atacante).getArma() instanceof DagaCritica) {
 
-                        if (rng.nextInt(0, 4) == 1) {
-                            objetivo.recibirDmg(atacante.getDmg() * 2, interfaz);
+                            if (rng.nextInt(0, 4) == 1) {
+                                objetivo.recibirDmg(atacante.getDmg() * 2, interfaz);
+                            } else {
+                                objetivo.recibirDmg(atacante.getDmg(), interfaz);
+                            }
+
                         } else {
                             objetivo.recibirDmg(atacante.getDmg(), interfaz);
                         }
-
                     } else {
                         objetivo.recibirDmg(atacante.getDmg(), interfaz);
                     }
-                } else {
-                    objetivo.recibirDmg(atacante.getDmg(), interfaz);
-                }
 
-                if (atacante instanceof Jugador) {
-                    if (jugador.getArma().getBonus() != null && !jugador.getArma().getBonus().isEmpty())
-                        for (int i = 0; i < jugador.getArma().getBonus().size(); i++) {
-                            if (rng.nextInt(0, 5) == 1) {
-                                objetivo.infligirEstado(jugador.getArma().getBonus().get(i));
+                    if (atacante instanceof Jugador) {
+                        if (jugador.getArma().getBonus() != null && !jugador.getArma().getBonus().isEmpty())
+                            for (int i = 0; i < jugador.getArma().getBonus().size(); i++) {
+                                if (rng.nextInt(0, 5) == 1) {
+                                    objetivo.infligirEstado(jugador.getArma().getBonus().get(i),interfaz);
+                                }
                             }
-                        }
-                }
+                    }
 
-                return true;
+                    return true;
+                } else {
+                    interfaz.imprimirMensaje("Contraataque");
+                    esperar(500);
+                    atacante.recibirDmg(objetivo.getDmg(), interfaz);
+                    return false;
+                }
             }
         } else {
             return false;
@@ -241,8 +254,10 @@ public class CombateWendigo extends BatallaConJefe {
 
         if (!atacante.getEstadosSufridos().containsKey(Estados.CONGELADO) && !atacante.getEstadosSufridos().containsKey(Estados.SILENCIADO)) {
             if (atacante instanceof Jugador) {
-                interfaz.getContenedorActual().actualizarEscena(2);
+                interfaz.cambiarFase(2);
+                interfaz.reiniciarPulsado();
                 while (interfaz.botonPulsado() == -1) {
+                    interfaz.habilitarBotones();
                     try {
                         Thread.sleep(10);
                     } catch (InterruptedException e) {
@@ -251,20 +266,24 @@ public class CombateWendigo extends BatallaConJefe {
                     if (interfaz.botonPulsado() != -1) {
                         ataque = interfaz.botonPulsado();
                     }
+                    interfaz.deshabilitarBotones();
                 }
-                interfaz.reiniciarPulsado();
 
             } else {
                 ataque = rng.nextInt(0, atacante.getAtaques().size());
+                interfaz.imprimirMensaje("El enemigo usa el etaque especial " + atacante.getAtaques().get(ataque).getNombre());
             }
-
-            AtaqueEspecial as = atacante.getAtaques().get(ataque);
-
-            if (rng.nextInt(0, 20 / multiplicadorFallo) == 1) {
-                return false;
+            if (!objetivo.getEstadosSufridos().containsKey(Estados.CONTRAATACANDO)) {
+                AtaqueEspecial as = atacante.getAtaques().get(ataque);
+                if (rng.nextInt(0, 20 / multiplicadorFallo) == 1) {
+                    return false;
+                } else {
+                    as.hacerAtaque(objetivo, atacante, interfaz);
+                    return true;
+                }
             } else {
-                as.hacerAtaque(objetivo, atacante, interfaz);
-                return true;
+                atacante.recibirDmg(objetivo.getDmg(), interfaz);
+                return false;
             }
         } else {
             return false;
@@ -275,14 +294,15 @@ public class CombateWendigo extends BatallaConJefe {
         Enemigo enemigo = enemigos[0];
         jugador.getAccesorios().forEach((a) -> {
             if (a.isInicioCombate()) {
-                a.aplicarEfecto(jugador);
+                a.aplicarEfecto(jugador,interfaz);
             }
         });
         while (!jugador.estaMuerto() && !comprobarVictoria()) {
 
             interfaz.imprimirMensaje("Turno del jugador");
-            interfaz.getContenedorActual().actualizarEscena(1);
-            while (interfaz.botonPulsado() == -1) {
+
+            interfaz.habilitarBotones();
+            while (interfaz.botonPulsado() == -1 && !interfaz.seguir()) {
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
@@ -296,28 +316,19 @@ public class CombateWendigo extends BatallaConJefe {
                     accionJugador(interfaz.botonPulsado() + 1, enemigo);
                 }
             }
+            interfaz.deshabilitarBotones();
             interfaz.reiniciarPulsado();
-
-            while (interfaz.botonPulsado() == -1) {
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                if (interfaz.botonPulsado() != -1) {
-                    accionJugador(interfaz.botonPulsado(), enemigo);
-                    interfaz.reiniciarPulsado();
-                }
-            }
+            interfaz.cambiarFase(1);
 
             for (int i = 0; i < enemigos.length; i++) {
                 if (enemigos[i].estaMuerto()) {
                     eliminarEnemigo(i);
                 }
             }
+            interfaz.actualizar();
 
             jugador.aplicarEstados(interfaz);
-            interfaz.imprimirMensaje("");
+            esperar(1000);
 
             if (!comprobarVictoria() && !jugador.estaMuerto()) {
                 for (int i = 0; i < enemigos.length; i++) {
@@ -331,9 +342,11 @@ public class CombateWendigo extends BatallaConJefe {
                 for (int i = 0; i < enemigos.length; i++) {
                     if (enemigos[i] != null) {
                         if (enemigo instanceof Wendigo) {
-                            accionEnemigo(rng.nextInt(1, 5), enemigos[i]);
+                            accionEnemigo(rng.nextInt(1, 6), enemigos[i]);
                         } else if (enemigo.estaMuerto()){
                             eliminarEnemigo(i);
+                        } else {
+                            accionEnemigo(rng.nextInt(1,4),enemigos[i]);
                         }
                         enemigos[i].aplicarEstados(interfaz);
                     }
@@ -341,9 +354,10 @@ public class CombateWendigo extends BatallaConJefe {
 
                 jugador.getAccesorios().forEach((a) -> {
                     if (a.isInicioTurno()) {
-                        a.aplicarEfecto(jugador);
+                        a.aplicarEfecto(jugador,interfaz);
                     }
                 });
+                interfaz.actualizar();
 
                 if (fintaJugador) {
                     if (finta(enemigo, jugador)) {
@@ -353,8 +367,8 @@ public class CombateWendigo extends BatallaConJefe {
                         interfaz.imprimirMensaje("La finta ha fallado");
                         esperar(1000);
                     }
+                    fintaJugador = false;
                 }
-
                 jugador.finTurno();
             } else {
                 return true;
@@ -430,10 +444,11 @@ public class CombateWendigo extends BatallaConJefe {
 
             jugador.getAccesorios().forEach((a) -> {
                 if (a.isFinCombate()) {
-                    a.aplicarEfecto(jugador);
+                    a.aplicarEfecto(jugador,interfaz);
                 }
             });
 
+            interfaz.habilitarBotones();
             while (interfaz.botonPulsado() == -1) {
                 try {
                     Thread.sleep(10);

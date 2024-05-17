@@ -14,8 +14,6 @@ public class EventoScammer extends Aleatorio {
 
         this.jugador = jugador;
     }
-
-    Jugador jugador;
     @Override
     public void empezarEvento() {
         interfaz.actualizar();

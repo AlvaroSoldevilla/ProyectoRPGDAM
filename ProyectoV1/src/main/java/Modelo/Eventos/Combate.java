@@ -22,7 +22,6 @@ public class Combate extends Evento {
     public Combate(Jugador jugador, Enemigo enemigo, int nivel, Interfaz interfaz) {
         super(interfaz);
         titulo = "Combate";
-        turnoActual = 1;
         this.enemigo = enemigo;
         this.jugador = jugador;
         this.nivel = nivel;
@@ -32,7 +31,6 @@ public class Combate extends Evento {
     public Combate(Jugador jugador, Enemigo enemigo, Interfaz interfaz) {
         super(interfaz);
         titulo = "Combate";
-        turnoActual = 1;
         this.enemigo = enemigo;
         this.jugador = jugador;
         if (enemigo instanceof Lobo) {
@@ -44,7 +42,6 @@ public class Combate extends Evento {
         }
     }
 
-    int turnoActual;
     int nivel = -1;
     boolean fintaJugador = false;
     Jugador jugador;
@@ -99,14 +96,23 @@ public class Combate extends Evento {
         switch (codAccion) {
             case 1:
                 if (!atacar(jugador, enemigo)) {
-                    interfaz.imprimirMensaje("El ataque ha fallado");
+                    interfaz.imprimirMensaje("El ataque del enemigo ha fallado");
                     esperar(1000);
                 } else {
-                    interfaz.imprimirMensaje("El ataque te ha dado");
+                    interfaz.imprimirMensaje("El ataque del enemigo te ha dado");
                     esperar(1000);
                 }
                 break;
             case 2:
+                if (!ataqueEspecial(jugador, enemigo)) {
+                    interfaz.imprimirMensaje("El ataque especial del enemigo ha fallado");
+                    esperar(1000);
+                } else {
+                    interfaz.imprimirMensaje("El ataque especial del enemigo ha sido un éxito");
+                    esperar(1000);
+                }
+                break;
+            case 3:
                 if (bloquear(enemigo)) {
                     interfaz.imprimirMensaje("El enemigo se prepara para bloquear el siguiente ataque");
                     esperar(1000);
@@ -115,7 +121,7 @@ public class Combate extends Evento {
                     esperar(1000);
                 }
                 break;
-            case 3:
+            case 4:
                 if (finta(jugador, enemigo)) {
                     interfaz.imprimirMensaje("Has caído en la trampa del enemigo, estás desorientado");
                     esperar(1000);
@@ -130,7 +136,7 @@ public class Combate extends Evento {
     public boolean finta(Entidad objetivo, Entidad atacante) {
         if (!atacante.getEstadosSufridos().containsKey(Estados.SILENCIADO)) {
             if (objetivo.isBloqueando()) {
-                objetivo.infligirEstado(Estados.DESORIENTADO);
+                objetivo.infligirEstado(Estados.DESORIENTADO,interfaz);
                 return true;
             } else {
                 return false;
@@ -170,47 +176,56 @@ public class Combate extends Evento {
             if (rng.nextInt(0, 20 / multiplicadorFallo) == 1) {
                 if (atacante instanceof Jugador) {
                     if (((Jugador) atacante).getArma() instanceof DagaDoble) {
+                        interfaz.imprimirMensaje("Te haces daño a ti mismo");
+                        esperar(500);
                         atacante.recibirDmg(atacante.getDmg() / 4, interfaz);
                     }
                 }
                 return false;
             } else {
-                if (atacante instanceof Jugador) {
-                    if (atacante instanceof Asesino) {
+                if (!objetivo.getEstadosSufridos().containsKey(Estados.CONTRAATACANDO)) {
+                    if (atacante instanceof Jugador) {
+                        if (atacante instanceof Asesino) {
 
-                        objetivo.recibirDmg(atacante.getDmg(), interfaz);
-                        objetivo.recibirDmg(atacante.getDmg() / 2, interfaz);
+                            objetivo.recibirDmg(atacante.getDmg(), interfaz);
+                            objetivo.recibirDmg(atacante.getDmg() / 2, interfaz);
 
-                    } else if (((Jugador) atacante).getArma() instanceof DagaRoboVida) {
+                        } else if (((Jugador) atacante).getArma() instanceof DagaRoboVida) {
 
-                        objetivo.recibirDmg(atacante.getDmg(), interfaz);
-                        jugador.curarVida(atacante.getDmg() / 3);
+                            objetivo.recibirDmg(atacante.getDmg(), interfaz);
+                            jugador.curarVida(atacante.getDmg() / 3);
 
-                    } else if (((Jugador) atacante).getArma() instanceof DagaCritica) {
+                        } else if (((Jugador) atacante).getArma() instanceof DagaCritica) {
 
-                        if (rng.nextInt(0, 4) == 1) {
-                            objetivo.recibirDmg(atacante.getDmg() * 2, interfaz);
+                            if (rng.nextInt(0, 4) == 1) {
+                                objetivo.recibirDmg(atacante.getDmg() * 2, interfaz);
+                            } else {
+                                objetivo.recibirDmg(atacante.getDmg(), interfaz);
+                            }
+
                         } else {
                             objetivo.recibirDmg(atacante.getDmg(), interfaz);
                         }
-
                     } else {
                         objetivo.recibirDmg(atacante.getDmg(), interfaz);
                     }
-                } else {
-                    objetivo.recibirDmg(atacante.getDmg(), interfaz);
-                }
 
-                if (atacante instanceof Jugador) {
-                    if (jugador.getArma().getBonus() != null && !jugador.getArma().getBonus().isEmpty())
-                        for (int i = 0; i < jugador.getArma().getBonus().size(); i++) {
-                            if (rng.nextInt(0, 5) == 1) {
-                                objetivo.infligirEstado(jugador.getArma().getBonus().get(i));
+                    if (atacante instanceof Jugador) {
+                        if (jugador.getArma().getBonus() != null && !jugador.getArma().getBonus().isEmpty())
+                            for (int i = 0; i < jugador.getArma().getBonus().size(); i++) {
+                                if (rng.nextInt(0, 5) == 1) {
+                                    objetivo.infligirEstado(jugador.getArma().getBonus().get(i),interfaz);
+                                }
                             }
-                        }
-                }
+                    }
 
-                return true;
+                    return true;
+                } else {
+                    interfaz.imprimirMensaje("Contraataque");
+                    esperar(500);
+                    atacante.recibirDmg(objetivo.getDmg(), interfaz);
+                    return false;
+                }
             }
         } else {
             return false;
@@ -229,7 +244,9 @@ public class Combate extends Evento {
         int multiplicadorFallo = 1;
         int ataque = 0;
 
-        if (estaContraatacando(objetivo, atacante)) return false;
+        if (estaContraatacando(objetivo, atacante)) {
+            return false;
+        }
 
         if (atacante.getEstadosSufridos().containsKey(Estados.CEGADO)) {
             multiplicadorFallo *= Estados.CEGADO.getEfecto();
@@ -245,7 +262,9 @@ public class Combate extends Evento {
 
         if (!atacante.getEstadosSufridos().containsKey(Estados.CONGELADO) && !atacante.getEstadosSufridos().containsKey(Estados.SILENCIADO)) {
             if (atacante instanceof Jugador) {
-                interfaz.getContenedorActual().actualizarEscena(2);
+                interfaz.cambiarFase(2);
+                interfaz.reiniciarPulsado();
+                interfaz.habilitarBotones();
                 while (interfaz.botonPulsado() == -1) {
                     try {
                         Thread.sleep(10);
@@ -254,21 +273,24 @@ public class Combate extends Evento {
                     }
                     if (interfaz.botonPulsado() != -1) {
                         ataque = interfaz.botonPulsado();
-
                     }
                 }
-                interfaz.reiniciarPulsado();
+                interfaz.deshabilitarBotones();
             } else {
                 ataque = rng.nextInt(0, atacante.getAtaques().size());
+                interfaz.imprimirMensaje("El enemigo usa el etaque especial " + atacante.getAtaques().get(ataque).getNombre());
             }
-
-            AtaqueEspecial as = atacante.getAtaques().get(ataque);
-
-            if (rng.nextInt(0, 20 / multiplicadorFallo) == 1) {
-                return false;
+            if (!objetivo.getEstadosSufridos().containsKey(Estados.CONTRAATACANDO)) {
+                AtaqueEspecial as = atacante.getAtaques().get(ataque);
+                if (rng.nextInt(0, 20 / multiplicadorFallo) == 1) {
+                    return false;
+                } else {
+                    as.hacerAtaque(objetivo, atacante, interfaz);
+                    return true;
+                }
             } else {
-                as.hacerAtaque(objetivo, atacante, interfaz);
-                return true;
+                atacante.recibirDmg(objetivo.getDmg(), interfaz);
+                return false;
             }
         } else {
             return false;
@@ -279,16 +301,16 @@ public class Combate extends Evento {
     public void empezarEvento() {
         jugador.getAccesorios().forEach((a) -> {
             if (a.isInicioCombate()) {
-                a.aplicarEfecto(jugador);
+                a.aplicarEfecto(jugador,interfaz);
             }
         });
 
         while (!jugador.estaMuerto() && !enemigo.estaMuerto()) {
 
             interfaz.imprimirMensaje("Tu turno");
-            interfaz.getContenedorActual().actualizarEscena(1);
 
-            while (interfaz.botonPulsado() == -1) {
+            interfaz.habilitarBotones();
+            while (interfaz.botonPulsado() == -1 && !interfaz.seguir()) {
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
@@ -298,9 +320,13 @@ public class Combate extends Evento {
                     accionJugador(interfaz.botonPulsado() + 1);
                 }
             }
+            interfaz.deshabilitarBotones();
             interfaz.reiniciarPulsado();
+            interfaz.cambiarFase(1);
 
             jugador.aplicarEstados(interfaz);
+            interfaz.actualizar();
+            esperar(500);
 
             if (!enemigo.estaMuerto() && !jugador.estaMuerto()) {
 
@@ -308,15 +334,16 @@ public class Combate extends Evento {
                 interfaz.imprimirMensaje("Turno del enemigo");
                 esperar(1000);
 
-                accionEnemigo(rng.nextInt(1, 4));
+                accionEnemigo(rng.nextInt(1, 5));
 
                 enemigo.aplicarEstados(interfaz);
 
                 jugador.getAccesorios().forEach((a) -> {
                     if (a.isInicioTurno()) {
-                        a.aplicarEfecto(jugador);
+                        a.aplicarEfecto(jugador,interfaz);
                     }
                 });
+                interfaz.actualizar();
 
                 if (fintaJugador) {
                     if (finta(enemigo, jugador)) {
@@ -326,6 +353,7 @@ public class Combate extends Evento {
                         interfaz.imprimirMensaje("La finta ha fallado");
                         esperar(1000);
                     }
+                    fintaJugador = false;
                 }
                 jugador.finTurno();
             }
@@ -352,6 +380,7 @@ public class Combate extends Evento {
             if (enemigo instanceof DragonFase1) {
                 interfaz.imprimirMensaje("Te diriges hacia la salida");
                 interfaz.cambiarFase(3);
+                interfaz.habilitarBotones();
                 while (interfaz.botonPulsado() == -1) {
                     try {
                         Thread.sleep(10);
@@ -362,6 +391,7 @@ public class Combate extends Evento {
             } else if (enemigo instanceof DragonFase2){
                 interfaz.imprimirMensaje("Esta vez te aseguras de que el Dragón ha muerto.");
                 interfaz.cambiarFase(3);
+                interfaz.habilitarBotones();
                 while (interfaz.botonPulsado() == -1) {
                     try {
                         Thread.sleep(10);
@@ -381,9 +411,10 @@ public class Combate extends Evento {
 
                     jugador.getAccesorios().forEach((a) -> {
                         if (a.isFinCombate()) {
-                            a.aplicarEfecto(jugador);
+                            a.aplicarEfecto(jugador,interfaz);
                         }
                     });
+                    interfaz.habilitarBotones();
                     while (interfaz.botonPulsado() == -1) {
                         try {
                             Thread.sleep(10);

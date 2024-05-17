@@ -15,7 +15,6 @@ public class EventoFuente extends Aleatorio {
         this.jugador = jugador;
     }
 
-    Jugador jugador;
     @Override
     public void empezarEvento() {
         interfaz.actualizar();

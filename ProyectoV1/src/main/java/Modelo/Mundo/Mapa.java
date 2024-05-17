@@ -2,13 +2,13 @@ package Modelo.Mundo;
 
 import Modelo.Bases.Enemigo;
 import Modelo.Bases.Jugador;
-import Modelo.Enemigos.Enemigo3;
+import Modelo.Enemigos.Serpiente;
 import Modelo.Enemigos.Goblin;
 import Modelo.Enemigos.Perro;
+import Modelo.Enums.Iconos;
 import Modelo.Eventos.*;
 import Modelo.Eventos.Aleatorios.*;
 import Modelo.Bases.Evento;
-import Modelo.Enemigos.PruebaEnemigo;
 import Modelo.Eventos.Jefes.CombateWendigo;
 import Modelo.Eventos.Jefes.CombateLobo;
 import Modelo.Eventos.Jefes.CombateDragon;
@@ -31,6 +31,17 @@ public class Mapa {
 
     public void avanzarNivel() {
         nivelActual++;
+        switch (nivelActual) {
+            case 1:
+                interfaz.setFondo(Iconos.NIVEL1.getRutaIcono());
+                break;
+            case 2:
+                interfaz.setFondo(Iconos.NIVEL2.getRutaIcono());
+                break;
+            case 3:
+                interfaz.setFondo(Iconos.NIVEL3.getRutaIcono());
+                break;
+        }
         sala = 0;
     }
 
@@ -39,6 +50,7 @@ public class Mapa {
         Evento[] eventos;
         if (distanciaAJefe() == -1) {
             jugador.restaurarVida();
+            jugador.subirNivel();
             avanzarNivel();
             avanzarSala();
             return null;
@@ -68,7 +80,6 @@ public class Mapa {
     }
 
     private Evento generarEvento() {
-
         int codEvento = rng.nextInt(0,15);
 
         return switch (codEvento) {
@@ -109,9 +120,9 @@ public class Mapa {
                 //Jefe
                 switch (nivelActual) {
                     case 1:
-                        return new CombateWendigo(jugador, interfaz);
-                    case 2:
                         return new CombateLobo(jugador, interfaz);
+                    case 2:
+                        return new CombateWendigo(jugador, interfaz);
                     case 3:
                         return new CombateDragon(jugador, interfaz);
                 }
@@ -135,7 +146,6 @@ public class Mapa {
                     case 0:
                         return new EventoScammer(jugador, interfaz);
                     case 1:
-                        //TODO: Poner enemigos especificos
                         return new EventoGitanos(jugador, generarEnemigo(),nivelActual, interfaz);
                     case 2:
                         return new EventoNerd(jugador, generarEnemigo(), nivelActual, interfaz);
@@ -155,36 +165,14 @@ public class Mapa {
         return null;
     }
 
-    //TODO: Poner los enemigos de cada nivel
     private Enemigo generarEnemigo() {
         switch (nivelActual) {
             case 1:
-                switch (rng.nextInt(0,3)) {
-                    case 0:
-                        return new Goblin();
-                    case 1:
-                        return new Enemigo3();
-                    case 2:
-                        return new Enemigo3();
-                }
+                return new Goblin();
             case 2:
-                switch (rng.nextInt(0,3)) {
-                    case 0:
-                        return new Enemigo3();
-                    case 1:
-                        return new Perro();
-                    case 2:
-                        return new Enemigo3();
-                }
+                return new Perro();
             case 3:
-                switch (rng.nextInt(0,4)) {
-                    case 0:
-                        return new Enemigo3();
-                    case 1:
-                        return new Enemigo3();
-                    case 2:
-                        return new Enemigo3();
-                }
+                return new Serpiente();
         }
         return null;
     }

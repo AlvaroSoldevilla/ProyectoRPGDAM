@@ -17,18 +17,16 @@ public class EfectoAleatorio extends AtaqueEspecial {
     @Override
     public boolean hacerAtaque(Entidad objetivo, Entidad atacante, Interfaz interfaz) {
         Random rng = new Random();
-        if (puedeAtacar(atacante)) {
+        if (puedeAtacar(atacante,interfaz)) {
             switch (rng.nextInt(0,3)) {
                 case 0:
-                    objetivo.infligirEstado(Estados.QUEMADURA);
+                    objetivo.infligirEstado(Estados.QUEMADURA,interfaz);
                     break;
-
                 case 1:
-                    objetivo.infligirEstado(Estados.ELECTRIFICADO);
+                    objetivo.infligirEstado(Estados.ELECTRIFICADO,interfaz);
                     break;
-
                 case 2:
-                    objetivo.infligirEstado(Estados.CONGELADO);
+                    objetivo.infligirEstado(Estados.CONGELADO,interfaz);
                     break;
             }
             return true;

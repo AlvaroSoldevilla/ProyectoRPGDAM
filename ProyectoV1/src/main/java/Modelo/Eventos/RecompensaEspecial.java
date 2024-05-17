@@ -19,16 +19,16 @@ public class RecompensaEspecial extends Evento {
         super(interfaz);
         titulo = "Tesoro";
         texto = "Se te ofrecen tres accesorios";
+        opciones = new String[] {};
         this.jugador = jugador;
         icono = Iconos.TESORO;
     }
 
-    Jugador jugador;
-
     @Override
     public void empezarEvento() {
-        Accesorio[] accesorios = new Accesorio[3];
+        int elegido = -1;
         opciones = new String[3];
+        Accesorio[] accesorios = new Accesorio[3];
         accesorios[0] = generarAccesorio();
         accesorios[1] = generarAccesorio();
         while (accesorios[1].getNombre().equals(accesorios[0].getNombre())) {
@@ -42,16 +42,35 @@ public class RecompensaEspecial extends Evento {
         for (int i = 0; i < accesorios.length; i++) {
             opciones[i] = accesorios[i].getNombre();
         }
-        interfaz.cambiarEscena(new UIEvento(interfaz.getFondo(),this));
-        int elegido = MenusConsola.menuEventoAleatorio(opciones);
+        interfaz.actualizar();
+        interfaz.reiniciarPulsado();
+        while (interfaz.botonPulsado() == -1) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            if (interfaz.botonPulsado() != -1) {
+                elegido = interfaz.botonPulsado();
+            }
+        }
 
-        jugador.addAccesorio(accesorios[elegido]);
+        jugador.addAccesorio(accesorios[elegido],interfaz);
         terminarEvento();
     }
 
     @Override
     public void terminarEvento() {
-        System.out.println("Continuas con tu camino");
+        setTexto("Continuas con tu camino");
+        opciones = new String[]{"Seguir"};
+        interfaz.actualizar();
+        while (interfaz.botonPulsado() == -1) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     private Accesorio generarAccesorio() {

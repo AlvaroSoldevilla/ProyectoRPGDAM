@@ -17,11 +17,8 @@ public class Hoguera extends Evento {
         this.jugador = j;
         icono = Iconos.HOGUERA;
     }
-
-
     @Override
     public void empezarEvento() {
-        Scanner sc = new Scanner(System.in);
         interfaz.actualizar();
         while (interfaz.botonPulsado()==-1) {
             try {

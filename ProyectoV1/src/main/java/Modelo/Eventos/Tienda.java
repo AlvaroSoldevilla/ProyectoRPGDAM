@@ -29,13 +29,12 @@ public class Tienda extends Evento {
         opciones = new String[4];
     }
     Random rng = new Random();
-    Jugador jugador;
     int nivel;
 
     @Override
     public void empezarEvento() {
 
-        int compra;
+        int compra = 0;
         boolean compraRealizada = false;
 
         Equipamiento equipamiento;
@@ -68,32 +67,75 @@ public class Tienda extends Evento {
                 break;
         }
 
-        //Valores provisionales
-        int precio1 = rng.nextInt(20*nivel,50*nivel);
-        int precio2 = rng.nextInt(20*nivel,50*nivel);
-        int precio3 = rng.nextInt(20*nivel,50*nivel);
+        //Valores de oro provisionales
+        int precio1 = rng.nextInt(20 * nivel,50 * nivel);
+        int precio2 = rng.nextInt(20 * nivel,50 * nivel);
+        int precio3 = rng.nextInt(20 * nivel,50 * nivel);
+
+        setTexto("¿Que quieres comprar?");
 
         do {
+            opciones = new String[] {
+                    "Salir",
+                    equipamiento.getNombre() + " " + precio1,
+                    accesorio.getNombre() + " " + precio2,
+                    estadisticaMejora + " " + precio3
+            };
+            interfaz.actualizar();
             System.out.println("Tu oro: " + jugador.getOro());
-            compra = MenusConsola.menuTienda(equipamiento.getNombre(), precio1, accesorio.getNombre(), precio2, estadisticaMejora, mejora, precio3);
+            interfaz.reiniciarPulsado();
+            while (interfaz.botonPulsado() == -1) {
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                if (interfaz.botonPulsado() != -1) {
+                    compra = interfaz.botonPulsado();
+                }
+            }
+
             switch (compra) {
                 case 1:
                     if (jugador.getOro() >= precio1) {
-                        Scanner sc = new Scanner(System.in);
-                        int accion;
+                        int accion = -1;
                         jugador.gastarOro(precio1);
                         if (equipamiento instanceof Arma arma) {
-                            System.out.println("¿Quieres cambiar tu arma actual? 1-Si 0-No");
-                            accion = sc.nextInt();
-                            if (accion == 1) {
+                            setTexto("¿Quieres cambiar tu arma actual?");
+                            opciones = new String[] {"Si", "No"};
+                            interfaz.actualizar();
+                            interfaz.reiniciarPulsado();
+                            while (interfaz.botonPulsado() == -1) {
+                                try {
+                                    Thread.sleep(10);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                if (interfaz.botonPulsado() != -1) {
+                                    accion = interfaz.botonPulsado();
+                                }
+                            }
+                            if (accion == 0) {
                                 jugador.cambiarArma(arma);
                             } else {
                                 jugador.guardarArma(arma);
                             }
                         } else if (equipamiento instanceof Armadura armadura) {
                             System.out.println("¿Quieres cambiar tu armadura actual? 1-Si 0-No");
-                            accion = sc.nextInt();
-                            if (accion == 1) {
+                            opciones = new String[] {"Si", "No"};
+                            interfaz.actualizar();
+                            interfaz.reiniciarPulsado();
+                            while (interfaz.botonPulsado() == -1) {
+                                try {
+                                    Thread.sleep(10);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                if (interfaz.botonPulsado() != -1) {
+                                    accion = interfaz.botonPulsado();
+                                }
+                            }
+                            if (accion == 0) {
                                 jugador.cambiarArmadura(armadura);
                             } else {
                                 jugador.guardarArmadura(armadura);
@@ -101,18 +143,16 @@ public class Tienda extends Evento {
                         }
                         compraRealizada = true;
                     } else {
-                        //TODO: Cambiar a mensaje en la GUI
-                        System.out.println("No tienes suficiente oro");
+                        setTexto("No tienes suficiente oro");
                     }
                     break;
                 case 2:
                     if (jugador.getOro() >= precio2) {
                         jugador.gastarOro(precio2);
-                        jugador.addAccesorio(accesorio);
+                        jugador.addAccesorio(accesorio,interfaz);
                         compraRealizada = true;
                     } else {
-                        //TODO: Cambiar a mensaje en la GUI
-                        System.out.println("No tienes suficiente oro");
+                        setTexto("No tienes suficiente oro");
                     }
                     break;
                 case 3:
@@ -138,8 +178,7 @@ public class Tienda extends Evento {
                         }
                         compraRealizada = true;
                     } else {
-                        //TODO: Cambiar a mensaje en la GUI
-                        System.out.println("No tienes suficiente oro");
+                        setTexto("No tienes suficiente oro");
                     }
                     break;
             }
@@ -149,7 +188,8 @@ public class Tienda extends Evento {
 
     @Override
     public void terminarEvento() {
-        System.out.println("Sales de la tienda");
+        opciones = new String[]{"Seguir"};
+        setTexto("Sales de la tienda");
     }
 
     private Accesorio generarAccesorio() {
@@ -184,7 +224,6 @@ public class Tienda extends Evento {
                             return new BastonMaldito();
                     }
                 } else if (jugador instanceof Asesino) {
-                    //TODO: Implementar armas del asesino
                     switch (nivel) {
                         case 1:
                             return new DagaDoble();

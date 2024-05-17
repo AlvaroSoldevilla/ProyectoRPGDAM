@@ -18,8 +18,6 @@ public class EventoNerd extends Aleatorio {
         this.enemigo = enemigo;
         this.nivel = nivel;
     }
-
-    Jugador jugador;
     Enemigo enemigo;
     int nivel;
 

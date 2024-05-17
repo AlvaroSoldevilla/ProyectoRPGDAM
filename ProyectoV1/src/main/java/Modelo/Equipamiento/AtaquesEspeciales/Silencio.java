@@ -14,8 +14,8 @@ public class Silencio extends AtaqueEspecial {
 
     @Override
     public boolean hacerAtaque(Entidad objetivo, Entidad atacante, Interfaz interfaz) {
-        if (puedeAtacar(atacante)) {
-            objetivo.infligirEstado(Estados.SILENCIADO);
+        if (puedeAtacar(atacante,interfaz)) {
+            objetivo.infligirEstado(Estados.SILENCIADO,interfaz);
             return true;
         } else {
             return false;

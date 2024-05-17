@@ -12,6 +12,6 @@ public abstract class Accesorio extends Equipamiento {
     protected boolean permanente = false;
 
 
-    public abstract void aplicarEfecto(Jugador jugador);
+    public abstract void aplicarEfecto(Jugador jugador,Interfaz interfaz);
 
 }

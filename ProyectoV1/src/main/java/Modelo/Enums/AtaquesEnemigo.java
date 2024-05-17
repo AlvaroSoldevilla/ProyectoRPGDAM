@@ -8,9 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum AtaquesEnemigo {
-    //TODO: poner bien los ataques
-    PRUEBA(new AtaqueEspecial[]{new PruebaAtaque()}),
-    GOBLIN(new AtaqueEspecial[]{new PruebaAtaque()}),
+    GOBLIN(new AtaqueEspecial[]{new Rabia()}),
     PERRO(new AtaqueEspecial[]{new MiniGarraMaldita()}),
     SERPIENTE(new AtaqueEspecial[]{new VenenoSeguro()}),
     LOBO(new AtaqueEspecial[]{new TormentaLunar()}),

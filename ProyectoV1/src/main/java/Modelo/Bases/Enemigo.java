@@ -2,16 +2,19 @@ package Modelo.Bases;
 
 
 import Modelo.Enums.Estados;
+import UI.Interfaces.Interfaz;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public abstract class Enemigo extends Entidad{
 
+    protected Random rng = new Random();
     protected List<Estados> inmunidades = new ArrayList<>();
 
     @Override
-    public void infligirEstado(Estados estado) {
+    public void infligirEstado(Estados estado, Interfaz interfaz) {
         if (inmunidades == null) {
             try {
                 estadosSufridos.put(estado, estadosSufridos.get(estado) + estado.getDuracion());
@@ -20,10 +23,13 @@ public abstract class Enemigo extends Entidad{
             }
         } else {
             if (!inmunidades.contains(estado)) {
-                estadosSufridos.put(estado, estadosSufridos.get(estado) + estado.getDuracion());
+                if (estadosSufridos.containsKey(estado)) {
+                    estadosSufridos.put(estado, estadosSufridos.get(estado) + estado.getDuracion());
+                } else {
+                    estadosSufridos.put(estado, estado.getDuracion());
+                }
             } else {
-                //TODO:cambiar a mensaje en la interfaz
-                System.out.println("El enemigo es inmune a " + estado.getNombre());
+                interfaz.imprimirMensaje("El enemigo es inmune a " + estado.getNombre());
             }
         }
     }

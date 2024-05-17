@@ -1,6 +1,7 @@
 package Modelo.Bases;
 
 import Modelo.Enums.Estados;
+import UI.Interfaces.Interfaz;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public abstract class Jugador extends Entidad{
 
 
     @Override
-    public void infligirEstado(Estados estado) {
+    public void infligirEstado(Estados estado, Interfaz interfaz) {
         if (armadura.getInmunidades() == null) {
             try {
                 estadosSufridos.put(estado, estadosSufridos.get(estado) + estado.getDuracion());
@@ -122,16 +123,25 @@ public abstract class Jugador extends Entidad{
         dmgBase = dmg;
     }
 
-    public boolean addAccesorio(Accesorio nuevo) {
+    public boolean addAccesorio(Accesorio nuevo,Interfaz interfaz) {
         if (nuevo!=null) {
             accesorios.add(nuevo);
             if (nuevo.isPermanente()) {
-                nuevo.aplicarEfecto(this);
+                nuevo.aplicarEfecto(this,interfaz);
             }
             return true;
         } else {
             return false;
         }
+    }
+
+    public void subirNivel() {
+        maxSalud *= 1.5;
+        maxMana *= 1.5;
+        dmg *= 1.5;
+        defensa *= 1.5;
+        restaurarVida();
+        restaurarMana();
     }
 
     public void mostrarEstadisticas() {

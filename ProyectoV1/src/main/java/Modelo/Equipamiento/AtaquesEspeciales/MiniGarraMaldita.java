@@ -13,9 +13,9 @@ public class MiniGarraMaldita extends AtaqueEspecial {
 
     @Override
     public boolean hacerAtaque(Entidad objetivo, Entidad atacante, Interfaz interfaz) {
-        if (puedeAtacar(atacante)) {
+        if (puedeAtacar(atacante,interfaz)) {
             objetivo.recibirDmg(atacante.getDmg() / 2,interfaz);
-            objetivo.infligirEstado(Estados.MALDITO);
+            objetivo.infligirEstado(Estados.MALDITO,interfaz);
             return true;
         } else {
             return false;

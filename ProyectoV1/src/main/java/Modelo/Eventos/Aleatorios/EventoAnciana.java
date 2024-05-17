@@ -7,13 +7,12 @@ import UI.Interfaces.Interfaz;
 public class EventoAnciana extends Aleatorio {
     public EventoAnciana(Jugador jugador, Interfaz interfaz) {
         super(interfaz);
+        titulo = "Anciana desamparada";
         texto = "En la distancia, avistas a una anciana tendida en el suelo. Te acercas a ella con paso firme.";
         opciones = new String[]{"Ayudas a la anciana a levantarse","Pasas de largo"};
 
         this.jugador = jugador;
     }
-
-    Jugador jugador;
     @Override
     public void empezarEvento() {
         interfaz.actualizar();

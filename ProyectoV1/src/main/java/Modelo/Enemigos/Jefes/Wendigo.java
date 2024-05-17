@@ -7,9 +7,12 @@ import Modelo.Enums.Iconos;
 public class Wendigo extends Enemigo {
     public Wendigo(){
         nombre ="Wendigo";
-        salud = 200;
-        dmg = 36;
-        defensa = 36;
+        maxSalud = 90;
+        salud = maxSalud;
+        dmg = 25;
+        dmgBase = dmg;
+        defensa = 15;
+        defensaBase = defensa;
         ataques = AtaquesEnemigo.WENDIGO.getAtaques();
         icono = Iconos.WENDIGO;
     }

@@ -13,7 +13,7 @@ public class MonedaOro extends Accesorio {
         finCombate= true;
     }
 
-    public void aplicarEfecto(Jugador jugador) {
+    public void aplicarEfecto(Jugador jugador, Interfaz interfaz) {
         jugador.ganarOro(5);
     }
 }
