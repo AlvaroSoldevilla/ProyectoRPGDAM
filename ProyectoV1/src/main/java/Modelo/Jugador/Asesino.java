@@ -17,6 +17,7 @@ public class Asesino extends Jugador {
     mana=maxMana;
     defensa = 5;
     defensaBase = defensa;
+    poderBloqueo = 5;
     oro = 40;
     arma= new Daga();
     armas.add(arma);

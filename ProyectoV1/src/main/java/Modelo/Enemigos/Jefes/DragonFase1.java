@@ -15,6 +15,7 @@ public class DragonFase1 extends Enemigo {
         dmgBase = dmg;
         defensa = 17;
         defensaBase = defensa;
+        poderBloqueo = 10;
         ataques = AtaquesEnemigo.DRAGONFASE1.getAtaques();
         icono = Iconos.DRAGON;
     }

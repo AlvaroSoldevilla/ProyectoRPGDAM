@@ -17,6 +17,7 @@ public class Mago extends Jugador {
         dmgBase = dmg;
         defensa = 0;
         defensaBase = defensa;
+        poderBloqueo = 3;
         oro = 30;
         arma= new Baston();
         armas.add(arma);

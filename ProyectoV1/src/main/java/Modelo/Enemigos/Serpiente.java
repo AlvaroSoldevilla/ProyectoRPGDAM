@@ -13,6 +13,7 @@ public class Serpiente extends Enemigo {
         dmgBase = dmg;
         defensa = rng.nextInt(10,21);
         defensaBase = defensa;
+        poderBloqueo = 5;
         ataques = AtaquesEnemigo.SERPIENTE.getAtaques();
         icono = Iconos.SERPIENTE;
     }

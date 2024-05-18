@@ -15,6 +15,7 @@ public class Goblin extends Enemigo {
         dmgBase = dmg;
         defensa = rng.nextInt(0,6);
         defensaBase = defensa;
+        poderBloqueo = 2;
         ataques = AtaquesEnemigo.GOBLIN.getAtaques();
         icono = Iconos.GOBLIN;
     }

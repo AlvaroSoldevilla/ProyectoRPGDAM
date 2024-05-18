@@ -14,7 +14,10 @@ public class Caballero extends Jugador {
         maxMana = 30;
         mana = maxMana;
         dmg = 5;
+        dmgBase = dmg;
         defensa = 5;
+        defensaBase = defensa;
+        poderBloqueo = 10;
         oro = 30;
         arma = new Espada();
         armas.add(arma);

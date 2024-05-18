@@ -7,11 +7,12 @@ import Modelo.Eventos.Aleatorio;
 import Modelo.Eventos.Combate;
 import UI.Interfaces.Interfaz;
 import UI.Interfaces.UICombate;
-import UI.MenusConsola;
 
 public class EventoGitanos extends Aleatorio {
     public EventoGitanos(Jugador jugador, Enemigo enemigo, int nivel, Interfaz interfaz) {
         super(interfaz);
+        titulo="Un encuentro desafortunado";
+
         texto = "Illo dame todo tu dinero";
 
         opciones = new String[]{"Dar todo tu dinero","Dar 5 de oro","Negarte y correr","Enfrentarlos"};
@@ -75,6 +76,10 @@ public class EventoGitanos extends Aleatorio {
         }
 
     }
+
+    @Override
+    public void terminarEvento() {}
+
     private void esperar() {
         while (interfaz.botonPulsado()==-1) {
             try {

@@ -13,6 +13,7 @@ public class Lobo extends Enemigo {
         dmgBase = dmg;
         defensa = 10;
         defensaBase = defensa;
+        poderBloqueo = 4;
         ataques = AtaquesEnemigo.LOBO.getAtaques();
         icono = Iconos.LOBO;
     }

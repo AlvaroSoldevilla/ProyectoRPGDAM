@@ -17,8 +17,23 @@ import lombok.Data;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * La clase Combate representa un combate en el juego.
+ *
+ * @author Álvaro Soldevilla
+ * @author Diego Gonzalez
+ */
 @Data
 public class Combate extends Evento {
+
+    /**
+     * Constrictor para los combates normales.
+     *
+     * @param jugador  El jugador que participa en el combate.
+     * @param enemigo  El enemigo que participa en el combate.
+     * @param nivel    El nivel del combate.
+     * @param interfaz La interfaz del juego.
+     */
     public Combate(Jugador jugador, Enemigo enemigo, int nivel, Interfaz interfaz) {
         super(interfaz);
         titulo = "Combate";
@@ -28,6 +43,13 @@ public class Combate extends Evento {
         icono = Iconos.COMBATE;
     }
 
+    /**
+     * Constrictor para los combates con jefes.
+     *
+     * @param jugador  El jugador que participa en el combate.
+     * @param enemigo  El enemigo que participa en el combate.
+     * @param interfaz La interfaz del juego.
+     */
     public Combate(Jugador jugador, Enemigo enemigo, Interfaz interfaz) {
         super(interfaz);
         titulo = "Combate";
@@ -42,13 +64,37 @@ public class Combate extends Evento {
         }
     }
 
+    /**
+     * Nivel del combate, determinará la recompensa
+     */
     int nivel = -1;
+    /**
+     * Variable para determinar si el jugador está haciendo una finta.
+     */
     boolean fintaJugador = false;
+    /**
+     * El jugador que participa en el combate
+     */
     Jugador jugador;
+    /**
+     * El enemigo que participa en el combate
+     */
     Enemigo enemigo;
 
+    /**
+     * Generador de numeros aleatorios
+     */
     Random rng = new Random();
 
+    /**
+     * Determina la acción del jugador
+     * <p>1-Ataque normal
+     * <p>2-Ataque especial
+     * <p>3-Bloquear
+     * <p>4-Finta
+     *
+     * @param codAccion La acción que va a realizar el jugador
+     */
     public void accionJugador(int codAccion) {
         boolean accion = false;
         while (!accion) {
@@ -92,6 +138,15 @@ public class Combate extends Evento {
         }
     }
 
+    /**
+     * Determina la acción del enemigo
+     * <p>1-Ataque normal
+     * <p>2-Ataque especial
+     * <p>3-Bloquear
+     * <p>4-Finta
+     *
+     * @param codAccion La acción que va a realizar el enemigo
+     */
     public void accionEnemigo(int codAccion) {
         switch (codAccion) {
             case 1:
@@ -133,6 +188,14 @@ public class Combate extends Evento {
         }
     }
 
+    /**
+     * Método para hacer la finta.
+     * <p>Si el objetivo está bloqueando, se le aplicará el efecto desorientado, que hace que sea mas facil fallar un ataque
+     *
+     * @param objetivo Entidad que recibe el ataque.
+     * @param atacante Entidad que hace la finta.
+     * @return Devuelve verdadero si el objetivo está bloqueando.
+     */
     public boolean finta(Entidad objetivo, Entidad atacante) {
         if (!atacante.getEstadosSufridos().containsKey(Estados.SILENCIADO)) {
             if (objetivo.isBloqueando()) {
@@ -146,6 +209,13 @@ public class Combate extends Evento {
         }
     }
 
+    /**
+     * Método para bloquear.
+     * <p>Aumenta la defensa del atacante ligeramente
+     *
+     * @param atacante La entidad que quiere bloquear.
+     * @return Devuelve veradero si el atacante no está silenciado.
+     */
     public boolean bloquear(Entidad atacante) {
         if (!atacante.getEstadosSufridos().containsKey(Estados.SILENCIADO)) {
             atacante.bloquear();
@@ -155,6 +225,19 @@ public class Combate extends Evento {
         }
     }
 
+    /**
+     * Método para hacer el ataque básico.
+     * <p>Primero calcula el multiplicador de fallo.
+     * <p>Tras eso comprueba si el atacante está congelado, lo que le impide hacer el ataque.
+     * <p>Hecho eso, comprueba si el objetivo está contraatacando.
+     * <p>Si no es el caso comprueba si el ataque ha fallado.
+     * <p>Si el ataque no falla, le hace daño al objetivo.
+     * <p>(El Asesino tiene distintas mecánicas dependiendo del arma que lleve equipada, además de una mecánica general que hace que ataque dos veces cada vez que ataca)
+     *
+     * @param objetivo Entidad que recibe el ataque.
+     * @param atacante Entidad que hace el ataque.
+     * @return Devuelve verdadero si el ataque se ha realizado correctamente
+     */
     public boolean atacar(Entidad objetivo, Entidad atacante) {
         int multiplicadorFallo = 1;
 
@@ -192,7 +275,8 @@ public class Combate extends Evento {
 
                         } else if (((Jugador) atacante).getArma() instanceof DagaRoboVida) {
 
-                            objetivo.recibirDmg(atacante.getDmg(), interfaz);
+                            objetivo.recibirDmg(atacante.getDmg()/2, interfaz);
+                            objetivo.recibirDmg(atacante.getDmg()/3,interfaz);
                             jugador.curarVida(atacante.getDmg() / 3);
 
                         } else if (((Jugador) atacante).getArma() instanceof DagaCritica) {
@@ -202,7 +286,11 @@ public class Combate extends Evento {
                             } else {
                                 objetivo.recibirDmg(atacante.getDmg(), interfaz);
                             }
-
+                            if (rng.nextInt(0, 4) == 1) {
+                                objetivo.recibirDmg(atacante.getDmg(), interfaz);
+                            } else {
+                                objetivo.recibirDmg(atacante.getDmg()/2, interfaz);
+                            }
                         } else {
                             objetivo.recibirDmg(atacante.getDmg(), interfaz);
                         }
@@ -232,6 +320,13 @@ public class Combate extends Evento {
         }
     }
 
+    /**
+     * Determina si el objetivo está contraatacando, en cuyo caso, le hace daño al atacante.
+     *
+     * @param objetivo Entidad que recibe el ataque.
+     * @param atacante Entidad que hace el ataque.
+     * @return Devuelve verdadero si el objetivo está contraatacando.
+     */
     private boolean estaContraatacando(Entidad objetivo, Entidad atacante) {
         if (objetivo.getEstadosSufridos().containsKey(Estados.CONTRAATACANDO)) {
             atacante.recibirDmg(atacante.getDmg(), interfaz);
@@ -240,6 +335,14 @@ public class Combate extends Evento {
         return false;
     }
 
+    /**
+     * Método para hacer el ataque especial.
+     * <p>Igual que el ataque básico, pero despues de comprobar si el atacante está congelado y si el atacante es un jugador, espera a que se seleccione el ataque especial
+     *
+     * @param objetivo Entidad que recibe el ataque.
+     * @param atacante Entidad que hace el ataque.
+     * @return Devuelve verdadero si el ataque se ha realizado correctamente
+     */
     public boolean ataqueEspecial(Entidad objetivo, Entidad atacante) {
         int multiplicadorFallo = 1;
         int ataque = 0;
@@ -266,11 +369,7 @@ public class Combate extends Evento {
                 interfaz.reiniciarPulsado();
                 interfaz.habilitarBotones();
                 while (interfaz.botonPulsado() == -1) {
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                    esperar(10);
                     if (interfaz.botonPulsado() != -1) {
                         ataque = interfaz.botonPulsado();
                     }
@@ -297,6 +396,12 @@ public class Combate extends Evento {
         }
     }
 
+    /**
+     * Bucle del combate.
+     * <p>El primer turno es del jugador y se van alternando acciones. El enemigo hace acciones aleatorias mientras que el jugador va eligiendo sus acciones.
+     * <p>Al final de cada turno se aplican los efectos de estado de cada Participante.
+     * <p>Se repite hasta que uno de los dos participantes muere.
+     */
     @Override
     public void empezarEvento() {
         jugador.getAccesorios().forEach((a) -> {
@@ -311,11 +416,7 @@ public class Combate extends Evento {
 
             interfaz.habilitarBotones();
             while (interfaz.botonPulsado() == -1 && !interfaz.seguir()) {
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
+                esperar(10);
                 if (interfaz.botonPulsado() != -1) {
                     accionJugador(interfaz.botonPulsado() + 1);
                 }
@@ -362,6 +463,11 @@ public class Combate extends Evento {
         terminarEvento();
     }
 
+    /**
+     * Método para esperar una cantidad de tiempo.
+     *
+     * @param tiempo Milisegundos que tiene que esperar.
+     */
     private void esperar(int tiempo) {
         try {
             Thread.sleep(tiempo);
@@ -370,6 +476,11 @@ public class Combate extends Evento {
         }
     }
 
+    /**
+     * Lógica del final del combate.
+     * <p>Si el jugador ha muerto, se imprime un mensaje por pantalla.
+     * <p>Si el enemigo ha muerto, se imprime un mensaje por pantalla y se le da una cantidad de oro al jugador dependiendo del nivel del combate.
+     */
     @Override
     public void terminarEvento() {
         int recompensaOro;
@@ -382,28 +493,19 @@ public class Combate extends Evento {
                 interfaz.cambiarFase(3);
                 interfaz.habilitarBotones();
                 while (interfaz.botonPulsado() == -1) {
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                    esperar(10);
                 }
             } else if (enemigo instanceof DragonFase2){
                 interfaz.imprimirMensaje("Esta vez te aseguras de que el Dragón ha muerto.");
                 interfaz.cambiarFase(3);
                 interfaz.habilitarBotones();
                 while (interfaz.botonPulsado() == -1) {
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
+                    esperar(10);
                 }
             } else  {
                 if (nivel != -1) {
                     recompensaOro = rng.nextInt(10 * nivel, 20 * nivel);
                     interfaz.imprimirMensaje("Has Ganado!! \n Recibes " + recompensaOro + " de oro");
-                    interfaz.imprimirMensaje("");
                     interfaz.cambiarFase(3);
                     jugador.ganarOro(recompensaOro);
                     jugador.restaurarMana();
@@ -416,11 +518,7 @@ public class Combate extends Evento {
                     });
                     interfaz.habilitarBotones();
                     while (interfaz.botonPulsado() == -1) {
-                        try {
-                            Thread.sleep(10);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
+                        esperar(10);
                     }
                 }
             }

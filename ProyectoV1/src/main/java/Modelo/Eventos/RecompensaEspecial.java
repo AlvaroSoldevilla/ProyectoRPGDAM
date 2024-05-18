@@ -9,12 +9,23 @@ import Modelo.Equipamiento.Accesorios.Antirayos;
 import Modelo.Equipamiento.Accesorios.Antiveneno;
 import Modelo.Equipamiento.Accesorios.MonedaOro;
 import UI.Interfaces.Interfaz;
-import UI.Interfaces.UIEvento;
-import UI.MenusConsola;
 
 import java.util.Random;
 
+/**
+ * La clase RecompensaEspecial representa un evento donde el jugador puede elegir entre tres accesorios aleatorios como recompensa.
+ *
+ * @author Álvaro Soldevilla
+ * @author Diego Gonzalez
+ */
 public class RecompensaEspecial extends Evento {
+
+    /**
+     * Constructor que inicializa el evento de recompensa especial con el jugador y la interfaz del juego.
+     *
+     * @param jugador  El jugador que participa en el evento.
+     * @param interfaz La interfaz del juego.
+     */
     public RecompensaEspecial(Jugador jugador, Interfaz interfaz) {
         super(interfaz);
         titulo = "Tesoro";
@@ -24,6 +35,9 @@ public class RecompensaEspecial extends Evento {
         icono = Iconos.TESORO;
     }
 
+    /**
+     * Genera tres accesorios y permite al jugador elegir cuál se quiere quedar.
+     */
     @Override
     public void empezarEvento() {
         int elegido = -1;
@@ -59,6 +73,9 @@ public class RecompensaEspecial extends Evento {
         terminarEvento();
     }
 
+    /**
+     * Final del evento
+     */
     @Override
     public void terminarEvento() {
         setTexto("Continuas con tu camino");
@@ -73,6 +90,11 @@ public class RecompensaEspecial extends Evento {
         }
     }
 
+    /**
+     * Método para generar los accesorios
+     *
+     * @return Devuelve un accesorio aleatorio
+     */
     private Accesorio generarAccesorio() {
         Random rng = new Random();
         return switch (rng.nextInt(0, 4)) {

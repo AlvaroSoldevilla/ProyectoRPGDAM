@@ -7,6 +7,12 @@ import lombok.Getter;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * El enum AtaquesEnemigo contiene los ataques especiales que puede usar cada enemigo.
+ *
+ * @author Álvaro Soldevilla
+ * @author Diego Gonzalez
+ */
 public enum AtaquesEnemigo {
     GOBLIN(new AtaqueEspecial[]{new Rabia()}),
     PERRO(new AtaqueEspecial[]{new MiniGarraMaldita()}),
@@ -16,9 +22,19 @@ public enum AtaquesEnemigo {
     DRAGONFASE1(new AtaqueEspecial[]{new AlientoHelado()}),
     DRAGONFASE2(new AtaqueEspecial[]{new AlientoHelado()}),
     ;
+
+    /**
+     * Constructor para inicializar los ataques especiales del enemigo.
+     *
+     * @param ataques Array de ataques especiales.
+     */
     AtaquesEnemigo(AtaqueEspecial[] ataques) {
         this.ataques = Arrays.stream(ataques).toList();
     }
+
+    /**
+     * Lista de ataques especiales del enemigo.
+     */
     @Getter
     List<AtaqueEspecial> ataques;
 }

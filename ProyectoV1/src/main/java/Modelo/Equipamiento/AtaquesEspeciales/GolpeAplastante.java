@@ -6,6 +6,9 @@ import UI.Interfaces.Interfaz;
 
 public class GolpeAplastante extends AtaqueEspecial {
 
+    /**
+     * Constructor que inicializa el ataque.
+     */
     public GolpeAplastante() {
         nombre = "Golpe aplastante";
         coste = 3;

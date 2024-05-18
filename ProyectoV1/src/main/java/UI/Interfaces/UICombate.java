@@ -5,7 +5,7 @@ import Modelo.Bases.Jugador;
 import Modelo.Bases.Entidad;
 import Modelo.Enums.Estados;
 import Modelo.Enums.Iconos;
-import UI.Elementos.Contenedor;
+import UI.Elementos.Escena;
 import UI.Elementos.PanelEstadisticas;
 
 import javax.swing.*;
@@ -18,30 +18,70 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class UICombate extends Contenedor {
+/**
+ * La clase UICombate representa una escena de combate en el juego, mostrando al jugador, los enemigos y las opciones de combate.
+ *
+ * @author Álvaro Soldevilla
+ * @author Diego Gonzalez
+ */
+public class UICombate extends Escena {
+
+    /**
+     * El jugador que participa en el combate
+     */
     private Jugador jugador;
+    /**
+     * Los enemigos que participan en el combate
+     */
     private Enemigo[] enemigos;
+    /**
+     * Las imagenes de los enemigos
+     */
     private JLabel[] imagenesEnemigos;
+    /**
+     * Los botones de las acciones
+     */
     private JButton[] botones = new JButton[4];
-    private List<JLabel> estados = new ArrayList<>();
+    /**
+     * La lista con los estados de cada entidad
+     */
     JLabel textoCombateLabel = new JLabel("Empieza El combate");
+    /**
+     * El texto de las opciones
+     */
     private String[] opciones;
+    /**
+     * Las distintas versiones de la escena
+     * <p>1-Elección de las acciones
+     * <p>2-Elección del ataque especial
+     * <p>3-Fin del combate
+     */
     private int fase = 1;
 
+    /**
+     * Constructor que inicializa la escena de combate con la imagen de fondo, el jugador y los enemigos.
+     *
+     * @param imagenDeFondo La imagen de fondo de la escena.
+     * @param jugador       El jugador que participa en el combate.
+     * @param enemigos      Los enemigos en el combate.
+     */
     public UICombate(String imagenDeFondo, Jugador jugador, Enemigo[] enemigos) {
         super(imagenDeFondo);
         this.jugador = jugador;
         this.enemigos = enemigos;
-        this.imagenesEnemigos = new JLabel[3]; // Asumimos que hay tres enemigos
-        setLayout(null); // Usamos null para posicionar los componentes manualmente
+        this.imagenesEnemigos = new JLabel[3];
+        setLayout(null);
         addElementos();
     }
 
+    /**
+     * Agrega los elementos gráficos a la escena de combate.
+     */
     public void addElementos() {
-        //Barra Estadísticas
+        // Barra Estadísticas
         JPanel panelEstadisticas = new PanelEstadisticas(jugador);
         panelEstadisticas.setBounds(0, 0, getWidth(), 50);
-        panelEstadisticas.setBackground(new Color(255, 255, 255, 150)); // Fondo semitransparente
+        panelEstadisticas.setBackground(new Color(255, 255, 255, 150));
         panelEstadisticas.setLayout(null);
         add(panelEstadisticas);
 
@@ -51,20 +91,14 @@ public class UICombate extends Contenedor {
         add(backgroundLabel);
 
         // Estados y estadísticas del jugador
-        JLabel jugadorLabel = new JLabel(new ImageIcon(jugador.getIcono().getRutaIcono())); // Reemplaza con la ruta correcta
-        jugadorLabel.setBounds(50, 120, 150, 198); // Ajustar posición
-        jugadorLabel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                System.out.println("Jugador seleccionado");
-            }
-        });
+        JLabel jugadorLabel = new JLabel(new ImageIcon(jugador.getIcono().getRutaIcono()));
+        jugadorLabel.setBounds(50, 120, 150, 198);
         backgroundLabel.add(jugadorLabel);
 
         JPanel estadosJugadorPanel = new JPanel();
-        estadosJugadorPanel.setBounds(50, 315, 150, 45); // Ajustar tamaño para dos filas de estados
-        estadosJugadorPanel.setLayout(new GridLayout(2, 1)); // GridLayout con 2 filas y 1 columna
-        estadosJugadorPanel.setBackground(new Color(255,255,255,120));
+        estadosJugadorPanel.setBounds(50, 315, 150, 45);
+        estadosJugadorPanel.setLayout(new GridLayout(2, 1));
+        estadosJugadorPanel.setBackground(new Color(255, 255, 255, 120));
         addEstados(estadosJugadorPanel, jugador.getEstadosSufridos());
         backgroundLabel.add(estadosJugadorPanel);
 
@@ -73,29 +107,29 @@ public class UICombate extends Contenedor {
         estadisticasJugadorPanel.setLayout(new BoxLayout(estadisticasJugadorPanel, BoxLayout.Y_AXIS));
 
         addEstadisticas(estadisticasJugadorPanel, jugador);
-        estadisticasJugadorPanel.setBackground(new Color(255,255,255,100));
+        estadisticasJugadorPanel.setBackground(new Color(255, 255, 255, 100));
         backgroundLabel.add(estadisticasJugadorPanel);
 
         // Estados y estadísticas de los enemigos
         for (int i = 0; i < enemigos.length; i++) {
             if (enemigos[i] != null) {
-                imagenesEnemigos[i] = new JLabel(new ImageIcon(enemigos[i].getIcono().getRutaIcono())); // Reemplaza con la ruta correcta
-                imagenesEnemigos[i].setBounds(getWidth() - 200 * (i + 1), 120, 150, 198); // Ajustar posición
+                imagenesEnemigos[i] = new JLabel(new ImageIcon(enemigos[i].getIcono().getRutaIcono()));
+                imagenesEnemigos[i].setBounds(getWidth() - 200 * (i + 1), 120, 150, 198);
                 int finalI = i;
                 imagenesEnemigos[i].addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        System.out.println("Enemigo seleccionado: " + (finalI + 4));
+                        elegido = finalI + 4;
                     }
                 });
                 backgroundLabel.add(imagenesEnemigos[i]);
 
                 JPanel estadosEnemigoPanel = new JPanel();
-                estadosEnemigoPanel.setBounds(getWidth() - 200 * (i + 1), 315, 150, 46); // Ajustar tamaño para dos filas de estados
-                estadosEnemigoPanel.setLayout(new GridLayout(2, 1)); // GridLayout con 2 filas y 1 columna
+                estadosEnemigoPanel.setBounds(getWidth() - 200 * (i + 1), 315, 150, 46);
+                estadosEnemigoPanel.setLayout(new GridLayout(2, 1));
 
                 addEstados(estadosEnemigoPanel, enemigos[i].getEstadosSufridos());
-                estadosEnemigoPanel.setBackground(new Color(255,255,255,120));
+                estadosEnemigoPanel.setBackground(new Color(255, 255, 255, 120));
                 backgroundLabel.add(estadosEnemigoPanel);
 
                 JPanel estadisticasEnemigoPanel = new JPanel();
@@ -103,14 +137,14 @@ public class UICombate extends Contenedor {
                 estadisticasEnemigoPanel.setLayout(new BoxLayout(estadisticasEnemigoPanel, BoxLayout.Y_AXIS));
 
                 addEstadisticas(estadisticasEnemigoPanel, enemigos[i]);
-                estadisticasEnemigoPanel.setBackground(new Color(255,255,255,100));
+                estadisticasEnemigoPanel.setBackground(new Color(255, 255, 255, 100));
                 backgroundLabel.add(estadisticasEnemigoPanel);
             }
         }
 
         // Texto de combate
         JPanel textoCombatePanel = new JPanel();
-        textoCombatePanel.setBounds(0, getHeight() - 130, getWidth() - 400, 100); // Sin margen izquierdo ni inferior
+        textoCombatePanel.setBounds(0, getHeight() - 130, getWidth() - 400, 100);
         textoCombatePanel.setBackground(Color.WHITE);
         textoCombatePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         textoCombatePanel.add(textoCombateLabel);
@@ -121,7 +155,7 @@ public class UICombate extends Contenedor {
         int botonWidth = 150;
         int botonHeight = 30;
         int espacioEntreBotones = 20;
-        int startX = getWidth() - 350; // Mover opciones más a la derecha
+        int startX = getWidth() - 350;
 
         switch (fase) {
             case 1:
@@ -139,16 +173,13 @@ public class UICombate extends Contenedor {
                 break;
             case 3:
                 opciones = new String[]{"Seguir"};
-                // Ajustar el botón "Seguir" para que esté en el medio del área donde estarían los 4 botones
                 int seguirBotonX = startX + botonWidth + espacioEntreBotones / 2 - botonWidth / 2;
                 botones[0] = new JButton(opciones[0]);
-                botones[0].setBounds(seguirBotonX, opcionY, botonWidth, botonHeight); // Centrar el botón en el área de los cuatro botones
+                botones[0].setBounds(seguirBotonX, opcionY, botonWidth, botonHeight);
                 backgroundLabel.add(botones[0]);
                 botones[0].addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        // Aquí puedes manejar la lógica cuando se selecciona una opción
-                        System.out.println(((JButton) e.getSource()).getText() + " seleccionada");
                         elegido = 0;
                         seguir = true;
                     }
@@ -157,6 +188,16 @@ public class UICombate extends Contenedor {
         }
     }
 
+    /**
+     * Añade los botones de opciones a la escena.
+     *
+     * @param backgroundLabel      El label de fondo donde se añaden los botones.
+     * @param opcionY              La coordenada Y de los botones.
+     * @param botonWidth           El ancho de los botones.
+     * @param botonHeight          La altura de los botones.
+     * @param espacioEntreBotones  El espacio entre los botones.
+     * @param startX               La coordenada X inicial de los botones.
+     */
     private void addBotones(JLabel backgroundLabel, int opcionY, int botonWidth, int botonHeight, int espacioEntreBotones, int startX) {
         for (int i = 0; i < botones.length; i++) {
             botones[i] = new JButton(opciones[i]);
@@ -170,8 +211,6 @@ public class UICombate extends Contenedor {
             botones[i].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    // Aquí puedes manejar la lógica cuando se selecciona una opción
-                    System.out.println(((JButton) e.getSource()).getText() + " seleccionada");
                     elegido = finalI;
                     seguir = true;
                 }
@@ -179,6 +218,12 @@ public class UICombate extends Contenedor {
         }
     }
 
+    /**
+     * Añade los estados de una entidad al panel proporcionado.
+     *
+     * @param panel            El panel donde se añaden los estados.
+     * @param estadosSufridos  Los estados sufridos por la entidad.
+     */
     private void addEstados(JPanel panel, Map<Estados, Integer> estadosSufridos) {
         JPanel fila1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
         fila1.setOpaque(false);
@@ -189,9 +234,11 @@ public class UICombate extends Contenedor {
         for (Map.Entry<Estados, Integer> entry : estadosSufridos.entrySet()) {
             Estados estado = entry.getKey();
             int duracion = entry.getValue();
-            if (estado!=Estados.CONTRAATACANDO) {
-                JLabel estadoLabel = new JLabel(new ImageIcon(estado.getIcono().getRutaIcono())); // Agregar el icono del estado
-                estadoLabel.setText(String.valueOf(duracion)); // Solo mostrar la duración
+            if (estado != Estados.CONTRAATACANDO) {
+                JLabel estadoLabel = new JLabel(new ImageIcon(estado.getIcono().getRutaIcono()));
+                if (duracion != 0) {
+                    estadoLabel.setText(String.valueOf(duracion));
+                }
 
                 if (count < 4) {
                     fila1.add(estadoLabel);
@@ -206,14 +253,19 @@ public class UICombate extends Contenedor {
         panel.add(fila2);
     }
 
+    /**
+     * Añade las estadísticas de una entidad al panel proporcionado.
+     *
+     * @param panel    El panel donde se añaden las estadísticas.
+     * @param entidad  La entidad cuyas estadísticas se añaden.
+     */
     private void addEstadisticas(JPanel panel, Entidad entidad) {
-        panel.add(new JLabel(String.valueOf(entidad.getSalud()),new ImageIcon(Iconos.SALUD.getRutaIcono()), SwingConstants.LEFT ));
-        panel.add(new JLabel(String.valueOf(entidad.getDmg()),new ImageIcon(Iconos.DMG.getRutaIcono()), SwingConstants.LEFT ));
-        panel.add(new JLabel(String.valueOf(entidad.getDefensa()),new ImageIcon(Iconos.DEFENSA.getRutaIcono()), SwingConstants.LEFT ));
-        if (entidad instanceof Jugador jugador) {
-            panel.add(new JLabel(String.valueOf(((Jugador) entidad).getMana()),new ImageIcon(Iconos.MANA.getRutaIcono()), SwingConstants.LEFT ));
+        panel.add(new JLabel(String.valueOf(entidad.getSalud()), new ImageIcon(Iconos.SALUD.getRutaIcono()), SwingConstants.LEFT));
+        panel.add(new JLabel(String.valueOf(entidad.getDmg()), new ImageIcon(Iconos.DMG.getRutaIcono()), SwingConstants.LEFT));
+        panel.add(new JLabel(String.valueOf(entidad.getDefensa()), new ImageIcon(Iconos.DEFENSA.getRutaIcono()), SwingConstants.LEFT));
+        if (entidad instanceof Jugador j) {
+            panel.add(new JLabel(String.valueOf(j.getMana()), new ImageIcon(Iconos.MANA.getRutaIcono()), SwingConstants.LEFT));
         }
-        // Agrega aquí más estadísticas si es necesario
     }
 
     @Override
@@ -222,6 +274,11 @@ public class UICombate extends Contenedor {
         actualizarInterfaz();
     }
 
+    /**
+     * Muestra un mensaje en el panel inferior izquierdo
+     *
+     * @param mensaje El mensaje a mostrar.
+     */
     @Override
     public void mostrarMensaje(String mensaje) {
         textoCombateLabel.setText(mensaje);

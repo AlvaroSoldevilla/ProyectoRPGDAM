@@ -5,8 +5,12 @@ import Modelo.Bases.Entidad;
 import Modelo.Enums.Estados;
 import UI.Interfaces.Interfaz;
 
+
 public class MiniGarraMaldita extends AtaqueEspecial {
 
+    /**
+     * Constructor que inicializa el ataque.
+     */
     public MiniGarraMaldita() {
         nombre = "Version menor de Garra Maldita";
     }

@@ -13,6 +13,7 @@ public class Wendigo extends Enemigo {
         dmgBase = dmg;
         defensa = 15;
         defensaBase = defensa;
+        poderBloqueo = 8;
         ataques = AtaquesEnemigo.WENDIGO.getAtaques();
         icono = Iconos.WENDIGO;
     }

@@ -17,18 +17,45 @@ import lombok.Data;
 
 import java.util.Random;
 
+/**
+ * La clase Mapa representa el mapa del juego, gestionando la progresión del jugador y los eventos en cada sala.
+ *
+ * @author Álvaro Soldevilla
+ * @author Diego Gonzalez
+ */
 @Data
 public class Mapa {
+
     public Mapa(Jugador jugador, Interfaz interfaz) {
         this.jugador = jugador;
         this.interfaz = interfaz;
     }
+    /**
+     * Jugador de la partida
+     */
     Jugador jugador;
+    /**
+     * Generador de números aleatorios
+     */
     Random rng = new Random();
+    /**
+     * Nivel del mundo
+     */
     int nivelActual = 1;
+    /**
+     * Sala actual, vuelve a 0 despues de cada nivel
+     */
     int sala = 0;
+    /**
+     * Interfaz del juego
+     */
     Interfaz interfaz;
 
+    /**
+     * Método para avanzar el nivel del mundo.
+     * <p>Cambia el fondo
+     * <p>Reinicia la sala
+     */
     public void avanzarNivel() {
         nivelActual++;
         switch (nivelActual) {
@@ -45,6 +72,16 @@ public class Mapa {
         sala = 0;
     }
 
+    /**
+     * Método para avanzar la sala.
+     * <p>Dependiendo de la distancia hasta el jefe, tiene diferentes comportamientos:
+     * <p>1-Si la distancia es -1 (El jefe ha sido derrotado) avanza el nivel y genera una nueva sala.
+     * <p>2-Si la distancia es 0 genera una batalla contra el jefe del nivel.
+     * <p>3-Si la distancias es la mitad del total, se genra una recompensa especial.
+     * <p>4-En cualquier otro caso genera 2 o 3 eventos.
+     *
+     * @return Eventos generados.
+     */
     public Evento[] avanzarSala() {
         sala++;
         Evento[] eventos;
@@ -52,8 +89,7 @@ public class Mapa {
             jugador.restaurarVida();
             jugador.subirNivel();
             avanzarNivel();
-            avanzarSala();
-            return null;
+            return avanzarSala();
         } else if (distanciaAJefe() == 0) {
             eventos = new Evento[1];
             eventos[0] = generarEvento(5);
@@ -71,14 +107,29 @@ public class Mapa {
         }
     }
 
+    /**
+     * Determina la distancia hasta el jefe.
+     *
+     * @return Devuelve la distancia hasta el jefe.
+     */
     int distanciaAJefe() {
         return (distanciaTotal() - sala);
     }
 
+    /**
+     * Determina la longitud total del nivel.
+     *
+     * @return Devuelve la longitud del nivel.
+     */
     int distanciaTotal() {
         return 3+(2*nivelActual);
     }
 
+    /**
+     * Genera un evento aleatorio, COn una mayor probabilidad de generar combates y eventos aleatorios.
+     *
+     * @return Devuelve el evento que se ha generado.
+     */
     private Evento generarEvento() {
         int codEvento = rng.nextInt(0,15);
 
@@ -99,6 +150,12 @@ public class Mapa {
         };
     }
 
+    /**
+     * Genera un evento específico.
+     *
+     * @param codEvento Codigo del evento a generar: <p>0-Combate <p>1-Evento aleatorio <p>2-Tienda <p>3-Hoguera <p>4-Recompensa especial <p>5-Combate con el jefe del nivel.
+     * @return Devuelve el evento que se ha generado.
+     */
     private Evento generarEvento(int codEvento) {
         switch (codEvento) {
             case 0:
@@ -130,6 +187,11 @@ public class Mapa {
         return null;
     }
 
+    /**
+     * Genera uno de los eventos aleatorios, divididos por los niveles del mundo.
+     *
+     * @return Devuelve un evento de la clase Aleatorio.
+     */
     private Aleatorio generarEventoAleatorio() {
         switch (nivelActual) {
             case 1:
@@ -165,6 +227,11 @@ public class Mapa {
         return null;
     }
 
+    /**
+     * Genera un enemigo dependiendo del nivel.
+     *
+     * @return Devuelve el enemigo generado.
+     */
     private Enemigo generarEnemigo() {
         switch (nivelActual) {
             case 1:

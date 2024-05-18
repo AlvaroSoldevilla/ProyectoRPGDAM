@@ -14,12 +14,23 @@ import Modelo.Jugador.Caballero;
 import Modelo.Jugador.Mago;
 import Modelo.Enums.Iconos;
 import UI.Interfaces.Interfaz;
-import UI.MenusConsola;
 
 import java.util.Random;
-import java.util.Scanner;
 
+/**
+ * La clase Tienda representa un evento donde el jugador puede comprar equipamiento y mejoras en una tienda.
+ *
+ * @author Álvaro Soldevilla
+ * @author Diego Gonzalez
+ */
 public class Tienda extends Evento {
+
+    /**
+     * Constructor que inicializa el evento de recompensa especial con el jugador y la interfaz del juego.
+     *
+     * @param jugador  El jugador que participa en el evento.
+     * @param interfaz La interfaz del juego.
+     */
     public Tienda(Jugador jugador, int nivel, Interfaz interfaz) {
         super(interfaz);
         titulo = "Tienda";
@@ -28,9 +39,24 @@ public class Tienda extends Evento {
         icono = Iconos.TIENDA;
         opciones = new String[4];
     }
+
+    /**
+     * Generador de números aleatorios.
+     */
     Random rng = new Random();
+    /**
+     * Nivel del mundo, se usa para determinar el precio de los objetos, asi como que armas o armaduras se generarán.
+     */
     int nivel;
 
+
+    /**
+     * Genera 3 Objetos:
+     * <p>1-Un arma o una armadura
+     * <p>2-Un accesorio
+     * <p>3-Una mejora permanente de una estadísitica
+     * <p>Permite al jugador elegir uno de los tres objetos o ignorar la tienda.
+     */
     @Override
     public void empezarEvento() {
 
@@ -186,12 +212,20 @@ public class Tienda extends Evento {
         terminarEvento();
     }
 
+    /**
+     * Fin del evento
+     */
     @Override
     public void terminarEvento() {
         opciones = new String[]{"Seguir"};
         setTexto("Sales de la tienda");
     }
 
+    /**
+     * Genera un accesorio aleatorio
+     *
+     * @return Devuelve el accesorio generado
+     */
     private Accesorio generarAccesorio() {
         return switch (rng.nextInt(0, 4)) {
             case 0 -> new MasArmadura();
@@ -202,6 +236,11 @@ public class Tienda extends Evento {
         };
     }
 
+    /**
+     * Genera una armadura o arma aleatoria dependiendo de la clase del jugador y el nivel del mundo.
+     *
+     * @return Devuelve el equipamiento generado
+     */
     private Equipamiento generarEquipamiento() {
         switch (rng.nextInt(0,2)) {
             case 0:
@@ -282,5 +321,4 @@ public class Tienda extends Evento {
         }
         return null;
     }
-
 }

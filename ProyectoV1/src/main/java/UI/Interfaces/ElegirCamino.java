@@ -2,7 +2,7 @@ package UI.Interfaces;
 
 import Modelo.Bases.Evento;
 import Modelo.Bases.Jugador;
-import UI.Elementos.Contenedor;
+import UI.Elementos.Escena;
 import UI.Elementos.PanelEstadisticas;
 
 import javax.swing.*;
@@ -10,9 +10,26 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * La clase ElegirCamino representa la escena donde el jugador elige el siguiente evento.
+ *
+ * @author Álvaro Soldevilla
+ * @author Diego Gonzalez
+ */
+public class ElegirCamino extends Escena {
 
-public class ElegirCamino extends Contenedor {
+    Jugador jugador;
+    Evento[] eventos;
+    JButton[] botones;
+    int minHeight = 0;
 
+    /**
+     * Constructor que inicializa la escena con la imagen de fondo, el jugador y los eventos disponibles.
+     *
+     * @param imagenDeFondo La imagen de fondo de la escena.
+     * @param jugador       El jugador que participa en la escena.
+     * @param eventos       Los eventos disponibles en la escena.
+     */
     public ElegirCamino(String imagenDeFondo, Jugador jugador, Evento[] eventos) {
         super(imagenDeFondo);
         setLayout(new BorderLayout());
@@ -21,34 +38,16 @@ public class ElegirCamino extends Contenedor {
         botones = new JButton[eventos.length];
     }
 
-    Jugador jugador;
-    Evento[] eventos;
-    JButton[] botones;
-    int minHeight = 0;
-
-    ActionListener botonElegido = new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == botones[0]) {
-
-                elegido = 0;
-            } else if (e.getSource() == botones[1]) {
-                System.out.println("Camino 2 elegido");
-                elegido = 1;
-            } else if (e.getSource() == botones[2]) {
-                System.out.println("Camino 3 elegido");
-                elegido = 2;
-            }
-        }
-    };
-
+    /**
+     * Agrega los elementos gráficos a la escena.
+     */
     @Override
     public void addElementos() {
         JLabel backgroundLabel = new JLabel(new ImageIcon(imagenDeFondo));
         backgroundLabel.setBounds(0, 0, width, height);
         add(backgroundLabel);
 
-        //Barra Estadísticas
+        // Barra de estadísticas
         JPanel panelEstadisticas = new PanelEstadisticas(jugador);
         panelEstadisticas.setBounds(0, 0, getWidth(), 50);
         panelEstadisticas.setBackground(new Color(255, 255, 255, 150)); // Fondo semitransparente
@@ -78,7 +77,7 @@ public class ElegirCamino extends Contenedor {
                 break;
         }
 
-        // Mostrar los botones de camino según el número aleatorio generado
+        // Mostrar los botones de camino según el número de eventos
         for (int i = 0; i < numCaminos; i++) {
             botones[i] = new JButton(new ImageIcon(eventos[i].getIcono().getRutaIcono())); // Seleccionar la imagen secuencialmente
             botones[i].setBounds(740, minHeight + i * 120, 150, 98); // Ajustar posiciones verticalmente
@@ -93,34 +92,24 @@ public class ElegirCamino extends Contenedor {
             botones[i].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("Camino " + finalI + " elegido");
                     elegido = finalI;
                 }
             });
         }
-
     }
 
     @Override
-    public void mostrarMensaje(String mensaje) {
-
-    }
-
+    public void mostrarMensaje(String mensaje) {}
 
     @Override
     public void actualizarEscena(int fase) {}
+
     @Override
     public void actualizarInterfaz() {}
 
     @Override
-    public void deshabilitarBotones() {
-
-    }
+    public void deshabilitarBotones() {}
 
     @Override
-    public void habilitarBotones() {
-
-    }
+    public void habilitarBotones() {}
 }
-
-

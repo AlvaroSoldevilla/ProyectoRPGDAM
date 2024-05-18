@@ -11,7 +11,5 @@ public class ArmaduraDragon extends Armadura {
         defensa=25;
         inmunidades= new ArrayList<>();
         inmunidades.add(Estados.QUEMADURA);
-        debilidades = new ArrayList<>();
-        debilidades.add(Estados.ELECTRIFICADO);
     }
 }

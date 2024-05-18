@@ -3,11 +3,12 @@ package Modelo.Eventos.Aleatorios;
 import Modelo.Bases.Jugador;
 import Modelo.Eventos.Aleatorio;
 import UI.Interfaces.Interfaz;
-import UI.MenusConsola;
 
 public class EventoTaberna extends Aleatorio {
     public EventoTaberna(Jugador jugador, Interfaz interfaz) {
         super(interfaz);
+        titulo="La taberna";
+
         texto = "En tu camino hayaste una taberna a los pies de un río. Estás sediento y decides entrar";
 
         opciones = new String[]{"Sentarte en la barra.","Ir al lavabo y marcharte."};
@@ -53,6 +54,7 @@ public class EventoTaberna extends Aleatorio {
                             setTexto( "No tienes oro para pagarlo y te echan de la taberna.");
                             opciones = new String[]{"Seguir"};
                             interfaz.actualizar();
+                            esperar();
                             break;
                         }
                         else {
@@ -65,6 +67,7 @@ public class EventoTaberna extends Aleatorio {
                             setTexto("Agradeces el trago de agua y te marchas.");
                             opciones = new String[]{"Seguir"};
                             interfaz.actualizar();
+                            esperar();
                             break;
                         }
                     case 1:
@@ -72,6 +75,7 @@ public class EventoTaberna extends Aleatorio {
                             setTexto("No tienes oro para pagarlo y te echan de la taberna.");
                             opciones = new String[]{"Seguir"};
                             interfaz.actualizar();
+                            esperar();
                             break;
                         }
                         else {
@@ -98,12 +102,14 @@ public class EventoTaberna extends Aleatorio {
                                     jugador.setOro(0);
                                     opciones = new String[]{"Seguir"};
                                     interfaz.actualizar();
+                                    esperar();
                                     break;
                                 case 1:
                                     setTexto("Al poco tiempo de salir de la taberna caiste al río. Tenía poca profundidad y te caiste sobre una roca pero al menos te sirvió para espabilarte. Pierdes 5 de vida.");
                                     jugador.setSalud(jugador.getSalud() - 5);
                                     opciones = new String[]{"Seguir"};
                                     interfaz.actualizar();
+                                    esperar();
                                     break;
                             }
                             break;
@@ -115,10 +121,24 @@ public class EventoTaberna extends Aleatorio {
                 jugador.setSalud(jugador.getSalud() - 2);
                 opciones = new String[]{"Seguir"};
                 interfaz.actualizar();
+                esperar();
                 break;
         }
         if (!jugador.estaMuerto()) {
             terminarEvento();
+        }
+    }
+
+    @Override
+    public void terminarEvento() {}
+
+    private void esperar() {
+        while (interfaz.botonPulsado()==-1) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

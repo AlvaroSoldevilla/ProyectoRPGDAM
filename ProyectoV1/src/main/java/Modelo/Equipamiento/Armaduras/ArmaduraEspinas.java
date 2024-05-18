@@ -11,7 +11,5 @@ public class ArmaduraEspinas extends Armadura {
         defensa=20;
         inmunidades= new ArrayList<>();
         inmunidades.add(Estados.ESPINAS);
-        debilidades = new ArrayList<>();
-        debilidades.add(Estados.QUEMADURA);
     }
 }

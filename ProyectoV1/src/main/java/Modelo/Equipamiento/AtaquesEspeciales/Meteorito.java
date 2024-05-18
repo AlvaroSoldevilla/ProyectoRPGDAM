@@ -7,6 +7,9 @@ import UI.Interfaces.Interfaz;
 
 public class Meteorito extends AtaqueEspecial {
 
+    /**
+     * Constructor que inicializa el ataque.
+     */
     public Meteorito() {
         nombre = "Meteorito";
         coste = 15;

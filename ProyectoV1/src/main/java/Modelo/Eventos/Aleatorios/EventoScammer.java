@@ -8,6 +8,7 @@ import UI.Interfaces.Interfaz;
 public class EventoScammer extends Aleatorio {
     public EventoScammer(Jugador jugador, Interfaz interfaz) {
         super(interfaz);
+        titulo="Un intercambio";
         texto = "Un enigmático mago aparece frente ante ti, te ofrece un arma de gran poder a cambio de la tuya. Su fiabilidad es cuestionable...";
 
         opciones = new String[]{"Aceptar el trato","No fiarte e ingorarlo"};
@@ -37,17 +38,32 @@ public class EventoScammer extends Aleatorio {
                 jugador.eliminarArma(antigua);
                 opciones = new String[]{"Seguir"};
                 interfaz.actualizar();
+                esperar();
                 break;
             case 1:
                 setTexto("Decidiste ignorarlo. El mago parece decepcionado y desaparece.");
                 opciones = new String[]{"Seguir"};
                 interfaz.actualizar();
+                esperar();
                 break;
         }
         if (!jugador.estaMuerto()) {
             terminarEvento();
         }
 
+    }
+
+    @Override
+    public void terminarEvento() {}
+
+    private void esperar() {
+        while (interfaz.botonPulsado()==-1) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 

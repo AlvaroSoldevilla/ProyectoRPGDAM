@@ -11,7 +11,5 @@ public class ArmaduraMaldita extends Armadura {
         defensa=30;
         inmunidades= new ArrayList<>();
         inmunidades.add(Estados.BENDITO);
-        debilidades = new ArrayList<>();
-        debilidades.add(Estados.MALDITO);
     }
 }

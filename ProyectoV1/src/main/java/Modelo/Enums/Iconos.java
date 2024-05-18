@@ -2,6 +2,13 @@ package Modelo.Enums;
 
 import lombok.Getter;
 
+/**
+ * El enum Iconos contiene la ruta relativa de cada imagen e icono.
+ *
+ * @author Álvaro Soldevilla
+ * @author Diego Gonzalez
+ */
+
 @Getter
 public enum Iconos {
     //Fondos
@@ -52,10 +59,17 @@ public enum Iconos {
     SERPIENTE("Imagenes/Enemigos/Serpiente.png"),
     ;
 
-
-
+    /**
+     * Constructor para inicializar la ruta del icono o imagen
+     *
+     * @param rutaIcono
+     */
     Iconos(String rutaIcono) {
         this.rutaIcono = rutaIcono;
     }
+
+    /**
+     * La ruta del icono o imagen
+     */
     String rutaIcono;
 }

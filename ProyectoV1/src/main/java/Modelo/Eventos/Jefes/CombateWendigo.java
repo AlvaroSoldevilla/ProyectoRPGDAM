@@ -316,6 +316,7 @@ public class CombateWendigo extends BatallaConJefe {
                     accionJugador(interfaz.botonPulsado() + 1, enemigo);
                 }
             }
+            interfaz.setSeguir();
             interfaz.deshabilitarBotones();
             interfaz.reiniciarPulsado();
             interfaz.cambiarFase(1);
@@ -435,8 +436,7 @@ public class CombateWendigo extends BatallaConJefe {
             esperar(2000);
         } else if (jefe.estaMuerto()) {
             recompensaOro = 80;
-            interfaz.imprimirMensaje("Has ganado");
-            interfaz.imprimirMensaje("Recibes " + recompensaOro + " de oro");
+            interfaz.imprimirMensaje("Has ganado!! Recibes " + recompensaOro + " de oro");
             interfaz.cambiarFase(3);
             jugador.ganarOro(recompensaOro);
             jugador.restaurarMana();

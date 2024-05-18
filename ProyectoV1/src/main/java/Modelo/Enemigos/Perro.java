@@ -13,6 +13,7 @@ public class Perro extends Enemigo {
         dmgBase = dmg;
         defensa = rng.nextInt(5,16);
         defensaBase = defensa;
+        poderBloqueo = 4;
         ataques = AtaquesEnemigo.PERRO.getAtaques();
         icono = Iconos.PERRO;
     }

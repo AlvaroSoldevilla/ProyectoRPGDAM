@@ -48,6 +48,7 @@ public class EventoAnciana extends Aleatorio {
                         jugador.curarVida(8);
                         opciones = new String[]{"Seguir"};
                         interfaz.actualizar();
+                        esperar();
                         break;
 
                     case 1:
@@ -58,12 +59,14 @@ public class EventoAnciana extends Aleatorio {
                         }
                         opciones = new String[]{"Seguir"};
                         interfaz.actualizar();
+                        esperar();
                         break;
 
                     case 2:
                         setTexto("La anciana muestra tristeza pero lo entiende. Se despide de ti" );
                         opciones = new String[]{"Seguir"};
                         interfaz.actualizar();
+                        esperar();
                         break;
                }
                 break;
@@ -72,6 +75,7 @@ public class EventoAnciana extends Aleatorio {
                 jugador.setMana(jugador.getMana() - 5);
                 opciones = new String[]{"Seguir"};
                 interfaz.actualizar();
+                esperar();
                 break;
         }
         if (!jugador.estaMuerto()) {
@@ -80,5 +84,18 @@ public class EventoAnciana extends Aleatorio {
 
     }
 
+    @Override
+    public void terminarEvento() {}
+
+    private void esperar() {
+        while (interfaz.botonPulsado()==-1) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
 
 }

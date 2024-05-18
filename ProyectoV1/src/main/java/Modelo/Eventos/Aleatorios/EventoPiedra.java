@@ -1,14 +1,14 @@
 package Modelo.Eventos.Aleatorios;
 
-import Modelo.Bases.Enemigo;
 import Modelo.Bases.Jugador;
 import Modelo.Eventos.Aleatorio;
 import UI.Interfaces.Interfaz;
-import UI.MenusConsola;
 
 public class EventoPiedra extends Aleatorio {
     public EventoPiedra(Jugador jugador, Interfaz interfaz) {
         super(interfaz);
+        titulo="Dualidad del hombre";
+
         texto = "Hay una piedra en el camino. ¿Que quieres hacer?";
 
         opciones = new String[]{"Patearla","Tirarla al río","Pasar de largo"};
@@ -52,6 +52,9 @@ public class EventoPiedra extends Aleatorio {
                 break;
         }
     }
+
+    @Override
+    public void terminarEvento() {}
 
     private void esperar() {
         while (interfaz.botonPulsado()==-1) {

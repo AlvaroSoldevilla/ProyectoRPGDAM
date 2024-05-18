@@ -1,21 +1,34 @@
 package UI.Interfaces;
 
 import Modelo.Enums.Iconos;
-import UI.Elementos.Contenedor;
+import UI.Elementos.Escena;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * La clase MenuPrincipal representa la escena del menú principal donde el jugador puede seleccionar un personaje.
+ *
+ * @author Álvaro Soldevilla
+ * @author Diego Gonzalez
+ */
+public class MenuPrincipal extends Escena {
 
-public class MenuPrincipal extends Contenedor {
-
+    /**
+     * Constructor que inicializa la escena del menú principal con la imagen de fondo proporcionada.
+     *
+     * @param nombreRutaImagen La imagen de fondo de la escena.
+     */
     public MenuPrincipal(String nombreRutaImagen) {
         super(nombreRutaImagen);
         setLayout(new BorderLayout());
     }
 
+    /**
+     * Agrega los elementos gráficos a la escena del menú principal.
+     */
     @Override
     public void addElementos() {
         JLabel backgroundLabel = new JLabel(new ImageIcon(imagenDeFondo));
@@ -49,12 +62,10 @@ public class MenuPrincipal extends Contenedor {
         character3Button.setOpaque(false);
         backgroundLabel.add(character3Button);
 
-        // Añadir acción a los botones
+        // Botones
         character1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Acción para el personaje 1
-                System.out.println("Caballero seleccionado");
                 elegido = 1;
             }
         });
@@ -62,16 +73,13 @@ public class MenuPrincipal extends Contenedor {
         character2Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Acción para el personaje 2
-                System.out.println("Mago seleccionado");
                 elegido = 2;
             }
         });
 
         character3Button.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-                // Acción para el personaje 3
-                System.out.println("Asesino seleccionado");
                 elegido = 3;
             }
         });
@@ -81,23 +89,14 @@ public class MenuPrincipal extends Contenedor {
     public void actualizarEscena(int fase) {}
 
     @Override
-    public void mostrarMensaje(String mensaje) {
-
-    }
+    public void mostrarMensaje(String mensaje) {}
 
     @Override
-    public void actualizarInterfaz() {
-
-    }
+    public void actualizarInterfaz() {}
 
     @Override
-    public void deshabilitarBotones() {
-
-    }
+    public void deshabilitarBotones() {}
 
     @Override
-    public void habilitarBotones() {
-
-    }
+    public void habilitarBotones() {}
 }
-
