@@ -31,6 +31,7 @@ public class Purificacion extends AtaqueEspecial {
     @Override
     public boolean hacerAtaque(Entidad objetivo, Entidad atacante, Interfaz interfaz) {
         if (puedeAtacar(atacante,interfaz)) {
+            interfaz.imprimirMensaje("Purificacion");
             atacante.eliminarEstadosPerjudiciales();
             return true;
         } else {

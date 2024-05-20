@@ -17,6 +17,7 @@ public class GolpeAplastante extends AtaqueEspecial {
     @Override
     public boolean hacerAtaque(Entidad objetivo, Entidad atacante, Interfaz interfaz) {
         if (puedeAtacar(atacante,interfaz)) {
+            interfaz.imprimirMensaje("Golpe Aplastante");
             objetivo.recibirDmg(atacante.getDmg()+5,interfaz);
             return true;
         } else {

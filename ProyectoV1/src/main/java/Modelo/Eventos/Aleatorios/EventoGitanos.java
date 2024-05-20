@@ -70,6 +70,10 @@ public class EventoGitanos extends Aleatorio {
                 interfaz.cambiarEscena(new UICombate(Iconos.NIVEL2.getRutaIcono(), jugador, new Enemigo[]{enemigo}));
                 Combate c = new Combate(jugador,enemigo,nivel,interfaz);
                 c.empezarEvento();
+                opciones = new String[]{"Seguir"};
+                interfaz.actualizar();
+                esperar();
+                break;
         }
         if (!jugador.estaMuerto()) {
             terminarEvento();

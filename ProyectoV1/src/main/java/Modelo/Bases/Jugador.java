@@ -81,7 +81,11 @@ public abstract class Jugador extends Entidad{
             }
         } else {
             if (!armadura.getInmunidades().contains(estado)) {
-                estadosSufridos.put(estado, estadosSufridos.get(estado) + estado.getDuracion());
+                try {
+                    estadosSufridos.put(estado, estadosSufridos.get(estado) + estado.getDuracion());
+                } catch (NullPointerException e) {
+                    estadosSufridos.put(estado, estado.getDuracion());
+                }
             } else {
                 interfaz.imprimirMensaje("Eres inmune a " + estado.getNombre());
                 try {

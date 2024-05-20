@@ -18,6 +18,7 @@ public class Meteorito extends AtaqueEspecial {
     @Override
     public boolean hacerAtaque(Entidad objetivo, Entidad atacante, Interfaz interfaz) {
         if (puedeAtacar(atacante,interfaz)) {
+            interfaz.imprimirMensaje("Meteorito");
             objetivo.recibirDmg(atacante.getDmg()*2,interfaz);
             atacante.infligirEstado(Estados.MENOSDEFENSA,interfaz);
             return true;

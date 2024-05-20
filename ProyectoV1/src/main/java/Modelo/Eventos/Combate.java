@@ -68,14 +68,17 @@ public class Combate extends Evento {
      * Nivel del combate, determinará la recompensa
      */
     int nivel = -1;
+
     /**
      * Variable para determinar si el jugador está haciendo una finta.
      */
     boolean fintaJugador = false;
+
     /**
      * El jugador que participa en el combate
      */
     Jugador jugador;
+
     /**
      * El enemigo que participa en el combate
      */
@@ -160,7 +163,6 @@ public class Combate extends Evento {
                 break;
             case 2:
                 if (!ataqueEspecial(jugador, enemigo)) {
-                    interfaz.imprimirMensaje("El ataque especial del enemigo ha fallado");
                     esperar(1000);
                 } else {
                     interfaz.imprimirMensaje("El ataque especial del enemigo ha sido un éxito");

@@ -31,6 +31,7 @@ public class TormentaLunar extends AtaqueEspecial {
     @Override
     public boolean hacerAtaque(Entidad objetivo, Entidad atacante, Interfaz interfaz) {
         if (puedeAtacar(atacante,interfaz)) {
+            interfaz.imprimirMensaje("Tormenta Lunar");
             objetivo.recibirDmg(atacante.getDmg(),interfaz);
             objetivo.recibirDmg(atacante.getDmg() - 10,interfaz);
             objetivo.recibirDmg(atacante.getDmg() - 15,interfaz);

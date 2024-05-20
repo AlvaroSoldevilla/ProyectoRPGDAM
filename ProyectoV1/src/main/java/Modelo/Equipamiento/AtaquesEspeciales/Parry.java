@@ -34,6 +34,7 @@ public class Parry extends AtaqueEspecial {
     @Override
     public boolean hacerAtaque(Entidad objetivo, Entidad atacante, Interfaz interfaz) {
         if (puedeAtacar(atacante,interfaz)) {
+            interfaz.imprimirMensaje("Parry");
             atacante.infligirEstado(Estados.CONTRAATACANDO,interfaz);
         }
         return false;

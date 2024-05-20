@@ -88,6 +88,10 @@ public class EventoNerd extends Aleatorio {
                                 setTexto("El chico se enfada y te lanza un cuchillo que tenía escondido pero falla dandole a un monstruo, esto pinta feo...");
                                 Combate c = new Combate(jugador,enemigo,nivel,interfaz);
                                 c.empezarEvento();
+                                opciones = new String[]{"Seguir"};
+                                interfaz.actualizar();
+                                esperar();
+                                break;
                         }
                         break;
 

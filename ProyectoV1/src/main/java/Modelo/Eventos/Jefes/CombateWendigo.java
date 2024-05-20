@@ -98,7 +98,6 @@ public class CombateWendigo extends BatallaConJefe {
                 break;
             case 2:
                 if (!ataqueEspecial(jugador, enemigo)) {
-                    interfaz.imprimirMensaje("El ataque especial del enemigo ha fallado");
                     esperar(1000);
                 } else {
                     interfaz.imprimirMensaje("El ataque especial del enemigo ha sido un éxito");
@@ -316,6 +315,7 @@ public class CombateWendigo extends BatallaConJefe {
                     accionJugador(interfaz.botonPulsado() + 1, enemigo);
                 }
             }
+
             interfaz.setSeguir();
             interfaz.deshabilitarBotones();
             interfaz.reiniciarPulsado();
@@ -422,7 +422,7 @@ public class CombateWendigo extends BatallaConJefe {
             }
         }
         interfaz.reiniciarPulsado();
-        interfaz.cambiarEscena(new UICombate(Iconos.NIVEL2.getRutaIcono(),jugador,new Enemigo[]{jefe}));
+        interfaz.cambiarEscena(new UICombate(Iconos.NIVEL2.getRutaIcono(),jugador,enemigos));
         if (combatir()) {
             terminarEvento();
         }

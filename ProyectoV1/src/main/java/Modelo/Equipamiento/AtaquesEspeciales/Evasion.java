@@ -33,6 +33,7 @@ public class Evasion extends AtaqueEspecial {
     @Override
     public boolean hacerAtaque(Entidad objetivo, Entidad atacante, Interfaz interfaz) {
         if (puedeAtacar(atacante,interfaz)) {
+            interfaz.imprimirMensaje("Evasion");
             atacante.infligirEstado(Estados.EVASION,interfaz);
             return true;
         } else {

@@ -32,8 +32,9 @@ public class Fortaleza extends AtaqueEspecial {
     @Override
     public boolean hacerAtaque(Entidad objetivo, Entidad atacante, Interfaz interfaz) {
         if (puedeAtacar(atacante,interfaz)) {
-        atacante.infligirEstado(Estados.FORTALEZA,interfaz);
-        return true;
+            interfaz.imprimirMensaje("Fortaleza");
+            atacante.infligirEstado(Estados.FORTALEZA,interfaz);
+            return true;
         } else {
             return false;
         }

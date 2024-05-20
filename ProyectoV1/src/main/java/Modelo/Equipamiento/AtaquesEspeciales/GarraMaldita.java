@@ -32,6 +32,7 @@ public class GarraMaldita extends AtaqueEspecial {
     @Override
     public boolean hacerAtaque(Entidad objetivo, Entidad atacante, Interfaz interfaz) {
         if (puedeAtacar(atacante,interfaz)) {
+            interfaz.imprimirMensaje("Garra maldita");
             objetivo.recibirDmg(atacante.getDmg(),interfaz);
             objetivo.infligirEstado(Estados.MALDITO,interfaz);
             return true;

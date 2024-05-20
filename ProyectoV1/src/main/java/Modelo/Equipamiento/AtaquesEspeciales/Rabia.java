@@ -29,6 +29,7 @@ public class Rabia extends AtaqueEspecial {
     @Override
     public boolean hacerAtaque(Entidad objetivo, Entidad atacante, Interfaz interfaz) {
         if (puedeAtacar(atacante,interfaz)) {
+            interfaz.imprimirMensaje("Rabia");
             atacante.infligirEstado(Estados.RABIA,interfaz);
             return true;
         } else {

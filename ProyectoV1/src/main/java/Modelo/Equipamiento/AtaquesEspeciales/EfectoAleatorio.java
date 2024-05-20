@@ -36,6 +36,7 @@ public class EfectoAleatorio extends AtaqueEspecial {
     public boolean hacerAtaque(Entidad objetivo, Entidad atacante, Interfaz interfaz) {
         Random rng = new Random();
         if (puedeAtacar(atacante,interfaz)) {
+            interfaz.imprimirMensaje("Efecto aleatorio");
             switch (rng.nextInt(0,3)) {
                 case 0:
                     objetivo.infligirEstado(Estados.QUEMADURA,interfaz);
