@@ -19,11 +19,6 @@ public abstract class Escena extends JPanel {
     protected String imagenDeFondo;
 
     /**
-     * Constructor privado para evitar la creación de instancias sin fondo.
-     */
-    private Escena() {}
-
-    /**
      * Constructor que inicializa la escena con la imagen de fondo proporcionada.
      *
      * @param fondo La imagen de fondo de la escena.
@@ -51,11 +46,6 @@ public abstract class Escena extends JPanel {
      * La altura de la escena.
      */
     protected int height = 576;
-
-    /**
-     * Indica si se debe continuar la interacción en la escena.
-     */
-    protected boolean seguir = false;
 
     /**
      * Método abstracto para agregar elementos a la escena.

@@ -60,22 +60,6 @@ public class Interfaz extends JFrame {
     }
 
     /**
-     * Verifica si se debe continuar la interacción en la escena actual.
-     *
-     * @return true si se debe continuar, false en caso contrario.
-     */
-    public boolean seguir() {
-        return escenaActual.isSeguir();
-    }
-
-    /**
-     * Reestablece la variable seguir a false.
-     */
-    public void setSeguir() {
-        escenaActual.setSeguir(false);
-    }
-
-    /**
      * Deshabilita los botones de la escena actual.
      */
     public void deshabilitarBotones() {
@@ -103,7 +87,6 @@ public class Interfaz extends JFrame {
      */
     public void reiniciarPulsado() {
         escenaActual.setElegido(-1);
-        escenaActual.setSeguir(false);
     }
 
     /**

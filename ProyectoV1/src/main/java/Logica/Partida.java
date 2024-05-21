@@ -82,9 +82,7 @@ public class Partida {
                 if (interfaz.botonPulsado() != -1) {
                     evento = eventosActuales[interfaz.botonPulsado()];
                     interfaz.reiniciarPulsado();
-                    if (evento instanceof CombateWendigo combateWendigo) {
-                        interfaz.cambiarEscena(new UICombate(rutaFondo,jugador, combateWendigo.getEnemigos()));
-                    } else if (evento instanceof Combate combate) {
+                    if (evento instanceof Combate combate) {
                         interfaz.cambiarEscena(new UICombate(rutaFondo,jugador,new Enemigo[]{combate.getEnemigo()}));
                     } else if (evento instanceof BatallaConJefe combate) {
                         interfaz.cambiarEscena(new UICombate(rutaFondo,jugador,new Enemigo[]{combate.getJefe()}));

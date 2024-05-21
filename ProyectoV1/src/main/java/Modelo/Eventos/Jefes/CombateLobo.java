@@ -37,7 +37,13 @@ public class CombateLobo extends BatallaConJefe {
     }
 
     @Override
-    public void terminarEvento() {
-        System.out.println("Has ganado");
+    public void terminarEvento() {}
+
+    public void esperar(int tiempo) {
+        try {
+            Thread.sleep(tiempo);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

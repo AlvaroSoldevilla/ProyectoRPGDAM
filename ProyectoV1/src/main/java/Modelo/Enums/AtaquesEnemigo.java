@@ -15,7 +15,7 @@ import java.util.List;
  */
 public enum AtaquesEnemigo {
     GOBLIN(new AtaqueEspecial[]{new Rabia()}),
-    PERRO(new AtaqueEspecial[]{new MiniGarraMaldita()}),
+    PERRO(new AtaqueEspecial[]{new GarraMaldita()}),
     SERPIENTE(new AtaqueEspecial[]{new VenenoSeguro()}),
     LOBO(new AtaqueEspecial[]{new TormentaLunar()}),
     WENDIGO(new AtaqueEspecial[]{new GarraMaldita()}),

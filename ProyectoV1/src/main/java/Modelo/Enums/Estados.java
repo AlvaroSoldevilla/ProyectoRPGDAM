@@ -14,7 +14,7 @@ public enum Estados {
     VENENO("Veneno",true,true,4,3,Iconos.ENVENENADO),
     QUEMADURA("Quemadura",true,true,2,4,Iconos.QUEMADURA),
     CEGADO("Cegado",false,true,2,1,Iconos.CEGADO),
-    MALDITO("Maldito", true, true, 2,1,Iconos.MALDICION),
+    MALDITO("Maldito", true, true, 2,3,Iconos.MALDICION),
     BENDITO("Bendito", true, true, 2,1,Iconos.BENDITO),
     CONGELADO("Congelado", false, true, 1,1,Iconos.CONGELADO),
     SILENCIADO("Silenciado",true,true,1,1,Iconos.SILENCIADO),

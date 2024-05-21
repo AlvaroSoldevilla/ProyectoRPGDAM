@@ -12,7 +12,7 @@ public class Meteorito extends AtaqueEspecial {
      */
     public Meteorito() {
         nombre = "Meteorito";
-        coste = 15;
+        coste = 40;
     }
 
     @Override
