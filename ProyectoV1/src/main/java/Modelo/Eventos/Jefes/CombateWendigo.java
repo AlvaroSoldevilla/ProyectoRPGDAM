@@ -51,11 +51,7 @@ public class CombateWendigo extends BatallaConJefe {
     }
 
     @Override
-    public void terminarEvento() {
-        interfaz.imprimirMensaje("Has Terminado el juego. ¡¡Felicidades!!");
-        interfaz.actualizar();
-        esperar(1000);
-    }
+    public void terminarEvento() {}
 
     public void esperar(int tiempo) {
         try {
