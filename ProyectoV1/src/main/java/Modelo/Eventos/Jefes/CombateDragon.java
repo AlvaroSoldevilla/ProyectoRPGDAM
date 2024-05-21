@@ -26,26 +26,18 @@ public class CombateDragon extends BatallaConJefe {
         setTexto("Aparece un dragón enorme delante tuya");
         interfaz.cambiarEscena(new UIEvento(Iconos.NIVEL3.getRutaIcono(),this));
         while (interfaz.botonPulsado() == -1) {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            esperar(10);
         }
         Combate c = new Combate(jugador,jefe, interfaz);
         interfaz.cambiarEscena(new UICombate(Iconos.NIVEL3.getRutaIcono(),jugador,new Enemigo[]{jefe}));
         c.empezarEvento();
 
-        setTexto("Sigues adelante tras vencer al dragón, pero antes de que puedas seguir, escuchas un rugido detras tuya," +
+        setTexto("Sigues adelante tras vencer al dragón. pero antes de que puedas seguir, escuchas un rugido detras tuya,\n" +
                 " el dragón se ha levantado de nuevo y se prepara para atacar");
         opciones = new String[] {"Seguir luchando"};
         interfaz.cambiarEscena(new UIEvento(Iconos.NIVEL3.getRutaIcono(),this));
         while (interfaz.botonPulsado() == -1) {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+            esperar(10);
         }
         jefe = new DragonFase2();
         interfaz.cambiarEscena(new UICombate(Iconos.NIVEL3.getRutaIcono(),jugador,new Enemigo[]{jefe}));
@@ -56,6 +48,20 @@ public class CombateDragon extends BatallaConJefe {
 
     @Override
     public void terminarEvento() {
-        System.out.println("Has ganado");
+        setTitulo("¡¡Felidicades!!");
+        setTexto("Has Terminado el juego. ¡¡Felicidades!!");
+        opciones = new String[]{"Terminar Juego"};
+        interfaz.cambiarEscena(new UIEvento(Iconos.NIVEL3.getRutaIcono(),this));
+        while (interfaz.botonPulsado() == -1) {
+            esperar(10);
+        }
+    }
+
+    public void esperar(int tiempo) {
+        try {
+            Thread.sleep(tiempo);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -83,6 +83,7 @@ public abstract class Entidad {
     public void aplicarEstados(Interfaz interfaz) {
         Estados[] aEliminar = new Estados[estadosSufridos.size() + 1];
         estadosSufridos.forEach((e,s)-> {
+            System.out.println("aplicado " + e.getNombre());
             aplicarEfectoDeEstados(e,interfaz);
             if (e.isDeterioro()) {
                 if (s-1==0) {
@@ -134,8 +135,8 @@ public abstract class Entidad {
                     dmgVerdadero(estado.getEfecto()/Estados.RESISTENCIAELECTRICIDAD.getEfecto(),interfaz);
                 }
             }
-            case MALDITO -> multiplicarEstadisticas(0.5);
-            case BENDITO -> multiplicarEstadisticas(1.5);
+            case MALDITO -> multiplicarEstadisticas(estado.getEfecto(), false);
+            case BENDITO -> multiplicarEstadisticas(estado.getEfecto(), true);
             case FORTALEZA -> aumentarDefensa(Estados.FORTALEZA.getEfecto());
             case RABIA -> {
                 aumentarDmg(Estados.RABIA.getEfecto());
@@ -267,12 +268,19 @@ public abstract class Entidad {
      * Metodo que aumenta o disminuye temporalmente las estadísticas de la entidad.
      *
      * @param multiplicador Cantidad por la que se multiplican las estadísticas de la entidad.
+     * @param beneficio Determina si se deben multiplicar o dividir las estadísticas.
      */
-    public void multiplicarEstadisticas(double multiplicador) {
+    public void multiplicarEstadisticas(int multiplicador, boolean beneficio) {
         saludTemp = salud;
-        salud = (int) (salud * multiplicador);
-        dmg = (int) (dmg * multiplicador);
-        defensa = (int) (defensa * multiplicador);
+        if (beneficio) {
+            salud *= salud * multiplicador;
+            dmg *= dmg * multiplicador;
+            defensa *= defensa * multiplicador;
+        } else{
+            salud /= multiplicador;
+            dmg /= multiplicador;
+            defensa /= multiplicador;
+        }
     }
 
     /**

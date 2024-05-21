@@ -181,7 +181,6 @@ public class UICombate extends Escena {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         elegido = 0;
-                        seguir = true;
                     }
                 });
                 break;
@@ -212,7 +211,6 @@ public class UICombate extends Escena {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     elegido = finalI;
-                    seguir = true;
                 }
             });
         }

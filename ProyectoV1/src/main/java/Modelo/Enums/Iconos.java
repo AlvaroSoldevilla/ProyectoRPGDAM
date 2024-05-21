@@ -34,7 +34,7 @@ public enum Iconos {
     CONGELADO("Imagenes/Iconos/Efectos de Estado/IconoCongelado.png"),
     ELECTROCUTADO("Imagenes/Iconos/Efectos de Estado/IconoElectrocutado.png"),
     ESPINAS("Imagenes/Iconos/Efectos de Estado/IconoEspinas.png"),
-    MALDICION("Imagenes/Iconos/Efectos de Estado/IconoMaldito.png"),
+    MALDICION("Imagenes/Iconos/Efectos de Estado/IconoMaldicion.png"),
     MASDEFENSA("Imagenes/Iconos/Efectos de Estado/IconoMasDefensa.png"),
     MENOSDEFENSA("Imagenes/Iconos/Efectos de Estado/IconoMenosDefensa.png"),
     QUEMADURA("Imagenes/Iconos/Efectos de Estado/IconoQuemadura.png"),

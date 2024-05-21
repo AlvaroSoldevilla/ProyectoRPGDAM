@@ -11,7 +11,7 @@ public class Mago extends Jugador {
         nombre="Mago";
         maxSalud = 40;
         salud=maxSalud;
-        maxMana = 80;
+        maxMana = 50;
         mana=maxMana;
         dmg=3;
         dmgBase = dmg;

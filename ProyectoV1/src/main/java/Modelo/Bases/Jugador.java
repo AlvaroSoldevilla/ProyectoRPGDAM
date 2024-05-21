@@ -268,11 +268,11 @@ public abstract class Jugador extends Entidad{
      * Aumenta permanentemente las estadísticas del jugador.
      */
     public void subirNivel() {
-        maxSalud *= 1.5;
-        maxMana *= 1.5;
-        dmg *= 1.5;
+        maxSalud *= 1.1;
+        maxMana *= 1.1;
+        dmg *= 1.1;
         dmgBase = dmg;
-        defensa *= 1.5;
+        defensa *= 1.1;
         defensaBase = defensa;
         restaurarVida();
         restaurarMana();
@@ -282,15 +282,24 @@ public abstract class Jugador extends Entidad{
      * Metodo que aumenta o disminuye temporalmente las estadísticas de la entidad.
      *
      * @param multiplicador Cantidad por la que se multiplican las estadísticas de la entidad.
+     * @param beneficio Determina si se deben multiplicar o dividir las estadísticas.
      */
     @Override
-    public void multiplicarEstadisticas(double multiplicador) {
+    public void multiplicarEstadisticas(int multiplicador, boolean beneficio) {
         saludTemp = salud;
-        salud *= (int) multiplicador;
         manaTemp = mana;
-        mana *= (int) multiplicador;
-        dmg *= (int) multiplicador;
-        defensa *= (int) multiplicador;
+
+        if (beneficio) {
+            salud *= multiplicador;
+            mana *= multiplicador;
+            dmg *= multiplicador;
+            defensa *= multiplicador;
+        } else{
+            salud /= multiplicador;
+            manaTemp /= multiplicador;
+            dmg /= multiplicador;
+            defensa /= multiplicador;
+        }
     }
 
     /**

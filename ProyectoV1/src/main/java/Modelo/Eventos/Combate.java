@@ -417,7 +417,7 @@ public class Combate extends Evento {
             interfaz.imprimirMensaje("Tu turno");
 
             interfaz.habilitarBotones();
-            while (interfaz.botonPulsado() == -1 && !interfaz.seguir()) {
+            while (interfaz.botonPulsado() == -1) {
                 esperar(10);
                 if (interfaz.botonPulsado() != -1) {
                     accionJugador(interfaz.botonPulsado() + 1);
@@ -507,8 +507,10 @@ public class Combate extends Evento {
             } else  {
                 if (nivel != -1) {
                     recompensaOro = rng.nextInt(10 * nivel, 20 * nivel);
+
                     interfaz.imprimirMensaje("Has Ganado!! \n Recibes " + recompensaOro + " de oro");
                     interfaz.cambiarFase(3);
+
                     jugador.ganarOro(recompensaOro);
                     jugador.restaurarMana();
                     jugador.setEstadosSufridos(new HashMap<>());
