@@ -202,10 +202,12 @@ public abstract class Entidad {
     public void recibirDmg(int dmg, Interfaz interfaz) {
         if (dmg - defensa > 0) {
             salud -= dmg-defensa;
+            saludTemp -= dmg-defensa;
             interfaz.imprimirMensaje(dmg-defensa + " de daño");
         } else {
             interfaz.imprimirMensaje("1 de daño");
             salud -= 1;
+            saludTemp -= 1;
         }
         interfaz.actualizar();
         try {
@@ -287,7 +289,7 @@ public abstract class Entidad {
      * Metodo llamado al final de cada turno en un combate, restablece las estadísticas a sus valores reales y devuelve la variable bloqueando a false.
      */
     public void finTurno() {
-        if (saludTemp != 0) {
+        if (saludTemp > 0) {
             salud = saludTemp;
             saludTemp = 0;
         }

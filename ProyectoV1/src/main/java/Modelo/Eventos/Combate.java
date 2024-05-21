@@ -117,7 +117,6 @@ public class Combate extends Evento {
                         interfaz.imprimirMensaje("El ataque ha fallado");
                         esperar(1000);
                     } else {
-                        interfaz.imprimirMensaje("El ataque ha sido un éxito");
                         esperar(1000);
                     }
                     accion = true;
@@ -163,9 +162,9 @@ public class Combate extends Evento {
                 break;
             case 2:
                 if (!ataqueEspecial(jugador, enemigo)) {
+                    interfaz.imprimirMensaje("El ataque especial del enemigo ha fallado");
                     esperar(1000);
                 } else {
-                    interfaz.imprimirMensaje("El ataque especial del enemigo ha sido un éxito");
                     esperar(1000);
                 }
                 break;
@@ -414,6 +413,11 @@ public class Combate extends Evento {
 
         while (!jugador.estaMuerto() && !enemigo.estaMuerto()) {
 
+            interfaz.imprimirMensaje("Aplicando Estados");
+            jugador.aplicarEstados(interfaz);
+            interfaz.actualizar();
+            esperar(500);
+
             interfaz.imprimirMensaje("Tu turno");
 
             interfaz.habilitarBotones();
@@ -427,19 +431,14 @@ public class Combate extends Evento {
             interfaz.reiniciarPulsado();
             interfaz.cambiarFase(1);
 
-            jugador.aplicarEstados(interfaz);
-            interfaz.actualizar();
-            esperar(500);
-
             if (!enemigo.estaMuerto() && !jugador.estaMuerto()) {
 
                 enemigo.finTurno();
                 interfaz.imprimirMensaje("Turno del enemigo");
                 esperar(1000);
 
-                accionEnemigo(rng.nextInt(1, 5));
-
                 enemigo.aplicarEstados(interfaz);
+                accionEnemigo(rng.nextInt(1, 5));
 
                 jugador.getAccesorios().forEach((a) -> {
                     if (a.isInicioTurno()) {

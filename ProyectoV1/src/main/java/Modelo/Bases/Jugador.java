@@ -279,35 +279,11 @@ public abstract class Jugador extends Entidad{
     }
 
     /**
-     * Metodo que aumenta o disminuye temporalmente las estadísticas de la entidad.
-     *
-     * @param multiplicador Cantidad por la que se multiplican las estadísticas de la entidad.
-     * @param beneficio Determina si se deben multiplicar o dividir las estadísticas.
-     */
-    @Override
-    public void multiplicarEstadisticas(int multiplicador, boolean beneficio) {
-        saludTemp = salud;
-        manaTemp = mana;
-
-        if (beneficio) {
-            salud *= multiplicador;
-            mana *= multiplicador;
-            dmg *= multiplicador;
-            defensa *= multiplicador;
-        } else{
-            salud /= multiplicador;
-            manaTemp /= multiplicador;
-            dmg /= multiplicador;
-            defensa /= multiplicador;
-        }
-    }
-
-    /**
      * Metodo llamado al final de cada turno en un combate, restablece las estadísticas a sus valores reales y devuelve la variable bloqueando a false.
      */
     @Override
     public void finTurno() {
-        if (saludTemp != 0) {
+        if (saludTemp > 0) {
             salud = saludTemp;
             saludTemp = 0;
         }

@@ -16,7 +16,7 @@ public enum Estados {
     CEGADO("Cegado",false,true,2,1,Iconos.CEGADO),
     MALDITO("Maldito", true, true, 2,3,Iconos.MALDICION),
     BENDITO("Bendito", true, true, 2,1,Iconos.BENDITO),
-    CONGELADO("Congelado", false, true, 1,1,Iconos.CONGELADO),
+    CONGELADO("Congelado", false, true, 1,2,Iconos.CONGELADO),
     SILENCIADO("Silenciado",true,true,1,1,Iconos.SILENCIADO),
     ELECTRIFICADO("Electrificado",true,true,5,2,Iconos.ELECTROCUTADO),
     ESPINAS("Espinas",false,false,5,0,Iconos.ESPINAS),
@@ -26,9 +26,9 @@ public enum Estados {
     MENOSDEFENSA("Menos defensa",true,true,10, 6,Iconos.MENOSDEFENSA),
     DESORIENTADO("Desorientado",false,true,2,1,Iconos.CONFUSO),
     CONTRAATACANDO("Contraatacando",false,true,2,1,null),
-    RESISTENCIAVENENO("Resistencia a Veneno",false,true,2,3,Iconos.RESISTVEN),
-    RESISTENCIAQUEMADURA("Resistencia a Quemadura",false,true,2,3,Iconos.RESISTQUEM),
-    RESISTENCIAELECTRICIDAD("Resistencia a Electricidad",false,true,2,3,Iconos.RESISTELEC);
+    RESISTENCIAVENENO("Resistencia a Veneno",false,true,2,2,Iconos.RESISTVEN),
+    RESISTENCIAQUEMADURA("Resistencia a Quemadura",false,true,2,2,Iconos.RESISTQUEM),
+    RESISTENCIAELECTRICIDAD("Resistencia a Electricidad",false,true,2,2,Iconos.RESISTELEC);
 
     /**
      * Constructor para inicializar los atributos del estado.
@@ -63,7 +63,7 @@ public enum Estados {
     final boolean deterioro;
     /**
      * Determina el efecto del estado.
-     * Dependiendo del estado, el efecto puede determinar distintos efectos, por ejemplo, el daño que hace en el caso de VENENO o el multiplicado de fallo en el caso de DESORIENTADO
+     * Dependiendo del estado, el efecto puede determinar distintos efectos, por ejemplo, el daño que hace en el caso de VENENO o el multiplicador de fallo en el caso de DESORIENTADO
      */
     final int efecto;
     /**
