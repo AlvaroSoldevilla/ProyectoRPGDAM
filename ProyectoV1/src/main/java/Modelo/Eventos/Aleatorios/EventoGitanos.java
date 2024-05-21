@@ -8,24 +8,42 @@ import Modelo.Eventos.Combate;
 import UI.Interfaces.Interfaz;
 import UI.Interfaces.UICombate;
 
+/**
+ * La clase EventoGitanos representa un evento aleatorio en el juego donde el jugador
+ * se encuentra con un grupo de gitanos y debe tomar una decisión sobre cómo enfrentar la situación.
+ *
+ * @autor Álvaro Soldevilla
+ * @autor Diego Gonzalez
+ */
 public class EventoGitanos extends Aleatorio {
+
+    private Enemigo enemigo;
+    private int nivel;
+
+    /**
+     * Constructor para el evento de encuentro con los gitanos.
+     *
+     * @param jugador  El jugador que participa en el evento.
+     * @param enemigo  El enemigo con el que el jugador puede enfrentarse.
+     * @param nivel    El nivel del enemigo.
+     * @param interfaz La interfaz del juego.
+     */
     public EventoGitanos(Jugador jugador, Enemigo enemigo, int nivel, Interfaz interfaz) {
         super(interfaz);
-        titulo="Un encuentro desafortunado";
-
+        titulo = "Un encuentro desafortunado";
         texto = "Illo dame todo tu dinero";
-
-        opciones = new String[]{"Dar todo tu dinero","Dar 5 de oro","Negarte y correr","Enfrentarlos"};
-
+        opciones = new String[]{"Dar todo tu dinero", "Dar 5 de oro", "Negarte y correr", "Enfrentarlos"};
         this.jugador = jugador;
         this.enemigo = enemigo;
         this.nivel = nivel;
     }
-    Enemigo enemigo;
-    int nivel;
+
+    /**
+     * Comienza el evento, esperando la acción del jugador y actuando en consecuencia.
+     */
     @Override
     public void empezarEvento() {
-        while (interfaz.botonPulsado()==-1) {
+        while (interfaz.botonPulsado() == -1) {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
@@ -47,7 +65,7 @@ public class EventoGitanos extends Aleatorio {
             case 1:
                 setTexto("Les diste pena y se fueron sin dudar que podías tener más oro.");
                 jugador.setOro(jugador.getOro() - 5);
-                if (jugador.getOro()<0) {
+                if (jugador.getOro() < 0) {
                     jugador.setOro(0);
                 }
                 opciones = new String[]{"Seguir"};
@@ -68,8 +86,8 @@ public class EventoGitanos extends Aleatorio {
                 esperar();
                 interfaz.reiniciarPulsado();
                 interfaz.cambiarEscena(new UICombate(Iconos.NIVEL2.getRutaIcono(), jugador, new Enemigo[]{enemigo}));
-                Combate c = new Combate(jugador,enemigo,nivel,interfaz);
-                c.empezarEvento();
+                Combate combate = new Combate(jugador, enemigo, nivel, interfaz);
+                combate.empezarEvento();
                 opciones = new String[]{"Seguir"};
                 interfaz.actualizar();
                 esperar();
@@ -78,14 +96,20 @@ public class EventoGitanos extends Aleatorio {
         if (!jugador.estaMuerto()) {
             terminarEvento();
         }
-
     }
 
+    /**
+     * Termina el evento. Este método puede ser sobreescrito en caso de necesitar
+     * lógica adicional al finalizar el evento.
+     */
     @Override
     public void terminarEvento() {}
 
+    /**
+     * Espera a que el jugador pulse un botón en la interfaz.
+     */
     private void esperar() {
-        while (interfaz.botonPulsado()==-1) {
+        while (interfaz.botonPulsado() == -1) {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
@@ -93,6 +117,4 @@ public class EventoGitanos extends Aleatorio {
             }
         }
     }
-
-
 }

@@ -4,20 +4,37 @@ import Modelo.Bases.Jugador;
 import Modelo.Eventos.Aleatorio;
 import UI.Interfaces.Interfaz;
 
+/**
+ * La clase EventoPintorMagico representa un evento aleatorio en el juego donde el jugador
+ * se encuentra con un pintor mágico que ofrece pintarlo con colores especiales que otorgan
+ * beneficios adicionales al jugador.
+ *
+ * @autor Álvaro Soldevilla
+ * @autor Diego Gonzalez
+ */
 public class EventoPintorMagico extends Aleatorio {
+
+    /**
+     * Constructor para el evento del pintor mágico.
+     *
+     * @param jugador  El jugador que participa en el evento.
+     * @param interfaz La interfaz del juego.
+     */
     public EventoPintorMagico(Jugador jugador, Interfaz interfaz) {
         super(interfaz);
-        titulo="Pintor Mágico";
+        titulo = "Pintor Mágico";
         texto = "Encuentras a un pintor plasmando sus pensamientos con pintura mágica en un lienzo. El pintor al verte dice que serías un buen lienzo para su arte.";
-
-        opciones = new String[]{"Pintarte de rojo","Pintarte de azul","Pintarte de gris","Pintarte de verde","No dejarte pintar"};
-
+        opciones = new String[]{"Pintarte de rojo", "Pintarte de azul", "Pintarte de gris", "Pintarte de verde", "No dejarte pintar"};
         this.jugador = jugador;
     }
+
+    /**
+     * Comienza el evento, esperando la acción del jugador y actuando en consecuencia.
+     */
     @Override
     public void empezarEvento() {
         interfaz.actualizar();
-        while (interfaz.botonPulsado()==-1) {
+        while (interfaz.botonPulsado() == -1) {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
@@ -71,18 +88,23 @@ public class EventoPintorMagico extends Aleatorio {
 
     }
 
+    /**
+     * Termina el evento. Este método puede ser sobreescrito en caso de necesitar
+     * lógica adicional al finalizar el evento.
+     */
     @Override
     public void terminarEvento() {}
 
+    /**
+     * Espera a que el jugador pulse un botón en la interfaz.
+     */
     private void esperar() {
-        while (interfaz.botonPulsado()==-1) {
+        while (interfaz.botonPulsado() == -1) {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
-
+    }
 }
-}
-

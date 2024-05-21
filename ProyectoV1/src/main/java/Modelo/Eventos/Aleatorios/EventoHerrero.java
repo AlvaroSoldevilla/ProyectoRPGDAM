@@ -4,21 +4,36 @@ import Modelo.Bases.Jugador;
 import Modelo.Eventos.Aleatorio;
 import UI.Interfaces.Interfaz;
 
+/**
+ * La clase EventoHerrero representa un evento aleatorio en el juego donde el jugador
+ * se encuentra con un herrero y tiene la opción de mejorar su arma o armadura.
+ *
+ * @autor Álvaro Soldevilla
+ * @autor Diego Gonzalez
+ */
 public class EventoHerrero extends Aleatorio {
+
+    /**
+     * Constructor para el evento del encuentro con el herrero.
+     *
+     * @param jugador  El jugador que participa en el evento.
+     * @param interfaz La interfaz del juego.
+     */
     public EventoHerrero(Jugador jugador, Interfaz interfaz) {
         super(interfaz);
-        titulo="André el herrero";
-
+        titulo = "André el herrero";
         texto = "A lo lejos escuchas el sonido de un martillo golpeando el acero. Hallaste a un viejo herrero.";
-
-        opciones = new String[]{"Pedirle que refuerce tu arma","Pedirle que refuerce tu armadura","Saludarle e irte."};
-
+        opciones = new String[]{"Pedirle que refuerce tu arma", "Pedirle que refuerce tu armadura", "Saludarle e irte."};
         this.jugador = jugador;
     }
+
+    /**
+     * Comienza el evento, esperando la acción del jugador y actuando en consecuencia.
+     */
     @Override
     public void empezarEvento() {
         interfaz.actualizar();
-        while (interfaz.botonPulsado()==-1) {
+        while (interfaz.botonPulsado() == -1) {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
@@ -54,14 +69,20 @@ public class EventoHerrero extends Aleatorio {
         if (!jugador.estaMuerto()) {
             terminarEvento();
         }
-
     }
 
+    /**
+     * Termina el evento. Este método puede ser sobreescrito en caso de necesitar
+     * lógica adicional al finalizar el evento.
+     */
     @Override
     public void terminarEvento() {}
 
+    /**
+     * Espera a que el jugador pulse un botón en la interfaz.
+     */
     private void esperar() {
-        while (interfaz.botonPulsado()==-1) {
+        while (interfaz.botonPulsado() == -1) {
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
@@ -70,4 +91,3 @@ public class EventoHerrero extends Aleatorio {
         }
     }
 }
-
