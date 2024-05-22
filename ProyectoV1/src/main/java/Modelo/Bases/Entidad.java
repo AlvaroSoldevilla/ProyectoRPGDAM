@@ -123,16 +123,22 @@ public abstract class Entidad {
             case VENENO -> {
                 if (estadosSufridos.containsKey(Estados.RESISTENCIAVENENO)) {
                     dmgVerdadero(estado.getEfecto()/Estados.RESISTENCIAVENENO.getEfecto(),interfaz);
+                } else {
+                    dmgVerdadero(estado.getEfecto(),interfaz);
                 }
             }
             case QUEMADURA -> {
                 if (estadosSufridos.containsKey(Estados.RESISTENCIAQUEMADURA)) {
                     dmgVerdadero(estado.getEfecto()/Estados.RESISTENCIAQUEMADURA.getEfecto(),interfaz);
+                } else {
+                    dmgVerdadero(estado.getEfecto(),interfaz);
                 }
             }
             case ELECTRIFICADO -> {
                 if (estadosSufridos.containsKey(Estados.RESISTENCIAELECTRICIDAD)) {
                     dmgVerdadero(estado.getEfecto()/Estados.RESISTENCIAELECTRICIDAD.getEfecto(),interfaz);
+                } else {
+                    dmgVerdadero(estado.getEfecto(),interfaz);
                 }
             }
             case MALDITO -> multiplicarEstadisticas(estado.getEfecto(), false);
@@ -161,7 +167,7 @@ public abstract class Entidad {
      * @param defensa Cantidad de defensa que se le tiene que quitar a la entidad.
      */
     public void bajarDefensa(int defensa) {
-        this.defensa += defensa;
+        this.defensa -= defensa;
     }
 
     /**
@@ -233,6 +239,8 @@ public abstract class Entidad {
      * Metodo que elimina efectos de estado que son considerados perjudiciales.
      */
     public void eliminarEstadosPerjudiciales() {
+        Estados[] aEliminar = new Estados[estadosSufridos.size()];
+        final int[] contador = {0};
         estadosSufridos.forEach((e,n) -> {
             switch (e) {
                 case
@@ -245,9 +253,13 @@ public abstract class Entidad {
                         QUEMADURA,
                         CEGADO,
                         ELECTRIFICADO
-                        -> estadosSufridos.remove(e);
+                        -> {
+                    aEliminar[contador[0]] = e;
+                    contador[0]++;
+                }
             }
         });
+        eliminarEstados(aEliminar);
     }
 
     /**
@@ -275,9 +287,9 @@ public abstract class Entidad {
     public void multiplicarEstadisticas(int multiplicador, boolean beneficio) {
         saludTemp = salud;
         if (beneficio) {
-            salud *= salud * multiplicador;
-            dmg *= dmg * multiplicador;
-            defensa *= defensa * multiplicador;
+            salud *= multiplicador;
+            dmg *= multiplicador;
+            defensa *= multiplicador;
         } else{
             salud /= multiplicador;
             dmg /= multiplicador;

@@ -91,7 +91,6 @@ public class Partida {
                     }
                     interfaz.reiniciarPulsado();
                     evento.empezarEvento();
-
                 }
             }
             interfaz.reiniciarPulsado();
