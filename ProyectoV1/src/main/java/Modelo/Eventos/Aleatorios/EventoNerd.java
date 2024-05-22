@@ -2,17 +2,19 @@ package Modelo.Eventos.Aleatorios;
 
 import Modelo.Bases.Enemigo;
 import Modelo.Bases.Jugador;
+import Modelo.Enums.Iconos;
 import Modelo.Eventos.Aleatorio;
 import Modelo.Eventos.Combate;
 import UI.Interfaces.Interfaz;
+import UI.Interfaces.UICombate;
 
 /**
  * La clase EventoNerd representa un evento aleatorio en el juego donde el jugador
  * se encuentra con un niño lloriqueando y debe tomar decisiones que afectarán el
  * desarrollo del juego.
  *
- * @autor Álvaro Soldevilla
- * @autor Diego Gonzalez
+ * @author Álvaro Soldevilla
+ * @author Diego Gonzalez
  */
 public class EventoNerd extends Aleatorio {
 
@@ -104,11 +106,12 @@ public class EventoNerd extends Aleatorio {
                                 break;
                             case 1:
                                 setTexto("El chico se enfada y te lanza un cuchillo que tenía escondido pero falla dándole a un monstruo, esto pinta feo...");
-                                Combate c = new Combate(jugador, enemigo, nivel, interfaz);
-                                c.empezarEvento();
-                                opciones = new String[]{"Seguir"};
+                                opciones = new String[]{"Combatir"};
                                 interfaz.actualizar();
                                 esperar();
+                                Combate c = new Combate(jugador, enemigo, nivel, interfaz);
+                                interfaz.cambiarEscena(new UICombate(Iconos.NIVEL2.getRutaIcono(),jugador,new Enemigo[]{enemigo}));
+                                c.empezarEvento();
                                 break;
                         }
                         break;

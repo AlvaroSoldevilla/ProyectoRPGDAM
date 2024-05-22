@@ -8,8 +8,8 @@ import UI.Interfaces.Interfaz;
  * La clase EventoFuente representa un evento aleatorio en el juego donde el jugador
  * encuentra una fuente ancestral y debe decidir si beber de ella o ignorarla.
  *
- * @autor Álvaro Soldevilla
- * @autor Diego Gonzalez
+ * @author Álvaro Soldevilla
+ * @author Diego Gonzalez
  */
 public class EventoFuente extends Aleatorio {
 

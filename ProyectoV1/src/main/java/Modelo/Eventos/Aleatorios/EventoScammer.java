@@ -10,8 +10,8 @@ import UI.Interfaces.Interfaz;
  * se encuentra con un mago enigmático que ofrece un intercambio de armas, con resultados
  * inciertos.
  *
- * @autor Álvaro Soldevilla
- * @autor Diego Gonzalez
+ * @author Álvaro Soldevilla
+ * @author Diego Gonzalez
  */
 public class EventoScammer extends Aleatorio {
 

@@ -8,8 +8,8 @@ import UI.Interfaces.Interfaz;
  * La clase EventoHerrero representa un evento aleatorio en el juego donde el jugador
  * se encuentra con un herrero y tiene la opción de mejorar su arma o armadura.
  *
- * @autor Álvaro Soldevilla
- * @autor Diego Gonzalez
+ * @author Álvaro Soldevilla
+ * @author Diego Gonzalez
  */
 public class EventoHerrero extends Aleatorio {
 

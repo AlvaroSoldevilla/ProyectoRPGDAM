@@ -9,8 +9,8 @@ import UI.Interfaces.Interfaz;
  * se encuentra con una taberna y tiene que tomar decisiones que pueden afectar su salud
  * y su economía.
  *
- * @autor Álvaro Soldevilla
- * @autor Diego Gonzalez
+ * @author Álvaro Soldevilla
+ * @author Diego Gonzalez
  */
 public class EventoTaberna extends Aleatorio {
 

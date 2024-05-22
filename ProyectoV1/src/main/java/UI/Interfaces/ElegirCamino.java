@@ -47,13 +47,6 @@ public class ElegirCamino extends Escena {
         backgroundLabel.setBounds(0, 0, width, height);
         add(backgroundLabel);
 
-        // Barra de estadísticas
-        JPanel panelEstadisticas = new PanelEstadisticas(jugador);
-        panelEstadisticas.setBounds(0, 0, getWidth(), 50);
-        panelEstadisticas.setBackground(new Color(255, 255, 255, 150)); // Fondo semitransparente
-        panelEstadisticas.setLayout(null);
-        add(panelEstadisticas);
-
         // Personaje 1
         JButton character1Button = new JButton(new ImageIcon(jugador.getIcono().getRutaIcono()));
         character1Button.setBounds(50, 200, 150, 198);

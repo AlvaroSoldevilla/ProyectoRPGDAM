@@ -9,8 +9,8 @@ import UI.Interfaces.Interfaz;
  * se encuentra con una piedra en el camino y debe tomar decisiones que afectarán el
  * desarrollo del juego.
  *
- * @autor Álvaro Soldevilla
- * @autor Diego Gonzalez
+ * @author Álvaro Soldevilla
+ * @author Diego Gonzalez
  */
 public class EventoPiedra extends Aleatorio {
 

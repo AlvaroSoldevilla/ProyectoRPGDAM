@@ -8,8 +8,8 @@ import UI.Interfaces.Interfaz;
  * La clase EventoAnciana representa un evento aleatorio en el juego donde el jugador
  * encuentra a una anciana y debe decidir cómo actuar.
  *
- * @autor Álvaro Soldevilla
- * @autor Diego Gonzalez
+ * @author Álvaro Soldevilla
+ * @author Diego Gonzalez
  */
 public class EventoAnciana extends Aleatorio {
 

@@ -13,8 +13,8 @@ import UI.Interfaces.UIEvento;
 /**
  * La clase CombateLobo representa un evento de batalla contra el jefe "Hombre lobo".
  *
- * @autor Álvaro Soldevilla
- * @autor Diego Gonzalez
+ * @author Álvaro Soldevilla
+ * @author Diego Gonzalez
  */
 public class CombateLobo extends BatallaConJefe {
 

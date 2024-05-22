@@ -13,8 +13,8 @@ import UI.Interfaces.UIEvento;
 /**
  * La clase CombateWendigo representa un evento de batalla contra el jefe "Wendigo".
  *
- * @autor Álvaro Soldevilla
- * @autor Diego Gonzalez
+ * @author Álvaro Soldevilla
+ * @author Diego Gonzalez
  */
 public class CombateWendigo extends BatallaConJefe {
 

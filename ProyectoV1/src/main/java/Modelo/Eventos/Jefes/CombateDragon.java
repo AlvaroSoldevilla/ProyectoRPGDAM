@@ -14,8 +14,8 @@ import UI.Interfaces.UIEvento;
 /**
  * La clase CombateDragon representa un evento de batalla contra el jefe "Dragón".
  *
- * @autor Álvaro Soldevilla
- * @autor Diego Gonzalez
+ * @author Álvaro Soldevilla
+ * @author Diego Gonzalez
  */
 public class CombateDragon extends BatallaConJefe {
 

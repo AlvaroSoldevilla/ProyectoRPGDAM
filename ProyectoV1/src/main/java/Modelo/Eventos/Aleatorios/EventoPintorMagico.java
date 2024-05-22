@@ -9,8 +9,8 @@ import UI.Interfaces.Interfaz;
  * se encuentra con un pintor mágico que ofrece pintarlo con colores especiales que otorgan
  * beneficios adicionales al jugador.
  *
- * @autor Álvaro Soldevilla
- * @autor Diego Gonzalez
+ * @author Álvaro Soldevilla
+ * @author Diego Gonzalez
  */
 public class EventoPintorMagico extends Aleatorio {
 

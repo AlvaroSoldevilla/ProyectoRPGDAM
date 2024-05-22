@@ -12,8 +12,8 @@ import UI.Interfaces.UICombate;
  * La clase EventoGitanos representa un evento aleatorio en el juego donde el jugador
  * se encuentra con un grupo de gitanos y debe tomar una decisión sobre cómo enfrentar la situación.
  *
- * @autor Álvaro Soldevilla
- * @autor Diego Gonzalez
+ * @author Álvaro Soldevilla
+ * @author Diego Gonzalez
  */
 public class EventoGitanos extends Aleatorio {
 
